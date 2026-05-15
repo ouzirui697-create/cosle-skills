@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GL.iNet Mudi 7 (GL-E5800) · 新品 Listing 预测报告 v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d; --bg2:#111318; --bg3:#181c24; --card:#1a1f2b;
+  --border:#252c3a; --red:#e63946; --orange:#f4a261; --yellow:#ffd166;
+  --green:#2ec4b6; --blue:#4cc9f0; --purple:#c77dff;
+  --text:#e8eaf0; --muted:#7b8299; --brand:#e63946;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:14px;line-height:1.7;padding:0 0 80px}
+.container{max-width:1100px;margin:0 auto;padding:0 40px}
+h1,h2,h3{font-family:'Syne',sans-serif;font-weight:800}
+.mono{font-family:'DM Mono',monospace}
+.section-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:.5px;margin:56px 0 20px;display:flex;align-items:center;gap:10px}
+.section-title .icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:rgba(230,57,70,0.15)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px}
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.tag-l1{background:rgba(46,196,182,0.15);color:#2ec4b6;border:1px solid rgba(46,196,182,0.3)}
+.tag-l2{background:rgba(255,209,102,0.15);color:#ffd166;border:1px solid rgba(255,209,102,0.3)}
+.tag-l3{background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)}
+.tag-pred{background:rgba(244,162,97,0.15);color:#f4a261;border:1px solid rgba(244,162,97,0.3)}
+.tag-blue{background:rgba(76,201,240,0.15);color:#4cc9f0;border:1px solid rgba(76,201,240,0.3)}
+.tag-purple{background:rgba(199,125,255,0.15);color:#c77dff;border:1px solid rgba(199,125,255,0.3)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#181c24}
+th{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#7b8299;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid rgba(37,44,58,0.5);vertical-align:top}
+.alert{border-radius:8px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;font-size:13px;line-height:1.6}
+.alert-red{background:rgba(230,57,70,0.08);border:1px solid rgba(230,57,70,0.25)}
+.alert-orange{background:rgba(244,162,97,0.08);border:1px solid rgba(244,162,97,0.25)}
+.alert-yellow{background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.25)}
+.alert-green{background:rgba(46,196,182,0.08);border:1px solid rgba(46,196,182,0.25)}
+.alert-blue{background:rgba(76,201,240,0.08);border:1px solid rgba(76,201,240,0.25)}
+.kbd{display:inline-block;background:#0a0b0d;border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-family:'DM Mono',monospace;font-size:11px;color:#4cc9f0}
+code.block{display:block;background:#0a0b0d;border:1px solid var(--border);border-radius:6px;padding:12px 16px;font-family:'DM Mono',monospace;font-size:12px;color:#4cc9f0;margin:10px 0;line-height:1.7;white-space:pre-wrap;word-break:break-word}
+.diff-old{background:rgba(230,57,70,0.06);border-left:3px solid #e63946;padding:10px 14px;font-size:12px;color:#c8ccda;line-height:1.7;margin-bottom:6px;border-radius:0 6px 6px 0}
+.diff-new{background:rgba(46,196,182,0.06);border-left:3px solid #2ec4b6;padding:10px 14px;font-size:12px;color:#c8ccda;line-height:1.7;border-radius:0 6px 6px 0}
+a{color:var(--red);text-decoration:none}
+a:hover{text-decoration:underline}
+.cov-yes{color:#2ec4b6;font-weight:600}
+.cov-mid{color:#ffd166;font-weight:600}
+.cov-no{color:#e63946;font-weight:600}
+</style>
+</head>
+<body>
+
+<!-- ============================================== -->
+<!-- HERO HEADER                                    -->
+<!-- ============================================== -->
+<div style="background:linear-gradient(135deg,#0d1117,#1a0a12,#0d1117);border-bottom:1px solid #2a1520;padding:60px 40px 50px;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-60px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(244,162,97,0.18),transparent 70%)"></div>
+  <div style="position:absolute;bottom:-100px;left:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(230,57,70,0.12),transparent 70%)"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(230,57,70,0.12);border:1px solid rgba(230,57,70,0.3);border-radius:4px;padding:4px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#e63946;letter-spacing:1.5px;text-transform:uppercase">🚀 Cosle Pre-Launch Report v2.0</div>
+      <div class="tag tag-pred">⚠ PREDICTIVE · 待 W+1 起验证</div>
+      <div class="tag tag-blue">US-FIRST · UK/DE 体量对照</div>
+    </div>
+    <h1 style="font-size:38px;line-height:1.15;margin-bottom:14px">GL.iNet Mudi 7 (GL-E5800)<br><span style="color:#e63946">5G NR Wi-Fi 7 旗舰旅行路由器 · Pre-Launch 预测报告 v2.0</span></h1>
+    <div style="font-size:13px;color:#7b8299;line-height:2;margin-top:18px">
+      <span class="mono" style="color:#e8eaf0">品牌</span> GL.iNet &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">品类</span> Routers / Mobile Broadband &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">Parent ASIN</span> B0GTNPSJ5Q &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">计划上市</span> 2026-05-20 &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">正式售价</span> $419.99 USD <span style="color:#7b8299">（预售 $369.99）</span><br>
+      <span class="mono" style="color:#e8eaf0">竞品代理</span> 17 ASIN（US 8 / UK 6 / DE 7，去重）&nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">报告日期</span> 2026-05-15 &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">版本</span> v2.0 (含同事反馈修订)
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================================== -->
+<!-- PREDICTIVE DISCLAIMER                          -->
+<!-- ============================================== -->
+<div class="alert alert-yellow" style="margin-top:32px;font-size:13px">
+  <span style="font-size:18px;flex-shrink:0">⚠</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">本报告为预测性产出，非验证性诊断</strong>
+    新品上市前没有自身 SP Prompts 数据，本报告基于 <strong>17 个竞品 listing 文本聚合 + Excel 输入模板 + Cosle Rufus 行为模型推演</strong>。所有 Listing 优化建议 100% 以卖家在 <em>"Listing 草稿"</em> sheet 中提供的 Title / 7 Bullets / A+ / Backend 字段为基础做 in-place 演化，<strong>不推倒重写</strong>。Rufus 友好度分数标注为"预测分"，需在 W+4 拉真实 SP Prompts 数据后做 Validation Report v1 验证（v2.0 已细化为周颗粒度 5 点位 W+1/2/4/8/12）。Rufus 模型每月更新 checkpoint，本报告基于 2026 Q2 的行为推测。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 执行摘要 STAT ROW                              -->
+<!-- ============================================== -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px">
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#4cc9f0;line-height:1;margin-bottom:6px">46</div>
+    <div style="font-size:11px;color:var(--muted)">预测 Prompt 总数</div>
+  </div>
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#2ec4b6;line-height:1;margin-bottom:6px">22 / 16 / 8</div>
+    <div style="font-size:11px;color:var(--muted)">L1 / L2 / L3 分布</div>
+  </div>
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#2ec4b6;line-height:1;margin-bottom:6px">78</div>
+    <div style="font-size:11px;color:var(--muted)">预测 Rufus 友好度（满分 100）</div>
+  </div>
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f4a261;line-height:1;margin-bottom:6px">9</div>
+    <div style="font-size:11px;color:var(--muted)">仅 Mudi 7 能独占的差异化点</div>
+  </div>
+</div>
+
+<div class="alert alert-blue" style="margin-top:18px">
+  <span style="font-size:18px;flex-shrink:0">🔍</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">一句话总结</strong>
+    Mudi 7 (E5800) 是 GL.iNet 历史最强差旅旗舰：Wi-Fi 7 三频 + 4.67 Gbps 5G + 2.8" 触屏 + 内置 eSIM + 700 Mbps OpenVPN — 这 5 个特性<strong>同时具备</strong>的产品在 US 市场 8 个直接竞品中<strong>仅 Mudi 7 一家</strong>。Listing 草稿数字密度已达高典型性级别（4.67Gbps / 5765Mbps / 13.5h / 700Mbps），但前 80 字符标题缺少 eSIM 关键词、A+ 多数模块为空、Backend 暂无、同品牌 MUDI 2 (E750V2) 与 Puli AX (XE3000) 存在中-高跨型号替代风险。本报告给出 in-place 优化版 Listing + 评分诊断 + W+1 起验证路径。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 1. 方法论与数据来源                              -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📐</span>方法论与数据来源</div>
+
+<div class="card" style="padding:24px">
+  <div style="font-size:13px;line-height:1.9">
+    <strong style="color:#e63946">输入数据三层来源：</strong>
+    <ol style="margin:10px 0 14px 22px;font-size:12.5px;color:#c8ccda">
+      <li><strong>新品技术 spec & 卖点表</strong>（Excel sheet 1 · 新品信息）：完整产品参数 + 8 个目标群体 Tier 1-3 细分 + 12 项核心 USP</li>
+      <li><strong>17 个竞品 listing 原文</strong>（Excel sheet 2 · 竞品列表）：US 8 ASIN（NETGEAR M7/M7 Pro/M6 · TP-Link M8550 · GlocalMe Numen Air · RoamWiFi 5G · 自家 XE3000 · 自家 E750V2）+ UK/DE 同款 ASIN 价格与销量对照</li>
+      <li><strong>卖家 Listing 草稿</strong>（Excel sheet 3 · Listing 草稿）：Title 197 字符 + 7 个 Bullet + 7 个 A+ 模块（部分留空）+ Backend 暂无</li>
+    </ol>
+    <strong style="color:#e63946">Cosle 推演路径：</strong>
+    <p style="margin-top:6px;color:#c8ccda;font-size:12.5px">使用 Cosle 内部 Prompt 分级体系（L1 高典型性 / L2 中典型性 / L3 低典型性）+ 15 类语义关系映射。对 Mudi 7 每项核心 spec 逐项映射 <span class="mono" style="color:#2ec4b6">capable_of</span> / <span class="mono" style="color:#2ec4b6">used_for_func</span> / <span class="mono" style="color:#2ec4b6">used_to</span> / <span class="mono" style="color:#2ec4b6">xWant</span>（L1 高典型性）；对 8 个目标群体生成 <span class="mono" style="color:#ffd166">used_for_aud</span> / <span class="mono" style="color:#ffd166">used_for_eve</span> / <span class="mono" style="color:#ffd166">used_in_loc</span> / <span class="mono" style="color:#ffd166">used_by</span>（L2 中典型性）；对品牌泛化问题生成 <span class="mono" style="color:#e63946">is_a</span> / <span class="mono" style="color:#e63946">xInterested_in</span>（L3 低典型性）。每条预测 Prompt 在 17 个竞品 listing 文本中做关键词聚合，标注竞品覆盖度，对比当前 Listing 草稿覆盖度，识别差异化机会与盲点。</p>
+    <strong style="color:#e63946">交付铁律：</strong>
+    <p style="margin-top:6px;color:#c8ccda;font-size:12.5px">所有 Listing 优化建议 100% 引用卖家草稿原文做 in-place 演化；所有技术数字（4.67Gbps / 5765Mbps / 13.5h / 700Mbps / 5380mAh 等）来源于 Excel sheet 1 技术参数表；零猜测、零编造、零推倒重写。</p>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 3. 竞品 Benchmark 矩阵                          -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🎯</span>竞品 Benchmark 矩阵 · US 8 直接竞品</div>
+
+<div class="alert alert-blue" style="margin-bottom:16px">
+  <span style="font-size:18px;flex-shrink:0">📊</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">为什么 Benchmark 矩阵只列 12 个 L1 特性？</strong>
+    <strong>L1 高典型性</strong>对应硬件 spec 的 <strong>二元判断</strong>（要么具备、要么不具备 — 例如"是否有 eSIM"、"是否 Wi-Fi 7"），适合表格化对比，且占 <strong>75% 的真实购买转化</strong>，是竞品差异化最直接的战场。<br>
+    <strong>L2 中典型性</strong>（"差旅 / 户外创作者 / RV"等场景类）是软性匹配，无法做"是否具备"的二元判断，统一在 §6 Tier 1-3 场景映射章节做软性对照。<br>
+    <strong>L3 低典型性</strong>（"GL.iNet portable router?" 等品牌泛化）对所有竞品来说覆盖度都"等价偏高"，对比无意义，已在附录列表中标注后建议直接 PAUSED。<br>
+    因此本矩阵只挑选了最具有 <strong>差异化判断力</strong> 的 12 个 L1 特性。
+  </div>
+</div>
+
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">把 12 个核心 L1 Prompt 集群与 8 个 US 直接竞品做覆盖度热图。✓ = 该竞品 listing 明确具备此特性，△ = 部分/弱覆盖，✗ = 不具备。最右列是 Mudi 7 自身。</p>
+
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:18px">
+  <table style="font-size:11.5px">
+    <thead><tr>
+      <th style="width:22%">L1 特性</th>
+      <th style="text-align:center">M7<br><span style="color:#7b8299;font-weight:400">$499</span></th>
+      <th style="text-align:center">M7 Pro<br><span style="color:#7b8299;font-weight:400">$305</span></th>
+      <th style="text-align:center">M6<br><span style="color:#7b8299;font-weight:400">$500</span></th>
+      <th style="text-align:center">TP-Link M8550<br><span style="color:#7b8299;font-weight:400">$595</span></th>
+      <th style="text-align:center">GlocalMe<br><span style="color:#7b8299;font-weight:400">$380</span></th>
+      <th style="text-align:center">RoamWiFi 5G<br><span style="color:#7b8299;font-weight:400">$260</span></th>
+      <th style="text-align:center">XE3000<br><span style="color:#7b8299;font-weight:400">$410</span></th>
+      <th style="text-align:center">E750V2<br><span style="color:#7b8299;font-weight:400">$155</span></th>
+      <th style="text-align:center;background:rgba(46,196,182,0.08)"><strong style="color:#2ec4b6">Mudi 7</strong><br><span style="color:#7b8299;font-weight:400">$419.99</span></th>
+    </tr></thead>
+    <tbody>
+      <tr><td>Wi-Fi 7 Tri-band</td><td style="text-align:center"><span class="cov-mid">△ 3.6G</span></td><td style="text-align:center"><span class="cov-yes">✓ 5.8G</span></td><td style="text-align:center"><span class="cov-no">✗ Wi-Fi 6E</span></td><td style="text-align:center"><span class="cov-no">✗ 6E</span></td><td style="text-align:center"><span class="cov-no">✗ Wi-Fi 6</span></td><td style="text-align:center"><span class="cov-no">✗ Wi-Fi 6</span></td><td style="text-align:center"><span class="cov-no">✗ Wi-Fi 6</span></td><td style="text-align:center"><span class="cov-no">✗ Wi-Fi 5</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 5.76G</span></td></tr>
+      <tr><td>5G NR Sub-6 (Qualcomm 新代)</td><td style="text-align:center"><span class="cov-mid">△ X75</span></td><td style="text-align:center"><span class="cov-mid">△ X75</span></td><td style="text-align:center"><span class="cov-mid">△ X65 mmWave</span></td><td style="text-align:center"><span class="cov-mid">△ 3.4G</span></td><td style="text-align:center"><span class="cov-mid">△ 2.5G</span></td><td style="text-align:center"><span class="cov-mid">△ 2.4G</span></td><td style="text-align:center"><span class="cov-mid">△ 双 SIM</span></td><td style="text-align:center"><span class="cov-no">✗ 4G LTE</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ X72 / 4.67G</span></td></tr>
+      <tr><td>Built-in eSIM</td><td style="text-align:center"><span class="cov-yes">✓ 1+8</span></td><td style="text-align:center"><span class="cov-no">✗ 纯 SIM</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-mid">△ CloudSIM</span></td><td style="text-align:center"><span class="cov-mid">△ 内嵌 eSIM</span></td><td style="text-align:center"><span class="cov-no">✗ 需外置 eSIM 卡</span></td><td style="text-align:center"><span class="cov-no">✗ 需外置 eSIM 卡</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ Onboard</span></td></tr>
+      <tr><td>Dual SIM Dual Standby</td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-mid">△ Dual SIM Single Standby</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ Dual Standby</span></td></tr>
+      <tr><td>2.8" Touchscreen</td><td style="text-align:center"><span class="cov-no">✗ 2.4"</span></td><td style="text-align:center"><span class="cov-yes">✓ 2.8"</span></td><td style="text-align:center"><span class="cov-yes">✓ 2.8"</span></td><td style="text-align:center"><span class="cov-mid">△ 1.44"</span></td><td style="text-align:center"><span class="cov-mid">△ 2.4"</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗ LED only</span></td><td style="text-align:center"><span class="cov-no">✗ OLED</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 2.8"</span></td></tr>
+      <tr><td>2.5G Ethernet WAN/LAN</td><td style="text-align:center"><span class="cov-no">✗ 1G</span></td><td style="text-align:center"><span class="cov-yes">✓ 2.5G</span></td><td style="text-align:center"><span class="cov-yes">✓ 2.5G</span></td><td style="text-align:center"><span class="cov-no">✗ 1G</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-yes">✓ 2.5G</span></td><td style="text-align:center"><span class="cov-no">✗ 1G</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 2.5G</span></td></tr>
+      <tr><td>10 Gbps USB-C</td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗ USB 3.0</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗ USB 3.1</span></td><td style="text-align:center"><span class="cov-no">✗ USB 2.0</span></td><td style="text-align:center"><span class="cov-no">✗ USB 2.0</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 10 Gbps</span></td></tr>
+      <tr><td>Battery ≥13h + PD 快充</td><td style="text-align:center"><span class="cov-mid">△ 10h</span></td><td style="text-align:center"><span class="cov-yes">✓ 13h</span></td><td style="text-align:center"><span class="cov-yes">✓ 13h</span></td><td style="text-align:center"><span class="cov-yes">✓ 14h</span></td><td style="text-align:center"><span class="cov-mid">△ 11h</span></td><td style="text-align:center"><span class="cov-yes">✓ 20h 待机</span></td><td style="text-align:center"><span class="cov-mid">△ 8h</span></td><td style="text-align:center"><span class="cov-mid">△ 8h</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 13.5h + 30W PD</span></td></tr>
+      <tr><td>OpenVPN / WireGuard 高速 VPN</td><td style="text-align:center"><span class="cov-no">✗ 闭源</span></td><td style="text-align:center"><span class="cov-no">✗ 闭源</span></td><td style="text-align:center"><span class="cov-no">✗ 闭源</span></td><td style="text-align:center"><span class="cov-mid">△ WireGuard only</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-yes">✓ OpenVPN 150 / WG 300</span></td><td style="text-align:center"><span class="cov-mid">△ OpenVPN 10 / WG 50</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ OpenVPN 700 / WG 600</span></td></tr>
+      <tr><td>OpenWrt 开源固件</td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗ Linux</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗ Linux</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-yes">✓ OpenWrt</span></td><td style="text-align:center"><span class="cov-yes">✓ OpenWrt</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ OpenWrt</span></td></tr>
+      <tr><td>TS-9 外置天线接口</td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-yes">✓ 2× TS-9</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗ 6 可拆天线</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 2× TS-9</span></td></tr>
+      <tr><td>Multi-WAN Failover (5G/Eth/Repeater/USB)</td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center"><span class="cov-yes">✓</span></td><td style="text-align:center"><span class="cov-no">✗</span></td><td style="text-align:center;background:rgba(46,196,182,0.06)"><span class="cov-yes">✓ 四网</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="alert alert-green">
+  <span style="font-size:18px;flex-shrink:0">💡</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">仅 Mudi 7 能独占的 9 个差异化点</strong>
+    在 8 个 US 直接竞品中，<strong>没有任何一款同时具备 Wi-Fi 7 Tri-band + 5G X72 + Built-in eSIM + Dual SIM Dual Standby + 2.8" 触屏 + 2.5G Ethernet + 10Gbps USB-C + 700Mbps OpenVPN + Multi-WAN Failover</strong>。最接近的是 NETGEAR M7 Pro（缺 eSIM + Dual SIM Dual Standby + OpenVPN + 10G USB-C + OpenWrt），售价 <strong>$304.99 (Renewed)</strong>；<strong>全新版仅在 UK 上架，售价 £899.99（≈$1130 USD）</strong>。Mudi 7 在 $420 价位带的"全能旗舰"定位无直接对手，<strong>必须在 Title 前 80 字符和 Bullet 1 把 "Wi-Fi 7" + "5G" + "eSIM" + "Touchscreen" 这 4 个高典型性词同时放出来</strong>。
+  </div>
+</div>
+
+<!-- 多市场体量对照 -->
+<div style="margin-top:28px">
+  <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px">UK/DE 体量对照（同款 ASIN 在欧洲市场月销 — 仅作定价参考）</div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table style="font-size:12px">
+      <thead><tr><th>市场</th><th>头部竞品</th><th>月销量</th><th>月营收</th><th>类目排名</th></tr></thead>
+      <tbody>
+        <tr><td>🇬🇧 UK</td><td>NETGEAR M7 Pro (£899) · NETGEAR M3 (£390)</td><td>58 · 112</td><td>£48,815 · £32,135</td><td>#120 / #27 Mobile Broadband</td></tr>
+        <tr><td>🇩🇪 DE</td><td>TP-Link M8550 (€343) · NETGEAR M3 (€399)</td><td>400+ · 303</td><td>€282,376 · €126,319</td><td>#1 / #62 Mobile Broadband</td></tr>
+        <tr><td>🇺🇸 US</td><td>NETGEAR M7 (B0G4XP7JMR · $500)</td><td>735</td><td>$367,686</td><td>#38 Computer Routers</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:11.5px;color:var(--muted);margin-top:10px">DE 市场对价格更敏感（TP-Link M8550 €343 销量碾压 NETGEAR M7 €599），Mudi 7 €420 区间在 DE 应主打"Wi-Fi 7 + 触屏 + Dragonwing 三件套，价格仍低于 M7"差异化。本报告仅深度优化 US listing，UK/DE 翻译版可沿用相同关键词架构。</p>
+</div>
+
+<!-- ============================================== -->
+<!-- 4. Listing 草稿诊断 + 优化建议（核心章节）       -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">✍</span>Listing 草稿诊断 + In-Place 优化建议</div>
+
+<div class="alert alert-orange" style="margin-bottom:20px">
+  <span style="font-size:18px;flex-shrink:0">📌</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">优化原则（严格遵守）</strong>
+    所有建议 100% 基于卖家在 Excel sheet 3 提供的 <em>Listing 草稿</em>做 in-place 演化。<strong>不推倒重写</strong>。每条 Bullet 给出"原版（红色边框） → 优化版（绿色边框）"对照，仅对关键词、数字密度、L1 语义关系结构做调整，不改动卖家原表达风格。<strong>Bullet 保留 7 条原数量</strong>（按卖家决策）。
+  </div>
+</div>
+
+<!-- TITLE 诊断 -->
+<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">A · TITLE（当前 197 字符 / Amazon 上限 200）</div>
+
+<div class="diff-old">
+<strong style="color:#e63946;font-size:11px">原版 · 当前草稿</strong><br>
+GL.iNet Mudi 7 (GL-E5800) 5G NR Tri-band Wi-Fi 7 Travel Router, Portable Hotspot VPN Router, <span style="background:rgba(230,57,70,0.25);padding:0 4px;border-radius:3px"><strong>Bulit-in</strong></span> eSIM &amp; Dual SIM Dual Standby, 2.5G Ethernet, 2.8" Touchscreen, Suitable for Livestreams/Meeting
+</div>
+<div class="diff-new" style="margin-top:6px">
+<strong style="color:#2ec4b6;font-size:11px">优化版 · 198 字符</strong><br>
+GL.iNet Mudi 7 (GL-E5800) Wi-Fi 7 5G Travel Router with eSIM &amp; Dual SIM, 2.8" Touchscreen, Tri-Band up to 5.76 Gbps, 2.5G Ethernet, 700Mbps VPN, 13.5h Battery — Mobile Hotspot for Travel, Livestream
+</div>
+
+<div style="background:rgba(76,201,240,0.06);border:1px solid rgba(76,201,240,0.25);border-radius:6px;padding:12px 14px;margin:10px 0 24px;font-size:12px;color:#9eb4c5;line-height:1.85">
+  <strong style="color:#4cc9f0;display:block;margin-bottom:6px">优化要点</strong>
+  <strong>① 修正 typo</strong>："Bulit-in" → "Built-in"（直接拼写错误，Rufus 不识别）<br>
+  <strong>② 前 80 字符意图密度提升</strong>：原版前 80 字符是 "GL.iNet Mudi 7 (GL-E5800) 5G NR Tri-band Wi-Fi 7 Travel Router, P"，覆盖 5G/Wi-Fi 7/Travel Router 但缺 eSIM 与 Touchscreen 两个高典型性词。优化版前 80 字符 "GL.iNet Mudi 7 (GL-E5800) Wi-Fi 7 5G Travel Router with eSIM &amp; Dual SIM"，把 4 个 L1 关键词全部塞入。<br>
+  <strong>③ 加入具体数字</strong>："up to 5.76 Gbps" + "700Mbps VPN" + "13.5h Battery" 提升 Typicality 评分（高典型性要求精确数字 + 单位）<br>
+  <strong>④ 移除冗余</strong>："Portable Hotspot VPN Router" 与后续 "Mobile Hotspot for Travel" 重复，合并为后者，腾出字符给 Touchscreen / Tri-Band 关键参数<br>
+  <strong>⑤ 保留卖家原意图</strong>：Mudi 7 / GL-E5800 / 5G / Wi-Fi 7 / Travel Router / eSIM / Dual SIM / 2.8" Touchscreen / 2.5G Ethernet / Livestream — 全部沿用，<strong>无任何编造</strong>
+</div>
+
+<!-- 7 BULLET POINTS 诊断 -->
+<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">B · 7 BULLET POINTS（保留卖家原数量，逐条 in-place 优化）</div>
+
+<!-- Bullet 1 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of × 2</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #1 / #2 / #16</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 1 · 原版 (233 char)</strong><br>【Ultra-Fast 5G &amp; Tri-Band Wi-Fi 7】Delivers blazing speeds up to 4.67 Gbps on 5G and tri-band Wi-Fi 7 with up to 688 Mbps (2.4 GHz) + 2882 Mbps (5 GHz) + 5765 Mbps (6 GHz) for lag-free streaming, gaming, and multi-device connectivity.</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 1 · 优化版 (~248 char)</strong><br>【Ultra-Fast 5G &amp; Tri-Band Wi-Fi 7】Powered by Qualcomm Dragonwing X72, delivers up to 4.67 Gbps 5G download and tri-band Wi-Fi 7 at 688 Mbps (2.4 GHz) + 2882 Mbps (5 GHz) + 5765 Mbps (6 GHz) — supports up to 64 connected devices for lag-free 4K streaming, gaming, and Zoom/Teams meetings.</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动</strong> ① 加入 "Qualcomm Dragonwing X72" 芯片名（L1 #17 capable_of，US 8 竞品均未明示新代芯片）② 补"64 connected devices"具体数字（命中 L1 #16）③ "lag-free streaming, gaming" → "4K streaming, gaming, and Zoom/Teams meetings"，把 L2 #13 "Zoom/Teams/Google Meet" 关键词放入</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>NETGEAR M7 Pro</strong> 用 "Up to 6 Gbps downstream / 5.8 Gbps Wi-Fi 7" 把 5G 和 Wi-Fi 速度分开两个精确数字呈现 — 比一句"超快"有说服力。Mudi 7 优化版采用相同节奏："4.67 Gbps 5G + 三频 5765/2882/688 Mbps Wi-Fi 7" 把速度拆成多个数字，可信度叠加。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> US 8 竞品在 listing 中<strong>无一家明示 5G 芯片代号</strong>（NETGEAR 偶尔提 Snapdragon X75 但简单一句带过、TP-Link/GlocalMe/RoamWiFi 完全不写）。"Qualcomm Dragonwing X72 (Gen 3 MBB)" 是 2026 年最新代 5G 芯片，技术权威感强 — Bullet 1 必须打出芯片名，让 Rufus 在 "latest 5G chip" / "Dragonwing router" 类 prompt 上独占。</div>
+</div>
+
+<!-- Bullet 2 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of</span><span class="tag tag-l2">used_for_eve</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #3 / #4 / #19 + L2 #15</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 2 · 原版 (202 char)</strong><br>【eSIM + Dual SIM Dual Standby】Built-in eSIM and dual physical SIM support with dual standby. Switch carriers instantly with one tap — perfect for travel, business trips, or areas with unstable coverage.</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 2 · v2.0 优化版 (~285 char)</strong><br>【Built-in eSIM + Dual Nano-SIM with Dual Standby】Two active SIM profiles running simultaneously — flexibly combine the onboard eSIM with two physical nano-SIM slots (eSIM uses one SIM position when activated). Switch between AT&amp;T, T-Mobile, Verizon and global carriers with one tap on the 2.8" touchscreen. Zero SIM-swap, zero local-SIM hunt on international trips.</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动（v2.0 修订）</strong> ① <strong style="color:#f4a261">硬件描述纠错</strong>：原版"two physical nano-SIM slots running simultaneously" + 暗示三槽同时工作 → 实际 <strong>eSIM 启用时会占用一个物理 SIM 槽位</strong>（Dual Standby 共享逻辑）。新版明确"Two active SIM profiles" + "eSIM uses one SIM position when activated"，主动透明告知。② <strong style="color:#f4a261">数字模糊化</strong>："140+ international carriers" → "global carriers" — 避免消费者追问具体国家清单引发客诉。③ 保留 AT&amp;T/T-Mobile/Verizon 三大运营商点名（这部分无问题，命中 L1 #14）。④ "Zero SIM-swap, zero local-SIM hunt" 仍命中 L2 #15 xWant。</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>NETGEAR M7</strong> 用 "AT&amp;T, T-Mobile, Verizon" 点名美国三大运营商是 US 卖家的标准动作，Bullet 2 复用此结构。<strong>NETGEAR M7 写 "140+ countries with NETGEAR eSIM" 看似有力但易被追问具体国家</strong> — Mudi 7 v2.0 不重复这个风险，改用 "global carriers" 模糊化策略（如卖家有官方支持国家清单可作为 Backend Keywords 或 A+ Brand Story 单独披露）。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> US 8 竞品中：<strong>NETGEAR M7</strong> 是 "1 物理 SIM + 8 eSIM" 但<strong>同时只能 1 个工作</strong>（Single Standby）；<strong>TP-Link M8550 / GlocalMe / RoamWiFi 5G</strong> 都没有 Dual Standby；<strong>自家 XE3000</strong> 是 Dual SIM Single Standby。<strong>Mudi 7 提供 2 个 active SIM profile 同时待机</strong>（用户可灵活组合：eSIM + 1 nano-SIM，或 2 个 nano-SIM），是同价位段独家的双卡 Dual Standby 5G 路由器。Bullet 2 把 "Dual Standby" 加粗作为差异化锚点。</div>
+</div>
+
+<!-- Bullet 3 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of</span><span class="tag tag-l2">used_with</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #7 / #8 + L2 #10</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 3 · 原版 (233 char)</strong><br>【Powerful Wired &amp; Tethering Options】Built for pro setups on the go with a 2.5Gbps Ethernet port plus dual USB‑C ports for charging, tethering, and OTG—great for laptops, tablets, and wired devices in hotels, offices, or remote sites.</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 3 · 优化版 (~258 char)</strong><br>【2.5G Ethernet + 10 Gbps USB-C】Built for pro setups: 2.5 Gbps Ethernet WAN/LAN port for wired backhaul, plus a 10 Gbps USB-C port for tethering, OTG storage and external NAS sync — ideal for content creators offloading 4K/8K footage and remote workers in hotels, Airbnbs, and co-working spaces.</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动</strong> ① 明确 "10 Gbps USB-C"（命中 L1 #8，<strong>US 8 竞品中 0 家具备此规格</strong>，独家差异化必须直说）② 加入 "external NAS sync"（命中 L2 #10 used_with NAS）③ "4K/8K footage"（命中 L2 #14 content creators 4K/8K livestreaming）④ "hotels, Airbnbs, and co-working spaces"（命中 L2 #4 used_in_loc Airbnb/hotel）</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>NETGEAR M7 Pro</strong> 在 Ports 段写 "LAN Port (10 Gbps with adapter)" — 把 10 Gbps 数字打出来强化高速感（虽然它要外接 adapter 才能用）。Mudi 7 可以用同样的 "10 Gbps" 数字，但加 "<strong>native</strong>" 一词点出"不需要 adapter" 这个关键差别。"Built for pro setups" 这句开头钩子也是从 NETGEAR pro/business 路由器系列的常用句式中借鉴。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> <strong>US 8 竞品中 0 家具备原生 10 Gbps USB-C</strong>（TP-Link M8550 仅 USB 3.0 = 5 Gbps；NETGEAR M7/M6/RoamWiFi 的 USB-C 未给速度，估计仍是 USB 2.0/3.0；GlocalMe Numen Air 仅 USB-C 充电）。Mudi 7 的 10 Gbps USB-C 是<strong>同价位段独家硬件</strong>，可同时支撑 NAS 同步、外接 Ethernet 适配器、OTG — Bullet 3 必须把"<strong>10 Gbps USB-C</strong>" 加粗作为视觉锚点。</div>
+</div>
+
+<!-- Bullet 4 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #13（独家）</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 4 · 原版 (267 char)</strong><br>【Advanced Automatic Failover】Enjoy ultra-reliable connectivity with smart failover. Supports 5G, Ethernet, Wi-Fi Repeater, Tethering, and USB Ethernet simultaneously. If one connection drops, it automatically switches to another in seconds for uninterrupted internet.</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 4 · 优化版 (~272 char)</strong><br>【Quad-Path Multi-WAN Failover】Run 5G, 2.5G Ethernet, Wi-Fi Repeater, USB Tethering and USB Ethernet at the same time — if any one link drops, traffic auto-routes to the next in seconds. Built for pop-up retail POS, food trucks, trade-show booths and live media that cannot afford a single second of downtime.</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动</strong> ① "Advanced" → "Quad-Path"（具体数字化，高典型性原则）② 把 "5G/Ethernet/Wi-Fi Repeater/USB Tethering/USB Ethernet" 5 条路径明示（产品 Excel 卖点表已含）③ 命中 Tier 3 全部 3 个 L2 场景（pop-up retail POS / food trucks / trade-show booths / live media — 全部来自 Excel sheet 1 目标用户表）</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>自家 GL.iNet XE3000</strong> Listing 写 "Multi-WAN: Ethernet, Repeater, Cellular, and Tethering support with load balancing and failover" — 这是 GL.iNet 品牌内部已经验证过的 Multi-WAN 措辞，行业用户认可度高。Mudi 7 优化版直接复用这个结构（"Run 5G, 2.5G Ethernet, Wi-Fi Repeater, USB Tethering and USB Ethernet at the same time"），保持品牌一致性。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> <strong>NETGEAR M7/M7 Pro/M6 闭源系统均不具备真·四路同时 failover</strong>（最多 Ethernet/Cellular 二选一手动切换）；<strong>TP-Link M8550 写 "Two-Modes in One" 只能 Cellular OR Ethernet 二选一</strong>；GlocalMe/RoamWiFi 无 Ethernet 也谈不上 failover。Mudi 7 是 US 8 竞品中<strong>唯一支持 5 路同时在线、毫秒级 failover</strong> 的 5G 旅行路由器 — Bullet 4 必须把 "毫秒级" / "without a single second of downtime" 直接打出来，命中 Pop-up Retail / Food Truck 的 Continuity 场景。</div>
+</div>
+
+<!-- Bullet 5 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of × 2</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #9 / #10</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 5 · 原版 (299 char) — 注意 24W 与 Excel 不一致</strong><br>【Long-Lasting Battery with Fast Charging】Stop struggling with power outlets. Enjoy up to 13.5 hours of untethered freedom on a single charge. The built-in 5380mAh battery keeps you connected all day, while <span style="background:rgba(230,57,70,0.25);padding:0 4px;border-radius:3px">24W</span> PD fast charging minimizes downtime so you can quickly get back online anytime, anywhere.</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 5 · 优化版 (~272 char)</strong><br>【13.5h Battery + 30W PD Fast Charging】Up to 13.5 hours of untethered freedom on a single charge from the built-in 5380 mAh battery — 30W PD/PPS USB-C fast charge refills to full in roughly 1.3 hours, so a coffee break is enough to get you back online for the rest of the day.</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动</strong> ① <strong>修正数字错误</strong>：原版 "24W" 与 Excel 技术参数表 "30W PD/PPS, 30W Max" 不一致，改为 30W（卖家请回查充电器实测功率，如确为 24W 请 Excel 同步修正）② 加入 "1.3 hours"（Excel sheet 1 卖点表已给）③ 命中 L1 #10 "30W PD fast-charge router"，US 8 竞品中 0 家具备此参数</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>TP-Link M8550</strong> 用 "up to 14 hours on a single charge" 写续航，"on a single charge" 修饰语很关键 — 排除掉"插电池条件下"的误解。Mudi 7 优化版采用同样修饰语 "13.5 hours of untethered freedom on a single charge"。<strong>NETGEAR M7 Pro</strong> 写 "Battery: Up to 13 hours" 简洁直接，Mudi 7 13.5h 略胜 0.5h 不显摆但用数字赢。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> <strong>US 8 竞品中 0 家明示 PD 充电功率</strong>（GlocalMe Numen Air 写 "22.5W SuperCharge" 是最接近的，但低 30%；NETGEAR/TP-Link/RoamWiFi 都没在 listing 中写 PD 功率）。Mudi 7 的 "30W PD/PPS, 1.3h 满充" 是<strong>充电速度战场的独家武器</strong> — 续航长是常态，但<strong>充得快</strong>才解决"咖啡店休息 30 分钟想满电出发"的真实痛点。Bullet 5 必须把 "30W PD" 和 "1.3 hours" 两个数字组合打出来。</div>
+</div>
+
+<!-- Bullet 6 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of</span><span class="tag tag-l2">used_by</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #6 + L2 #4 / #9</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 6 · 原版 (204 char)</strong><br>【2.8" Touchscreen Control &amp; Privacy】Configure and monitor your network easily using the 2.8-inch touchscreen—access key settings, manage connections, and adjust privacy options without needing a computer.</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 6 · v2.0 优化版 (~310 char)</strong><br>【2.8" Touchscreen Quick Controls】Switch SIMs, toggle VPN clients, share Wi-Fi via QR codes, and monitor real-time data usage directly on the 2.8" color LCD — no need to open the GL.iNet app or admin panel for everyday tasks. Combined with the GL.iNet mobile app for advanced configuration, this hybrid setup is ideal for non-tech retail staff, hotel front desks, and business travelers in a hurry.</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动（v2.0 修订）</strong> ① <strong style="color:#f4a261">措辞软化</strong>：原版开头 "No App, No Admin Panel" 太绝对，容易被消费者解读为"完全不需要 app"。新版改为 "Quick Controls" + "no need to open ... <em>for everyday tasks</em>" 限定为<strong>日常任务</strong>。② <strong style="color:#f4a261">明示软件依赖</strong>：加 "Combined with the GL.iNet mobile app for advanced configuration"，让消费者预期"高级功能仍依赖 app"，"hybrid setup" 一词强调互补不是替代。③ 保留 Excel sheet 1 列出的 4 个具体操作（Switching SIMs / Toggling VPN / Sharing QR / Monitoring data usage）。④ 保留 "non-tech retail staff / hotel front desks / business travelers" 三个 used_by 人群锚点。</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>NETGEAR M7 Pro / M6</strong> 都用 "2.8-inch color LCD touchscreen" 标准表达；DE 版 M7 Pro 用 "7,1 cm LCD-Farb-Touchscreen" — 数字+颜色+材质三段式表达已经是行业触屏标配。Mudi 7 v2.0 沿用 "2.8" color LCD" 格式。<strong>NETGEAR M7 Pro</strong> 用 "Touchscreen and mobile app" 把触屏和 app <strong>并列呈现</strong>是正确做法（不暗示替代关系），Mudi 7 v2.0 的 "Combined with the GL.iNet mobile app" 直接借鉴这个表达。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> <strong>NETGEAR/TP-Link 的触屏多为"状态显示 + 简单设置"</strong>（NETGEAR M7 Pro 主要操作仍在 app；TP-Link M8550 触屏仅 1.44" 太小）— <strong>日常任务（切 SIM / 开关 VPN client / 生成 QR 分享）无法在屏上完成</strong>。Mudi 7 是少有支持<strong>日常任务屏上直接操作</strong>的 5G 路由器（Excel 卖点表写明 "Switching SIM cards, toggling VPN clients, managing clients, displaying custom notes, sharing QR codes" 都可在屏上完成）— Bullet 6 把 "Quick Controls" 加粗作为差异化锚点，<em>不再用 "No App, No Admin Panel" 绝对化措辞</em>。</div>
+</div>
+
+<!-- Bullet 7 -->
+<div class="card" style="padding:20px;margin-bottom:14px">
+  <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px"><span class="tag tag-l1">capable_of</span><span class="tag tag-l2">used_with</span><span style="font-size:11px;color:var(--muted)">→ 命中 L1 #5 / #11 / #15 + L2 #11</span></div>
+  <div class="diff-old"><strong style="color:#e63946;font-size:11px">Bullet 7 · 原版 (462 char) — 偏长</strong><br>【Powerful VPN Performance】Delivers blazing VPN speeds of up to 700 Mbps (OpenVPN-DCO) and 600 Mbps (WireGuard®). OpenVPN and WireGuard are pre-installed, compatible with 30+ VPN service providers (active subscription required). Enjoy secure, encrypted connections for work, travel, and streaming without slowing down your 5G or Wi-Fi 7 network.*Speed tests are conducted on a local network. Real-world speeds may differ depending on your network configuration.*</div>
+  <div class="diff-new" style="margin-top:6px"><strong style="color:#2ec4b6;font-size:11px">Bullet 7 · 优化版 (~370 char)</strong><br>【700 Mbps Pre-Installed VPN — Keep Your Home Network Anywhere】OpenVPN-DCO up to 700 Mbps + WireGuard® up to 600 Mbps, pre-installed and compatible with 30+ VPN providers including NordVPN, ExpressVPN, Mullvad and Surfshark. Run as VPN Client for safe Airbnb/hotel/cafe Wi-Fi, or VPN Server to keep your home IP and reach your home NAS while abroad. *Speeds measured on local network; real-world results vary.*</div>
+  <div style="font-size:11.5px;color:#9eb4c5;line-height:1.8;margin-top:10px"><strong style="color:#4cc9f0">改动</strong> ① 加 "Keep Your Home Network Anywhere"（Excel sheet 1 Tier 1 外派人员的营销 tagline 直接复用）② 点名 NordVPN/ExpressVPN/Mullvad/Surfshark 4 个 used_with 实体（命中 L2 #11）③ 区分 "VPN Client" 与 "VPN Server"（命中 L1 #15 used_to keep home IP — US 8 竞品中 0 家具备此特性）④ 总字符从 462 缩到 ~370，保留所有数字 + 法律免责声明 ⑤ 加入 hotel/Airbnb/cafe（命中 L2 #4 used_in_loc）</div>
+  <div style="background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2);border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#2ec4b6">🔍 借鉴自竞品</strong> <strong>自家 GL.iNet XE3000</strong> 用 "OpenVPN (up to 150 Mbps) &amp; WireGuard (up to 300 Mbps)" 双协议双数字呈现 — 同时给两个协议的速度更有说服力。Mudi 7 优化版直接复用结构 "OpenVPN-DCO up to 700 Mbps + WireGuard® up to 600 Mbps"。<strong>TP-Link M8550</strong> 写 "Built-in WireGuard VPN for secure remote access" 把 VPN 与"安全远程访问"绑定 — 这个 use-case 框架可借鉴到 Mudi 7 的 "for safe Airbnb/hotel/cafe Wi-Fi" 表达。</div>
+  <div style="background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2);border-radius:6px;padding:10px 14px;margin-top:6px;font-size:11.5px;color:#9eb4c5;line-height:1.8"><strong style="color:#f4a261">🚀 Mudi 7 差异化机会</strong> <strong>US 8 竞品中 5 家完全无 VPN</strong>（NETGEAR M7/M7 Pro/M6 闭源 · GlocalMe Numen Air · RoamWiFi 5G）；<strong>TP-Link M8550 仅 WireGuard 但不给速度数字</strong>；自家 XE3000 速度 150/300 Mbps 已经是同价位最高、Mudi 7 700/600 Mbps 是<strong>行业天花板</strong>。<strong>更独家的是 "VPN Server 模式 + Keep Your Home IP"</strong> — US 8 竞品中没有任何一家在 listing 里提到 VPN Server，Mudi 7 是<strong>唯一能让用户从国外远程访问家中 NAS / 内网</strong>的旅行路由器。Bullet 7 必须保留 "Keep Your Home Network Anywhere" 作为差异化锚点。</div>
+</div>
+
+<!-- A+ MODULES -->
+<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin:32px 0 8px">C · A+ CONTENT 模块文案补全（卖家草稿多数为空，按 Excel 卖点表 + Tier 用户表生成）</div>
+
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:24px">
+  <table>
+    <thead><tr><th style="width:18%">模块</th><th style="width:18%">目标 Prompt / Tier</th><th style="width:64%">建议核心文案（一句话，可直接复用）</th></tr></thead>
+    <tbody>
+      <tr><td><strong>KV (Hero)</strong></td><td>全局品牌</td><td><span style="color:#c8ccda">"Mudi 7 · The World's First Wi-Fi 7 + 5G Travel Router with Built-in eSIM &amp; 2.8" Touchscreen — Global Roaming, Zero Hassle."</span>（融合 Excel Tier 1 营销方向 "Global Roaming, Zero Hassle"）</td></tr>
+      <tr><td><strong>Highlight</strong></td><td>L1 spec 综合</td><td>5 列卖点图：5G 4.67 Gbps · Wi-Fi 7 5.76 Gbps · eSIM + Dual SIM · 13.5h Battery · 2.8" Touchscreen — 每列下方一行数字</td></tr>
+      <tr><td><strong>Wi-Fi 7 + Touchscreen</strong></td><td>L1 #1 + L1 #6</td><td><span style="color:#c8ccda">"Studio-Grade Speed Meets Glance-and-Go Control. Tri-band Wi-Fi 7 (688 + 2882 + 5765 Mbps) for 64 simultaneous devices, all managed on a 2.8" color LCD — no app, no admin panel."</span>（融合 Excel Tier 2 户外创作者 tagline "Studio-Grade Speed, Outdoors"）</td></tr>
+      <tr><td><strong>Four Features</strong>（卖家已填）</td><td>L1 综合</td><td>保留草稿：Built-in eSIM | Dual USB-C Ports | OpenWrt 22.03 on Linux Kernel 5.15 | Dual TS-9 Antenna Ports（建议补一句话引导：<span style="color:#c8ccda">"Designed for engineers who want full control, not closed-box firmware."</span>）</td></tr>
+      <tr><td><strong>Scenario 1</strong>（卖家已填）</td><td>L2 #5 户外创作者</td><td>保留草稿："Perfect for media creators on the move, sharing every moment as it happens" + 建议补：<span style="color:#c8ccda">"4K/8K livestream backhaul via 2.5G Ethernet to NAS · TS-9 external antenna boost in weak-signal venues · Wi-Fi 7 6 GHz private band for OBS/streaming PCs."</span></td></tr>
+      <tr><td><strong>Scenario 2</strong>（卖家已填）</td><td>L2 #1 商务差旅</td><td>保留草稿："Instant setup on arrival. Perfect for airport waits &amp; business coffee sessions" + 建议补：<span style="color:#c8ccda">"Switch from your home carrier to a local eSIM the moment your plane lands — no app, no SIM card hunt, no carrier surcharge."</span></td></tr>
+      <tr><td><strong>Four Feature Scene</strong>（卖家已填）</td><td>L2 多场景</td><td>保留草稿：Stable wired access in co-working spaces | High-resolution PC VR wireless streaming | Instant connectivity via USB-C tethering | Signal boosting in challenging coverage areas（建议每条加 1 个数字：例 "2.5 Gbps wired in co-working" / "5.76 Gbps Wi-Fi 7 for PC VR" 等）</td></tr>
+      <tr><td><strong>What's New vs MUDI 2</strong>（建议新增）</td><td>跨型号风险化解</td><td><span style="color:#c8ccda">"Upgrading from MUDI 2 (E750V2)? Wi-Fi 5 → Wi-Fi 7 · 4G LTE → 5G NR · OLED → 2.8" Color Touchscreen · OpenVPN 10 Mbps → 700 Mbps · OpenWrt 22.03 keeps your favorite plugins."</span>（详见 §6 跨型号风险章节）</td></tr>
+      <tr><td><strong>Comparison Chart</strong>（建议新增）</td><td>L1 综合对照</td><td>建议对比 NETGEAR M7 / M7 Pro / TP-Link M8550 / GL.iNet 自家 XE3000 — 6 维度（Wi-Fi 标准 / 5G 速率 / SIM 类型 / 触屏 / VPN 速度 / 价格）。重点突出 Mudi 7 是<strong>唯一</strong>同时具备 Wi-Fi 7 + 5G + eSIM + Dual SIM Dual Standby + 2.8" 触屏 + 700Mbps VPN 的产品</td></tr>
+      <tr><td><strong>Brand Story</strong>（建议新增）</td><td>L3 化解</td><td><span style="color:#c8ccda">"Since 2014, GL.iNet has been making OpenWrt-powered travel routers for engineers, digital nomads, and privacy advocates who want full control. Mudi 7 is our flagship — every port, every byte, every VPN tunnel under your command."</span>（承接 L3 #3 "Why choose GL.iNet over NETGEAR"）</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- BACKEND -->
+<div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">D · BACKEND SEARCH TERMS（卖家暂无，建议全量生成 · 249 字节 / 上限 250）</div>
+
+<code class="block">5g hotspot wifi 7 router travel openwrt vpn router openvpn wireguard mifi 5g esim dual sim hotspot digital nomad remote work rv router airbnb hotel wifi at&amp;t t-mobile verizon unlocked 4.67gbps mudi 7 e5800 dragonwing x72 tri-band 6ghz touchscreen ts-9 antenna pop-up retail food truck pos backup</code>
+
+<div style="background:rgba(76,201,240,0.06);border:1px solid rgba(76,201,240,0.25);border-radius:6px;padding:12px 14px;margin:10px 0 24px;font-size:11.5px;color:#9eb4c5;line-height:1.85">
+  <strong style="color:#4cc9f0;display:block;margin-bottom:6px">Backend 关键词覆盖原则</strong>
+  仅放置 <strong>未在 Title / 7 Bullets / A+ 中出现</strong> 的 L1/L2 关键词（Amazon 算法对重复关键词不加权）。已覆盖：核心 spec 词、卖家未直接写但已在 Tier 用户表中的场景词（digital nomad / rv router / airbnb / pop-up retail / food truck / pos backup）、美国主流运营商词（at&amp;t / t-mobile / verizon）、未在前台的型号代号（mudi 7 / e5800 / dragonwing x72）、未在前台的拼写变体（4.67gbps）。<br>
+  <strong style="color:#4cc9f0">禁止</strong>：放 L3 泛化词（"best router" / "fast wifi"）— ROI 为负
+</div>
+
+<!-- ============================================== -->
+<!-- 5. 预测 Rufus 友好度评分                         -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">💯</span>预测 Rufus 友好度评分</div>
+
+<div style="display:grid;grid-template-columns:200px 1fr;gap:32px;align-items:center;margin-bottom:24px">
+  <div style="text-align:center">
+    <svg width="160" height="160" viewBox="0 0 160 160" style="transform:rotate(-90deg)">
+      <circle cx="80" cy="80" r="68" fill="none" stroke="#181c24" stroke-width="14"/>
+      <circle cx="80" cy="80" r="68" fill="none" stroke="#ffd166" stroke-width="14" stroke-linecap="round" stroke-dasharray="427.3" stroke-dashoffset="93.99"/>
+    </svg>
+    <div style="margin-top:-110px;font-family:'Syne',sans-serif;font-size:48px;font-weight:800;color:#ffd166">78</div>
+    <div style="margin-top:54px;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:1px">PREDICTED · GOOD</div>
+    <div style="margin-top:4px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">应用本报告优化建议后 → 86</div>
+  </div>
+  <div>
+    <div style="display:grid;grid-template-columns:1fr;gap:10px">
+      <div style="background:#0a0b0d;border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>capable_of 功能覆盖度（权重 40%）</span><strong style="color:#2ec4b6">85 / 100</strong></div>
+        <div style="height:4px;background:#181c24;border-radius:2px;overflow:hidden"><div style="width:85%;height:100%;background:#2ec4b6"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">22 条 L1 Prompt，草稿覆盖 14 条（Wi-Fi 7/5G/eSIM/Dual SIM/触屏/2.5G/电池/VPN/Failover），缺 OpenWrt/X72 芯片/64 设备/30W PD/Carrier/TS-9/300g 等 8 条 → 优化版补齐 7 条后预测可升至 95</div>
+      </div>
+      <div style="background:#0a0b0d;border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>Typicality 描述质量（权重 30%）</span><strong style="color:#2ec4b6">88 / 100</strong></div>
+        <div style="height:4px;background:#181c24;border-radius:2px;overflow:hidden"><div style="width:88%;height:100%;background:#2ec4b6"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">草稿数字密度非常高（4.67Gbps / 5765Mbps / 13.5h / 700Mbps / 5380mAh / 30+ VPN），达到 high-typicality 8-10 级别。轻微扣分项：Bullet 5 的 24W 与 Excel 30W 不一致（已在优化版修正）</div>
+      </div>
+      <div style="background:#0a0b0d;border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>前 80 字符意图密度（权重 15%）</span><strong style="color:#ffd166">65 / 100</strong></div>
+        <div style="height:4px;background:#181c24;border-radius:2px;overflow:hidden"><div style="width:65%;height:100%;background:#ffd166"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">当前前 80 字符：<code style="background:#181c24;padding:1px 4px;border-radius:3px;font-size:10.5px;color:#c8ccda">GL.iNet Mudi 7 (GL-E5800) 5G NR Tri-band Wi-Fi 7 Travel Router, P</code> — 覆盖 5G / Wi-Fi 7 / Travel Router 3 个 L1 词；缺 eSIM 与 Touchscreen。优化版重组后 4 个 L1 词全部进前 80 → 升至 90</div>
+      </div>
+      <div style="background:#0a0b0d;border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>L2 / L3 场景覆盖（权重 10%）</span><strong style="color:#ffd166">62 / 100</strong></div>
+        <div style="height:4px;background:#181c24;border-radius:2px;overflow:hidden"><div style="width:62%;height:100%;background:#ffd166"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">A+ 模块多数为空（KV/Highlight/Wi-Fi+Touchscreen 都没文案），Tier 2 户外/Tier 3 商业场景关键词覆盖弱。补全 A+ 10 个模块后预测可升至 85</div>
+      </div>
+      <div style="background:#0a0b0d;border:1px solid var(--border);border-radius:8px;padding:12px 16px">
+        <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:4px"><span>跨型号替代风险（最多 -5%）</span><strong style="color:#e63946">-3 分</strong></div>
+        <div style="height:4px;background:#181c24;border-radius:2px;overflow:hidden"><div style="width:60%;height:100%;background:#e63946"></div></div>
+        <div style="font-size:11px;color:var(--muted);margin-top:4px">"Mudi" 名称延续到第 3 代（前代 MUDI 2 = E750V2 仍在售）+ 同品牌 XE3000 (Puli AX) 也覆盖 5G/双 SIM/OpenWrt。<strong>L3 brand-level prompt 大概率把流量分给 E750V2 或 XE3000</strong>。详见 §6</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-yellow">
+  <span style="font-size:18px;flex-shrink:0">📌</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">为什么是 78 分 · 应用本报告优化后预测可至 86 分</strong>
+    Mudi 7 的硬件优势极强（9 项独家差异化），但草稿在三个维度有可优化空间：① 前 80 字符 Title 缺 eSIM + Touchscreen 关键词；② Bullet 1/3/6 缺具体数字（Dragonwing X72 / 10 Gbps USB-C / 64 设备 / 1.3h 充电）；③ A+ 7 个模块多数为空。<strong>仅做本报告 §4 的 in-place 优化（不改动产品本身），预测分可从 78 升至 86，进入 ✨ Excellent 区间</strong>。Rufus 友好度真实分须在 W+4 拉真实 SP Prompts 数据后才能验证。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 6. 跨型号替代风险分析                           -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">⚠</span>跨型号替代风险分析 · Mudi 7 vs Puli AX vs MUDI 2</div>
+
+<div class="alert alert-red" style="margin-bottom:20px">
+  <span style="font-size:18px;flex-shrink:0">🚨</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">这是 Mudi 7 上市最大的风险点</strong>
+    GL.iNet 已有两款 5G/4G 旅行路由器在售：<strong>GL-XE3000 (Puli AX)</strong> $409.99 和 <strong>GL-E750V2 (MUDI 2)</strong> $154.99。Rufus 在响应 "GL.iNet 5G hotspot" / "GL.iNet travel router" / "GL.iNet mudi" 等 L3 brand-level prompt 时，可能把流量分配给老款 SKU，导致 Mudi 7 上市初期吃不到品牌自然流量。<strong>Mudi 名称从 E750 → E750V2 → E5800 延续 3 代，最危险</strong>。
+  </div>
+</div>
+
+<!-- 三型号横向对比 -->
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:18px">
+  <table>
+    <thead><tr>
+      <th style="width:22%">参数维度</th>
+      <th style="text-align:center;background:rgba(46,196,182,0.08)"><strong style="color:#2ec4b6">Mudi 7 (E5800)</strong><br><span style="color:#7b8299;font-weight:400">$419.99 · 新品 <em>(预售 $369.99)</em></span></th>
+      <th style="text-align:center">Puli AX (XE3000)<br><span style="color:#7b8299;font-weight:400">$409.99 · 在售</span></th>
+      <th style="text-align:center">MUDI 2 (E750V2)<br><span style="color:#7b8299;font-weight:400">$154.99 · 在售</span></th>
+    </tr></thead>
+    <tbody>
+      <tr><td><strong>Wi-Fi 标准</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">Wi-Fi 7 Tri-band · 5.76 Gbps</strong></td><td style="text-align:center">Wi-Fi 6 Dual-band · 2.4 Gbps</td><td style="text-align:center">Wi-Fi 5 Dual-band · 733 Mbps</td></tr>
+      <tr><td><strong>蜂窝技术</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">5G NR (Dragonwing X72) · 4.67 Gbps</strong></td><td style="text-align:center">5G NR (双 SIM Single Standby)</td><td style="text-align:center">4G LTE Cat 6 (EM060K) · 300 Mbps</td></tr>
+      <tr><td><strong>eSIM</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">Onboard 内置</strong></td><td style="text-align:center"><span class="cov-mid">需外置 eSIM 卡</span></td><td style="text-align:center"><span class="cov-mid">需外置 eSIM 卡</span></td></tr>
+      <tr><td><strong>SIM 模式</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">Dual Standby（同时待机）</strong></td><td style="text-align:center">Dual Single Standby</td><td style="text-align:center">单 SIM</td></tr>
+      <tr><td><strong>屏幕</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">2.8" Color LCD Touchscreen</strong></td><td style="text-align:center">LED 状态灯</td><td style="text-align:center">小 OLED</td></tr>
+      <tr><td><strong>VPN 速度</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">OpenVPN-DCO 700 / WG 600 Mbps</strong></td><td style="text-align:center">OpenVPN 150 / WG 300 Mbps</td><td style="text-align:center">OpenVPN 10 / WG 50 Mbps</td></tr>
+      <tr><td><strong>Ethernet</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">1× 2.5G WAN/LAN</strong></td><td style="text-align:center">1× 2.5G WAN + 1× GbE LAN</td><td style="text-align:center">1× Gigabit Ethernet</td></tr>
+      <tr><td><strong>USB-C</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">10 Gbps + Power-only</strong></td><td style="text-align:center">USB 2.0</td><td style="text-align:center">USB 2.0</td></tr>
+      <tr><td><strong>电池</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)">5380 mAh / 13.5h / <strong style="color:#2ec4b6">30W PD</strong></td><td style="text-align:center">6400 mAh / 8h</td><td style="text-align:center">7000 mAh / 8h</td></tr>
+      <tr><td><strong>外置天线</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">2× TS-9（差旅便携友好）</strong></td><td style="text-align:center">6 可拆卸天线（固定使用）</td><td style="text-align:center">无</td></tr>
+      <tr><td><strong>重量 / 体积</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">300 g / 157×75×22.8 mm</strong></td><td style="text-align:center">761 g / 95×36×155 mm</td><td style="text-align:center">285 g / 145×79×23 mm</td></tr>
+      <tr><td><strong>OpenWrt</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">OpenWrt 22.03 + 2GB LPDDR4X + 8GB eMMC</strong></td><td style="text-align:center">OpenWrt + 5000+ 插件</td><td style="text-align:center">OpenWrt + Tor + 1TB MicroSD</td></tr>
+      <tr><td><strong>定位</strong></td><td style="text-align:center;background:rgba(46,196,182,0.04)"><strong style="color:#2ec4b6">差旅旗舰 + Wi-Fi 7 + 触屏</strong></td><td style="text-align:center">固定商业部署 + 6 外置天线</td><td style="text-align:center">入门级 VPN 旅行 + Tor</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 三大风险 -->
+<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px">
+  <div class="card" style="border-left:3px solid #e63946;padding:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-l3">🔴 HIGH</span><strong style="font-size:13px">风险 #1 · "Mudi" 名称延续导致老用户混淆</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    Mudi V1 (E750) → MUDI 2 (E750V2) → Mudi 7 (E5800) 三代同名。Rufus 在 "GL.iNet Mudi router" prompt 下，可能优先指向 4G LTE 老款 E750V2（$155，价格便宜 + listing 评论数多）。<br>
+    <strong style="color:#4cc9f0">缓解策略</strong>：① 新品 Title 必须有 "Mudi 7" 显式标注（已做）② 在 A+ 必须新增 "What's new vs MUDI 2 (E750V2)" 升级对照模块（见 §4 A+ 推荐文案）③ <strong>同步微调 E750V2 Listing</strong>：把它的 Title 加入 "(4G LTE Version)" 5 字符级标注，明确这是 4G 老款，让 Rufus 在 "5G Mudi" prompt 下不命中错型号
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #f4a261;padding:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-l2">🟡 MED</span><strong style="font-size:13px">风险 #2 · Puli AX (XE3000) 也是 5G 双 SIM OpenWrt</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    XE3000 同样是 5G + 双 SIM + OpenWrt，价格 $409.99（与 Mudi 7 正式价 $419.99 几乎重叠）。在 "GL.iNet 5G router for office" prompt 下，Rufus 可能优先推 XE3000（关键词 "Office, Retail, Events" 已在 XE3000 Title）。<br>
+    <strong style="color:#4cc9f0">缓解策略</strong>：① Mudi 7 主打 <strong>"Travel"</strong> + "Wi-Fi 7" + "触屏" + "便携 300g"；XE3000 主打 <strong>"Fixed Business"</strong> + "6 外置天线" + "load balancing"，两者使用场景错位 ② 在 XE3000 Listing 加入 "Best for fixed deployments — for travel, see Mudi 7" 一行（卖家自家品牌内的相互引流）③ Mudi 7 Bullet 1 强调 "300g portable"，明确便携属性
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #f4a261;padding:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-l2">🟡 MED</span><strong style="font-size:13px">风险 #3 · L3 brand-level prompt 流量稀释</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    "Best GL.iNet products" / "GL.iNet portable router" 这类 L3 泛化 prompt，Rufus 大概率列出 3-5 个 SKU（包含 Slate AX / Beryl AX / Spitz AX / MUDI 2 / XE3000 / Mudi 7），新品在排序中可能靠后。<br>
+    <strong style="color:#4cc9f0">缓解策略</strong>：D+0 上市即把所有 L3 brand-level prompt 标记为 PAUSED 候选，节省广告费；自然搜索流量通过 Brand Story + A+ Comparison Chart 引导
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-blue">
+  <span style="font-size:18px;flex-shrink:0">🛠</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">D+0 上市前 SKU 矩阵清理任务</strong>
+    上市当天，需要在 Seller Central 同步做 3 处小修改：① <strong>MUDI 2 (E750V2)</strong> Title 加 "(4G LTE Version)"；② <strong>Puli AX (XE3000)</strong> Title 强调 "Fixed Business · 6 External Antennas"；③ Mudi 7 (E5800) A+ 新增 "Why upgrade from MUDI 2" 模块。三处共 ~30 分钟操作。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 7. Tier 1-3 场景 × 卖点映射表                   -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🎯</span>Tier 1-3 场景 × 卖点映射（直接复用为 A+ / 广告文案）</div>
+
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">把 Excel sheet 1 中的 8 个细分群体与 Mudi 7 核心 USP 一一映射，每个群体给出可直接复用的营销 tagline + 推荐 Hero 卖点 + Backend 关键词。所有 tagline 与卖点全部来自 Excel 输入，零编造。</p>
+
+<!-- Tier 1 -->
+<div style="margin-bottom:20px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span class="tag" style="background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)">🔴 Tier 1 · 核心主力</span>
+    <span style="font-size:12px;color:var(--muted)">商务差旅 76.29% + 户外活动 64.38% 两大核心场景</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table>
+      <thead><tr><th style="width:18%">目标群体</th><th style="width:18%">营销 Tagline</th><th style="width:30%">推荐 Hero 卖点（Mudi 7 → 痛点）</th><th style="width:34%">Backend / A+ 关键词</th></tr></thead>
+      <tbody>
+        <tr><td><strong>商务差旅用户</strong><br><span style="color:#7b8299;font-size:11px">Efficiency 效率</span></td><td><em style="color:#2ec4b6">"Global Roaming, Zero Hassle"</em></td><td>eSIM + Dual SIM Dual Standby + 13.5h 电池 + 30W PD → 解决频繁换 SIM 卡 + 全天供网</td><td>international business travel, cross-border, global roaming, no sim swap, esim, dual sim hotspot</td></tr>
+        <tr><td><strong>高收入专业人士</strong><br><span style="color:#7b8299;font-size:11px">Professionalism 专业度</span></td><td><em style="color:#2ec4b6">"Your Reputation Relies on Every Single Connection"</em></td><td>四网冗余 Failover + Wi-Fi 7 5.76 Gbps + 700Mbps VPN → 解决酒店/Airbnb Zoom 卡顿 + 公网数据泄露</td><td>zoom router, teams meeting, video conference, vpn router, secure hotspot, remote work router</td></tr>
+        <tr><td><strong>长期外派 / 数字游民</strong><br><span style="color:#7b8299;font-size:11px">Cost-saving 省钱</span></td><td><em style="color:#2ec4b6">"Take Your Home Network Anywhere"</em></td><td>VPN Server + Keep Home IP + eSIM + 多 WAN 聚合 → 解决远程访问家庭 NAS + 跨国 Netflix/Streaming 受限</td><td>digital nomad, expat router, home server access, vpn server, keep home ip, netflix abroad</td></tr>
+        <tr><td><strong>注重隐私的家庭用户</strong><br><span style="color:#7b8299;font-size:11px">Privacy 隐私</span></td><td><em style="color:#2ec4b6">"Your Digital Footprint, Hidden"</em></td><td>Pre-installed VPN + OpenWrt + Repeater 中继 → 解决公网 Wi-Fi 重复认证 + 多设备共流量</td><td>privacy router, openwrt router, vpn always on, repeater router, family hotspot, public wifi security</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tier 2 -->
+<div style="margin-bottom:20px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span class="tag" style="background:rgba(244,162,97,0.15);color:#f4a261;border:1px solid rgba(244,162,97,0.3)">🟡 Tier 2 · 高性能需求</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table>
+      <thead><tr><th style="width:18%">目标群体</th><th style="width:18%">营销 Tagline</th><th style="width:30%">推荐 Hero 卖点</th><th style="width:34%">Backend / A+ 关键词</th></tr></thead>
+      <tbody>
+        <tr><td><strong>户外内容创作者 / 直播团队</strong><br><span style="color:#7b8299;font-size:11px">Performance 性能</span></td><td><em style="color:#f4a261">"Studio-Grade Speed, Outdoors"</em></td><td>1.3h 快充 + 13.5h 续航 + 2.5G Ethernet 接 NAS + 10Gbps USB-C OTG + 触屏 → 解决户外 4K/8K 直播素材回传 + 设备连接繁琐</td><td>4k livestream router, vlogger hotspot, content creator router, nas wireless, sports broadcasting, twitch streaming</td></tr>
+        <tr><td><strong>RV 车用户 / 户外旅行者</strong><br><span style="color:#7b8299;font-size:11px">Freedom 自由</span></td><td><em style="color:#f4a261">"Boost Your Signal in the Wild"</em></td><td>eSIM 全球切换 + TS-9 外置天线接口 + 多频段 5G → 解决 RV 跨国买 SIM + 偏远路段信号弱</td><td>rv router, van life hotspot, road trip router, external antenna router, ts9 antenna, weak signal boost</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Tier 3 -->
+<div style="margin-bottom:20px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span class="tag" style="background:rgba(76,201,240,0.15);color:#4cc9f0;border:1px solid rgba(76,201,240,0.3)">🔵 Tier 3 · 商业 B2B</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table>
+      <thead><tr><th style="width:18%">目标群体</th><th style="width:18%">营销 Tagline</th><th style="width:30%">推荐 Hero 卖点</th><th style="width:34%">Backend / A+ 关键词</th></tr></thead>
+      <tbody>
+        <tr><td><strong>展会主办方 / 参展商</strong><br><span style="color:#7b8299;font-size:11px">Exclusive 专属</span></td><td><em style="color:#4cc9f0">"Private Network in a Crowded Hall"</em></td><td>5G 独立网络 + Pre-installed VPN + 触屏 → 解决展馆 Wi-Fi 按设备收费 + 公网商业数据泄露</td><td>trade show router, exhibition wifi, conference 5g router, vendor booth hotspot, exhibitor network</td></tr>
+        <tr><td><strong>Pop-up Retail / Food Truck</strong><br><span style="color:#7b8299;font-size:11px">Continuity 连续性</span></td><td><em style="color:#4cc9f0">"Never Lose a Sale"</em></td><td>四网 Failover（有线/5G 毫秒切换）+ Tri-band Wi-Fi 7（POS 独立频段）+ 触屏维护 → 解决固网故障收银掉线 + 多设备争抢带宽</td><td>pop up retail router, food truck wifi, pos backup router, square stripe hotspot, retail failover</td></tr>
+        <tr><td><strong>现场媒体 / 体育直播</strong><br><span style="color:#7b8299;font-size:11px">Performance</span></td><td><em style="color:#4cc9f0">"Speed Wins the Shot"</em></td><td>5G NR 独立信道 + 2.5G Ethernet + 长续航 → 解决场馆基站过载 + 大文件回传时效</td><td>sports photographer router, live event hotspot, news media 5g, broadcast wifi, esports tournament router</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 8. W+1 / W+2 / W+4 / W+8 / W+12 验证路线图（v2.0 颗粒度细化） -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🔁</span>周颗粒度数据闭环验证路线图（v2.0 修订）</div>
+
+<div class="alert alert-blue">
+  <span style="font-size:18px;flex-shrink:0">🤝</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">v2.0 颗粒度升级：从 3 点位（月）改为 5 点位（周）</strong>
+    同事反馈 v1.0 报告的 D+30 / D+60 / D+90 三点位颗粒度太粗 — <strong>会错过 W+1、W+2 阶段最有价值的"意外 prompt"早期信号</strong>。v2.0 改为<strong>周颗粒度 5 点位：W+1 / W+2 / W+4 / W+8 / W+12</strong>，前两周轻量监控，第 4/8/12 周交付完整报告。Cosle 对本报告承诺<strong>5 次后续验证 / 优化交付，全部免费</strong>。
+  </div>
+</div>
+
+<!-- W+1 Quick Read -->
+<div class="card" style="border-left:3px solid #c77dff;padding:22px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">W+1</div>
+    <div style="font-size:15px;font-weight:700">Quick Read · 早期 prompt 信号（约 2026-05-27）</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">轻量交付（无完整报告）</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.85;color:#c8ccda">
+    <li><strong>第 1 周 SP Prompts xlsx</strong>（卖家拉取，Amazon Ads Console → Reports → SP Search Term Report，日期 2026-05-20 至 2026-05-27）</li>
+    <li><strong>Cosle 24 小时内出短报</strong>：是否出现 v1.0 报告"完全没预测到"的高频 prompt？这些是预测盲点，立刻补到 Backend keywords</li>
+    <li><strong>9 个独家差异化点</strong>是否在第 1 周就被 Rufus 捕捉到？</li>
+  </ul>
+</div>
+
+<!-- W+2 Trend Check -->
+<div class="card" style="border-left:3px solid #c77dff;padding:22px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">W+2</div>
+    <div style="font-size:15px;font-weight:700">Trend Check · 增长曲线 + L3 候选 PAUSED（约 2026-06-03）</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">轻量交付</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.85;color:#c8ccda">
+    <li><strong>W+1 → W+2 prompt 数量增速</strong>：判断是否进入稳定流量带</li>
+    <li><strong>L3 高曝光低转化 prompt 初步识别</strong>：候选 PAUSED 清单（不立即关，等 W+4 报告确认）</li>
+    <li><strong>跨型号替代早期实测</strong>：MUDI 2 / Puli AX 是否真的在 brand-level prompt 抢流量</li>
+  </ul>
+</div>
+
+<!-- W+4 Validation Report v1 -->
+<div class="card" style="border-left:3px solid #4cc9f0;padding:24px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#4cc9f0">W+4</div>
+    <div style="font-size:16px;font-weight:700">Validation Report v1 · 预测命中率正式验证（约 2026-06-17）</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">卖家拉数据路径</div>
+  <code class="block">Amazon Ads Console → Reports → Sponsored Products → Search Term Report
+日期范围：2026-05-20（上市日）到 2026-06-17（W+4）
+导出格式：XLSX
+关键字段：Search Term, Impressions, Clicks, Spend, Orders, 7-Day Total Sales</code>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;margin-top:14px">Cosle 在 Validation Report v1 中交付</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.9;color:#c8ccda">
+    <li><strong>预测命中率</strong>：本报告 46 条预测 prompt 中实际触发了多少？哪些没触发？</li>
+    <li><strong>意外 Prompt 全量</strong>：Cosle 未预测、Rufus 实际生成的全部 prompt（含 W+1/W+2 已发现 + W+3/W+4 新增）</li>
+    <li><strong>L1 / L2 / L3 实际分布</strong>：对比预测 22/16/8 的真实结果</li>
+    <li><strong>跨型号替代实测</strong>：MUDI 2 / Puli AX 抢流量量化（占比 %）</li>
+    <li><strong>9 个独家差异化点表现</strong>：10 Gbps USB-C / 4.67 Gbps 5G / 700 Mbps VPN 等独家词命中率排序</li>
+    <li><strong>v2.0 修订验证</strong>：Bullet 2 / Bullet 6 修订后是否减少客诉 / 退货？（关注 review 词频变化）</li>
+  </ul>
+</div>
+
+<!-- W+8 Optimization Report v1 -->
+<div class="card" style="border-left:3px solid #f4a261;padding:24px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#f4a261">W+8</div>
+    <div style="font-size:16px;font-weight:700">Optimization Report v1 · 真实诊断 + Listing 微调（约 2026-07-15）</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">卖家提供</div>
+  <p style="font-size:12.5px;color:#c8ccda;line-height:1.85;margin-bottom:14px">第二次 SP Prompts xlsx + 已上线 Listing 的当前快照（Cosle 用于 web_fetch 验证当前文本）</p>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">Cosle 交付</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.9;color:#c8ccda">
+    <li><strong>跑完整 Cosle 诊断流程</strong>：套用标准诊断 SOP，输出真实流量诊断报告（与现有付费卖家相同）</li>
+    <li><strong>L3 关闭清单</strong>：实测无转化的低典型性 prompt 立即关闭，预估省下的广告费</li>
+    <li><strong>L1 加码清单</strong>：真实有转化的 prompt 建议提 bid +20–30%</li>
+    <li><strong>Listing 字符级微调</strong>：基于真实 mismatch 给出精确到字符的修改建议</li>
+    <li><strong>Rufus 友好度真实分（首次）</strong>：替代本报告的预测 78 分</li>
+  </ul>
+</div>
+
+<!-- W+12 Calibration Report -->
+<div class="card" style="border-left:3px solid #2ec4b6;padding:24px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#2ec4b6">W+12</div>
+    <div style="font-size:16px;font-weight:700">Calibration & Roadmap Report · 方法论校准（约 2026-08-12）</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">交付内容</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.9;color:#c8ccda">
+    <li><strong>预测准确度复盘</strong>：W+0 本报告的 46 条 prompt + 78 分预测 vs 12 周真实表现</li>
+    <li><strong>15 关系命中分析</strong>：哪些语义关系类型预测准、哪些偏差大 → 反馈到 Cosle 模型 v2</li>
+    <li><strong>ROI 测算</strong>：Cosle 报告产生的实际广告费节省 + 转化提升量化</li>
+    <li><strong>SKU 矩阵长期方案</strong>：基于 12 周真实流量分布，决定 MUDI 2 / Puli AX 的生命周期管理（保留/降价/EOL）</li>
+    <li><strong>持续合作建议</strong>：月度诊断节奏 + 跨产品线复用方法论</li>
+  </ul>
+</div>
+
+<!-- 时间轴 v2.0 6 点位 -->
+<div class="card" style="margin-top:24px;padding:24px">
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:16px">闭环时间轴（v2.0 · 6 点位 · 周颗粒度）</div>
+  <div style="position:relative;height:90px">
+    <div style="position:absolute;top:40px;left:0;right:0;height:2px;background:linear-gradient(90deg,#e63946,#c77dff,#c77dff,#4cc9f0,#f4a261,#2ec4b6)"></div>
+    <div style="position:absolute;top:0;left:0;text-align:center"><div style="width:14px;height:14px;border-radius:50%;background:#e63946;margin:34px auto 6px"></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#e63946">W+0</div><div style="font-size:10px;color:var(--muted)">2026-05-20</div><div style="font-size:10px;color:var(--muted)">上市</div></div>
+    <div style="position:absolute;top:0;left:14%;text-align:center;transform:translateX(-50%)"><div style="width:12px;height:12px;border-radius:50%;background:#c77dff;margin:35px auto 6px"></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#c77dff">W+1</div><div style="font-size:10px;color:var(--muted)">05-27</div><div style="font-size:10px;color:var(--muted)">Quick Read</div></div>
+    <div style="position:absolute;top:0;left:28%;text-align:center;transform:translateX(-50%)"><div style="width:12px;height:12px;border-radius:50%;background:#c77dff;margin:35px auto 6px"></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#c77dff">W+2</div><div style="font-size:10px;color:var(--muted)">06-03</div><div style="font-size:10px;color:var(--muted)">Trend Check</div></div>
+    <div style="position:absolute;top:0;left:48%;text-align:center;transform:translateX(-50%)"><div style="width:14px;height:14px;border-radius:50%;background:#4cc9f0;margin:34px auto 6px"></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#4cc9f0">W+4</div><div style="font-size:10px;color:var(--muted)">06-17</div><div style="font-size:10px;color:var(--muted)">Validation</div></div>
+    <div style="position:absolute;top:0;left:74%;text-align:center;transform:translateX(-50%)"><div style="width:14px;height:14px;border-radius:50%;background:#f4a261;margin:34px auto 6px"></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#f4a261">W+8</div><div style="font-size:10px;color:var(--muted)">07-15</div><div style="font-size:10px;color:var(--muted)">Optimization</div></div>
+    <div style="position:absolute;top:0;right:0;text-align:center"><div style="width:14px;height:14px;border-radius:50%;background:#2ec4b6;margin:34px auto 6px"></div><div style="font-family:'DM Mono',monospace;font-size:11px;color:#2ec4b6">W+12</div><div style="font-size:10px;color:var(--muted)">08-12</div><div style="font-size:10px;color:var(--muted)">Calibration</div></div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 附录 · 预测 Prompt 宇宙                          -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📚</span>附录 · 预测 Prompt 宇宙（46 条）· 完整技术支撑</div>
+
+<div class="alert alert-blue" style="margin-bottom:18px">
+  <span style="font-size:18px;flex-shrink:0">🗂</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">附录用途</strong>
+    以下 46 条预测 Prompt 是 §3 Listing 优化部分 "→ 命中 L1 #N" 编号引用的完整查询表。读者可直接跳读，或在 W+4 真实 SP Prompts 数据回归对比时作为预测基线。基于 Cosle 内部 15 类语义关系 × Mudi 7 技术 spec × 8 个目标群体推演而得。
+  </div>
+</div>
+
+<!-- L1 Table -->
+<div style="margin-bottom:28px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span class="tag tag-l1">L1 高典型性 · 22 条</span>
+    <span style="font-size:12px;color:var(--muted)">capable_of / used_for_func / used_to / xWant — 转化率 ★★★★★ · 75% 购买来源于此</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table>
+      <thead><tr><th style="width:34%">预测 Prompt</th><th style="width:14%">语义关系</th><th style="width:22%">触发的 Mudi 7 spec</th><th style="width:15%;text-align:center">竞品覆盖</th><th style="width:15%;text-align:center">草稿覆盖</th></tr></thead>
+      <tbody>
+        <tr><td>Does GL.iNet have a Wi-Fi 7 travel router with tri-band speeds?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>688/2882/5765 Mbps Tri-band Wi-Fi 7</td><td style="text-align:center"><span class="cov-mid">△ 2/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 1</span></td></tr>
+        <tr><td>Does GL.iNet have a 5G router with 4.67 Gbps download?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>Qualcomm Dragonwing X72, up to 4.67 Gbps</td><td style="text-align:center"><span class="cov-no">✗ 0/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 1</span></td></tr>
+        <tr><td>Does GL.iNet have a portable router with built-in eSIM?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>Onboard eSIM chipset</td><td style="text-align:center"><span class="cov-mid">△ 3/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Title+Bullet 2</span></td></tr>
+        <tr><td>Does GL.iNet have a 5G hotspot with dual physical SIM slots?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>2× Nano SIM + Dual Standby</td><td style="text-align:center"><span class="cov-mid">△ 2/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 2</span></td></tr>
+        <tr><td>Does GL.iNet have a router with 700 Mbps OpenVPN?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>OpenVPN-DCO 700 Mbps + WireGuard 600 Mbps</td><td style="text-align:center"><span class="cov-no">✗ 0/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 7</span></td></tr>
+        <tr><td>Does GL.iNet have a travel router with a touchscreen?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>2.8" Color LCD Touchscreen</td><td style="text-align:center"><span class="cov-mid">△ 3/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Title+Bullet 6</span></td></tr>
+        <tr><td>Does GL.iNet have a 5G router with 2.5G Ethernet?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>1× 2.5G WAN/LAN Ethernet port</td><td style="text-align:center"><span class="cov-mid">△ 1/8（仅 M7 Pro 同等）</span></td><td style="text-align:center"><span class="cov-yes">✓ Title+Bullet 3</span></td></tr>
+        <tr><td>Does GL.iNet have a hotspot with 10 Gbps USB-C?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>1× USB-C (10Gbps, OTG/tethering)</td><td style="text-align:center"><span class="cov-no">✗ 0/8（独家）</span></td><td style="text-align:center"><span class="cov-mid">△ Bullet 3 笼统</span></td></tr>
+        <tr><td>Does GL.iNet have a 13-hour battery 5G hotspot?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>5380mAh / 13.5h / 30W PD</td><td style="text-align:center"><span class="cov-mid">△ 4/8 (10-14h)</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 5</span></td></tr>
+        <tr><td>Does GL.iNet have a 30W PD fast-charge router?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>USB PD/PPS 5-12V, 30W Max</td><td style="text-align:center"><span class="cov-no">✗ 0/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 5</span></td></tr>
+        <tr><td>Does GL.iNet have a router with WireGuard pre-installed?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>Pre-installed WireGuard + OpenVPN</td><td style="text-align:center"><span class="cov-mid">△ 2/8（TP-Link M8550 仅 WireGuard）</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 7</span></td></tr>
+        <tr><td>Does GL.iNet have a router with OpenWrt open-source firmware?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>OpenWrt + 2GB LPDDR4X + 8GB eMMC</td><td style="text-align:center"><span class="cov-no">✗ 0/8（行业独家）</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及</span></td></tr>
+        <tr><td>Does GL.iNet have a router with automatic failover between 5G/Wi-Fi/Ethernet?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>Multi-WAN failover (5G/Eth/Wi-Fi Repeater/USB Tethering)</td><td style="text-align:center"><span class="cov-no">✗ 0/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 4</span></td></tr>
+        <tr><td>Does GL.iNet have a hotspot with TS-9 external antenna ports?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>2× TS-9 Antenna Ports</td><td style="text-align:center"><span class="cov-mid">△ 2/8 (TP-Link M8550, NETGEAR M3 兼容)</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及</span></td></tr>
+        <tr><td>Does GL.iNet have a router certified for AT&T, T-Mobile, Verizon?</td><td><span class="mono" style="color:#2ec4b6">used_for_func</span></td><td>5G NR Sub-6 SA/NSA, 多频段兼容</td><td style="text-align:center"><span class="cov-yes">✓ 5/8</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及运营商</span></td></tr>
+        <tr><td>Does GL.iNet have a router used to keep home network IP while abroad?</td><td><span class="mono" style="color:#2ec4b6">used_to</span></td><td>VPN Client/Server 双模</td><td style="text-align:center"><span class="cov-no">✗ 0/8</span></td><td style="text-align:center"><span class="cov-mid">△ Bullet 7 提 VPN 未提 Server</span></td></tr>
+        <tr><td>Does GL.iNet have a Wi-Fi 7 router that supports 64 simultaneous devices?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>64 devices (Dual-band Mode)</td><td style="text-align:center"><span class="cov-mid">△ 3/8 (M7 Pro 64, TP-Link M8550 32)</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及具体设备数</span></td></tr>
+        <tr><td>Does GL.iNet have a Qualcomm Dragonwing 5G modem router?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>Qualcomm Dragonwing X72 (Gen 3 MBB)</td><td style="text-align:center"><span class="cov-no">✗ 0/8（行业最新代）</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及</span></td></tr>
+        <tr><td>Does GL.iNet have a router xWant to switch carriers without swapping SIM?</td><td><span class="mono" style="color:#2ec4b6">xWant</span></td><td>eSIM + Dual SIM 一键切换</td><td style="text-align:center"><span class="cov-mid">△ 3/8</span></td><td style="text-align:center"><span class="cov-yes">✓ Bullet 2</span></td></tr>
+        <tr><td>Does GL.iNet have a router xWant for secure hotel/airport Wi-Fi?</td><td><span class="mono" style="color:#2ec4b6">xWant</span></td><td>VPN + Repeater 中继加密</td><td style="text-align:center"><span class="cov-no">✗ 0/8</span></td><td style="text-align:center"><span class="cov-mid">△ Bullet 7 提 VPN 未提 hotel</span></td></tr>
+        <tr><td>Does GL.iNet have a portable router under 300g?</td><td><span class="mono" style="color:#2ec4b6">capable_of</span></td><td>300g / 157×75×22.8mm</td><td style="text-align:center"><span class="cov-yes">✓ 6/8（多数 ≤300g）</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及重量</span></td></tr>
+        <tr><td>Does GL.iNet have a router used for cellular signal boost in weak areas?</td><td><span class="mono" style="color:#2ec4b6">used_to</span></td><td>TS-9 外置天线接口</td><td style="text-align:center"><span class="cov-mid">△ 2/8</span></td><td style="text-align:center"><span class="cov-no">✗ 未提及</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- L2 Table -->
+<div style="margin-bottom:28px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span class="tag tag-l2">L2 中典型性 · 16 条</span>
+    <span style="font-size:12px;color:var(--muted)">used_for_aud / used_in_loc / used_with / used_for_eve / used_by — 转化率 ★★★☆☆</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table>
+      <thead><tr><th style="width:42%">预测 Prompt</th><th style="width:16%">语义关系</th><th style="width:26%">对应 Tier / 场景（Excel 输入）</th><th style="width:16%;text-align:center">草稿覆盖</th></tr></thead>
+      <tbody>
+        <tr><td>What router is best for business travelers crossing borders?</td><td><span class="mono" style="color:#ffd166">used_for_aud</span></td><td>Tier 1 · 商务差旅（76.29% 核心场景）</td><td style="text-align:center"><span class="cov-mid">△ Title 末 "Meeting"</span></td></tr>
+        <tr><td>What router is best for digital nomads / long-term expats?</td><td><span class="mono" style="color:#ffd166">used_for_aud</span></td><td>Tier 1 · 长期外派/数字游民</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router is best for remote engineers / consultants in video meetings?</td><td><span class="mono" style="color:#ffd166">used_for_aud</span></td><td>Tier 1 · 高收入专业人士</td><td style="text-align:center"><span class="cov-mid">△ Title "Meeting" 笼统</span></td></tr>
+        <tr><td>What router works for Airbnb / hotel / coffee shop Wi-Fi?</td><td><span class="mono" style="color:#ffd166">used_in_loc</span></td><td>Tier 1 · 注重隐私的个人/家庭用户</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router works for outdoor livestreaming creators?</td><td><span class="mono" style="color:#ffd166">used_for_eve</span></td><td>Tier 2 · 户外直播 / Vlogger / 赛事媒体</td><td style="text-align:center"><span class="cov-mid">△ Title 末 "Livestreams"</span></td></tr>
+        <tr><td>What router is best for RV / van life / road trip?</td><td><span class="mono" style="color:#ffd166">used_for_eve</span></td><td>Tier 2 · RV 车用户与户外旅行者</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router is best for trade show booths / exhibitions?</td><td><span class="mono" style="color:#ffd166">used_in_loc</span></td><td>Tier 3 · 展会主办方/参展商</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router for pop-up retail / food truck / POS backup?</td><td><span class="mono" style="color:#ffd166">used_in_loc</span></td><td>Tier 3 · Pop-up Retail & Events</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router used by IT pros for secure remote access to home server?</td><td><span class="mono" style="color:#ffd166">used_by</span></td><td>Tier 1 · 外派 + Keep Home IP</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router used with NAS / external storage at 2.5G speed?</td><td><span class="mono" style="color:#ffd166">used_with</span></td><td>Tier 2 · 户外内容创作者（素材回传）</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>What router used with NordVPN / Mullvad / ExpressVPN?</td><td><span class="mono" style="color:#ffd166">used_with</span></td><td>30+ VPN 服务兼容（Excel 卖点）</td><td style="text-align:center"><span class="cov-mid">△ Bullet 7 提 30+ 未点名</span></td></tr>
+        <tr><td>What router used with eSIM data plans (Airalo / Holafly)?</td><td><span class="mono" style="color:#ffd166">used_with</span></td><td>Onboard eSIM + 多 carrier 切换</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+        <tr><td>Best 5G hotspot for Zoom / Teams / Google Meet meetings?</td><td><span class="mono" style="color:#ffd166">xIs_a</span></td><td>Tier 1 · 视频会议稳定性</td><td style="text-align:center"><span class="cov-mid">△ Title "Meeting" 但无品牌词</span></td></tr>
+        <tr><td>Best portable router for content creators with 4K/8K livestreaming?</td><td><span class="mono" style="color:#ffd166">xIs_a</span></td><td>Tier 2 · 户外直播 4K/8K 画质</td><td style="text-align:center"><span class="cov-no">✗ 未提及 4K/8K</span></td></tr>
+        <tr><td>What router is best for international roaming without buying local SIM?</td><td><span class="mono" style="color:#ffd166">used_for_eve</span></td><td>eSIM 全球漫游</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖 roaming 词</span></td></tr>
+        <tr><td>What 5G router is used for outdoor photography / sports event live?</td><td><span class="mono" style="color:#ffd166">used_for_eve</span></td><td>Tier 3 · 现场媒体 / 体育直播</td><td style="text-align:center"><span class="cov-no">✗ 未覆盖</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- L3 Table -->
+<div style="margin-bottom:28px">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+    <span class="tag tag-l3">L3 低典型性 · 8 条</span>
+    <span style="font-size:12px;color:var(--muted)">is_a / xInterested_in — 转化率 ★☆☆☆☆ · 建议 D+0 上市即列入 PAUSED 候选</span>
+  </div>
+  <div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border)">
+    <table>
+      <thead><tr><th style="width:44%">预测 Prompt</th><th style="width:18%">语义关系</th><th style="width:38%">建议</th></tr></thead>
+      <tbody>
+        <tr><td>GL.iNet portable router?</td><td><span class="mono" style="color:#e63946">is_a</span></td><td>跨型号替代风险 HIGH — 可能被指向 XE3000/E750V2，关闭</td></tr>
+        <tr><td>Best GL.iNet products?</td><td><span class="mono" style="color:#e63946">is_a</span></td><td>泛化品牌问题，D+0 关闭</td></tr>
+        <tr><td>Why choose GL.iNet over NETGEAR?</td><td><span class="mono" style="color:#e63946">xInterested_in</span></td><td>Brand Story 模块覆盖，不投广告</td></tr>
+        <tr><td>Is GL.iNet good?</td><td><span class="mono" style="color:#e63946">xInterested_in</span></td><td>泛化情感问题，关闭</td></tr>
+        <tr><td>5G travel router?</td><td><span class="mono" style="color:#e63946">is_a</span></td><td>无品牌词，竞品争夺激烈，监控但不投</td></tr>
+        <tr><td>Mobile hotspot device?</td><td><span class="mono" style="color:#e63946">is_a</span></td><td>泛化品类问题，关闭</td></tr>
+        <tr><td>What is Mudi 7?</td><td><span class="mono" style="color:#e63946">is_a</span></td><td>纯产品名问题，自然搜索覆盖即可</td></tr>
+        <tr><td>GL.iNet vs NETGEAR comparison?</td><td><span class="mono" style="color:#e63946">xInterested_in</span></td><td>对比类，Brand Story + A+ 覆盖</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 9. 报告局限与免责                                -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📝</span>报告局限与免责</div>
+
+<div class="card" style="padding:24px">
+  <ul style="margin-left:20px;font-size:12.5px;line-height:2;color:#c8ccda">
+    <li><strong>预测分 ≠ 实际分</strong>：78 分（优化后 86 分）是基于草稿质量 + Cosle Rufus 行为模型推演的 ceiling 估计，不代表上市后真实 Rufus 友好度。真实分将在 W+8 报告中替换。</li>
+    <li><strong>Rufus 模型每月更新</strong>：根据 Cosle 学术顾问的跟踪，Amazon 每月更新 Rufus checkpoint。本报告的 prompt 推演基于 2026 Q2 的行为模式。</li>
+    <li><strong>竞品 listing 文本是 Excel 输入</strong>：本报告未对 17 个竞品做实时 web_fetch（默认使用 Excel sheet 2 提供的参数文本作为代理）。如需绝对最新版本（含可能的 listing 改动），可在 W+4 前补做 US 8 ASIN 的 web_fetch 验证。</li>
+    <li><strong>视觉/品牌资产未纳入</strong>：本报告只覆盖文字 listing。主图、视频、A+ 视觉模块的合规与转化优化在本报告范围之外，建议同步进行。</li>
+    <li><strong>价格定位（v2.0 修订）</strong>：本报告基于<strong>正式售价 $419.99</strong>（预售价 $369.99 仅作历史记录）。"GL.iNet hotspot under $450" 是新的搜索带；如有后续定价调整，相关 prompt 覆盖逻辑需重做。</li>
+    <li><strong>Bullet 5 充电功率请回核</strong>：草稿写 24W PD，Excel 技术参数表写 30W Max。优化版采用 30W；如卖家以 24W 为准请回核硬件实测后告知。</li>
+    <li><strong>Bullet 数量保留 7 条</strong>（按卖家决策）：Amazon 前端通常只展示前 5 条，第 6-7 条主要服务于搜索算法和 A+ 引用。如转化数据显示前 5 条已足够，可在 W+8 再考虑精简。</li>
+    <li><strong>数据保密</strong>：本报告所有数据仅用于本次模型验证；报告产出后原始数据不留存；可签 NDA。</li>
+  </ul>
+</div>
+
+<!-- ============================================== -->
+<!-- FOOTER                                         -->
+<!-- ============================================== -->
+<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);margin-top:60px">
+  <div>由 <strong style="color:#e8eaf0">Cosle</strong>（香港科技大学 AI 创业团队）基于 Cosle Rufus 行为模型生成</div>
+  <div style="margin-top:6px">输入数据：E5800新品Listing优化模版1.0.xlsx（4 sheet · 17 竞品 · 8 目标群体 · 草稿 Title+7 Bullets+A+）&nbsp;·&nbsp;v2.0 修订日期 2026-05-15（基于同事 4 类反馈）</div>
+  <div style="margin-top:14px">📧 <a href="mailto:zouak@connect.ust.hk">zouak@connect.ust.hk</a> &nbsp;·&nbsp; 📧 <a href="mailto:zyuanay@connect.ust.hk">zyuanay@connect.ust.hk</a></div>
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>

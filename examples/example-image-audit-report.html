@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GL.iNet Mudi 7 (GL-E5800) · 主图 + A+ 打分诊断报告 v1.0</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b0d; --bg2:#111318; --bg3:#181c24; --card:#1a1f2b;
+  --border:#252c3a; --red:#e63946; --orange:#f4a261; --yellow:#ffd166;
+  --green:#2ec4b6; --blue:#4cc9f0; --purple:#c77dff;
+  --text:#e8eaf0; --muted:#7b8299; --brand:#c77dff;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important}
+
+/* PDF 打印优化 */
+@media print{
+  @page{size:A4;margin:10mm 8mm}
+  body{padding:0 !important}
+  .container{max-width:none !important;padding:0 16px !important}
+  .image-card{page-break-inside:avoid;break-inside:avoid}
+  .card{page-break-inside:avoid;break-inside:avoid}
+  tr{page-break-inside:avoid;break-inside:avoid}
+  .section-title{page-break-after:avoid;break-after:avoid;margin-top:24px !important}
+  h1,h2,h3{page-break-after:avoid;break-after:avoid}
+  .alert{page-break-inside:avoid;break-inside:avoid}
+  img{max-width:100% !important;page-break-inside:avoid}
+}
+body{background:var(--bg);color:var(--text);font-family:'Noto Sans SC',sans-serif;font-size:14px;line-height:1.7;padding:0 0 80px}
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+h1,h2,h3{font-family:'Syne',sans-serif;font-weight:800}
+.mono{font-family:'DM Mono',monospace}
+.section-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:.5px;margin:56px 0 20px;display:flex;align-items:center;gap:10px}
+.section-title .icon{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;background:rgba(199,125,255,0.15)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:22px}
+.tag{display:inline-flex;align-items:center;padding:2px 8px;border-radius:3px;font-family:'DM Mono',monospace;font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap}
+.tag-l1{background:rgba(46,196,182,0.15);color:#2ec4b6;border:1px solid rgba(46,196,182,0.3)}
+.tag-l2{background:rgba(255,209,102,0.15);color:#ffd166;border:1px solid rgba(255,209,102,0.3)}
+.tag-l3{background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)}
+.tag-pred{background:rgba(199,125,255,0.15);color:#c77dff;border:1px solid rgba(199,125,255,0.3)}
+.tag-blue{background:rgba(76,201,240,0.15);color:#4cc9f0;border:1px solid rgba(76,201,240,0.3)}
+.tag-purple{background:rgba(199,125,255,0.15);color:#c77dff;border:1px solid rgba(199,125,255,0.3)}
+.tag-green{background:rgba(46,196,182,0.15);color:#2ec4b6;border:1px solid rgba(46,196,182,0.3)}
+.tag-orange{background:rgba(244,162,97,0.15);color:#f4a261;border:1px solid rgba(244,162,97,0.3)}
+table{width:100%;border-collapse:collapse}
+thead tr{background:#181c24}
+th{font-family:'DM Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.8px;color:#7b8299;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:12px 14px;font-size:12.5px;border-bottom:1px solid rgba(37,44,58,0.5);vertical-align:top}
+.alert{border-radius:8px;padding:14px 18px;margin-bottom:10px;display:flex;align-items:flex-start;gap:12px;font-size:13px;line-height:1.6}
+.alert-red{background:rgba(230,57,70,0.08);border:1px solid rgba(230,57,70,0.25)}
+.alert-orange{background:rgba(244,162,97,0.08);border:1px solid rgba(244,162,97,0.25)}
+.alert-yellow{background:rgba(255,209,102,0.08);border:1px solid rgba(255,209,102,0.25)}
+.alert-green{background:rgba(46,196,182,0.08);border:1px solid rgba(46,196,182,0.25)}
+.alert-blue{background:rgba(76,201,240,0.08);border:1px solid rgba(76,201,240,0.25)}
+.alert-purple{background:rgba(199,125,255,0.08);border:1px solid rgba(199,125,255,0.25)}
+a{color:var(--purple);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* 评分卡专属 */
+.image-card{background:#1a1f2b;border:1px solid #252c3a;border-radius:14px;padding:20px;margin-bottom:18px;display:grid;grid-template-columns:340px 1fr;gap:24px;align-items:start}
+.image-card .img-wrap{background:#0a0b0d;border:1px solid #252c3a;border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:280px;position:relative}
+.image-card .img-wrap img{width:100%;height:auto;display:block;border-radius:8px}
+.image-card .img-meta{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;text-align:center}
+.image-card h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:6px}
+.image-card .role{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:14px}
+.dim-bar{background:#0a0b0d;border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:6px}
+.dim-bar-head{display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:3px}
+.dim-bar-fill{height:3px;background:#181c24;border-radius:2px;overflow:hidden}
+.dim-bar-fill > div{height:100%;border-radius:2px}
+.score-ring-wrap{display:flex;align-items:center;gap:18px;margin-bottom:14px;padding:12px 14px;background:#0a0b0d;border:1px solid var(--border);border-radius:10px}
+.diag-box{border-radius:6px;padding:10px 14px;margin-top:8px;font-size:11.5px;color:#9eb4c5;line-height:1.75}
+.diag-borrow{background:rgba(46,196,182,0.06);border:1px solid rgba(46,196,182,0.2)}
+.diag-borrow strong{color:#2ec4b6}
+.diag-diff{background:rgba(244,162,97,0.06);border:1px solid rgba(244,162,97,0.2)}
+.diag-diff strong{color:#f4a261}
+.diag-warn{background:rgba(230,57,70,0.06);border:1px solid rgba(230,57,70,0.2)}
+.diag-warn strong{color:#e63946}
+.diag-fix{background:rgba(76,201,240,0.06);border:1px solid rgba(76,201,240,0.2)}
+.diag-fix strong{color:#4cc9f0}
+
+@media (max-width:900px){.image-card{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- ============================================== -->
+<!-- HERO HEADER                                    -->
+<!-- ============================================== -->
+<div style="background:linear-gradient(135deg,#0d1117,#1a0d24,#0d1117);border-bottom:1px solid #2a1535;padding:60px 40px 50px;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-60px;right:-60px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(199,125,255,0.18),transparent 70%)"></div>
+  <div style="position:absolute;bottom:-100px;left:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(76,201,240,0.12),transparent 70%)"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(199,125,255,0.12);border:1px solid rgba(199,125,255,0.3);border-radius:4px;padding:4px 12px;font-family:'DM Mono',monospace;font-size:11px;color:#c77dff;letter-spacing:1.5px;text-transform:uppercase">🎨 Cosle Image Audit Report v1.0</div>
+      <div class="tag tag-purple">📸 13 主图 + 3 A+ 逐张评分</div>
+      <div class="tag tag-blue">配套 v1.2 Listing 优化报告</div>
+    </div>
+    <h1 style="font-size:36px;line-height:1.15;margin-bottom:14px">GL.iNet Mudi 7 (GL-E5800)<br><span style="color:#c77dff">主图 + A+ 视觉打分诊断报告</span></h1>
+    <div style="font-size:13px;color:#7b8299;line-height:2;margin-top:18px">
+      <span class="mono" style="color:#e8eaf0">品牌</span> GL.iNet &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">产品</span> Mudi 7 (GL-E5800) 5G Wi-Fi 7 Travel Router &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">售价</span> $369.99 USD &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">上市</span> 2026-05-20<br>
+      <span class="mono" style="color:#e8eaf0">输入</span> 13 张主图（E5800主图/）+ 3 张 A+（B5800A+图片/）&nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">报告日期</span> 2026-05-15 &nbsp;·&nbsp;
+      <span class="mono" style="color:#e8eaf0">版本</span> v1.0
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================================== -->
+<!-- 顶部免责                                       -->
+<!-- ============================================== -->
+<div class="alert alert-purple" style="margin-top:32px;font-size:13px">
+  <span style="font-size:18px;flex-shrink:0">⚠</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">本报告为预测性视觉诊断，非验证性测试</strong>
+    本报告基于 <strong>Rufus 多模态视觉理解能力 + Amazon 主图政策 + A+ 最佳实践</strong>，对 Mudi 7 的 13 张主图与 3 张 A+ 图片做逐张评分。所有评分为 Cosle 模型推演，<strong>实际效果须在 D+30 通过点击热图 / 停留时长 / Brand Analytics 等 Amazon Seller Central 数据验证</strong>。本报告与 <em>v1.2 Listing 文字优化报告</em>配套使用，引用其中识别的 9 个独家差异化点作为差异化评分基准。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 1. 执行摘要 STAT ROW                            -->
+<!-- ============================================== -->
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px">
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#c77dff;line-height:1;margin-bottom:6px">16</div>
+    <div style="font-size:11px;color:var(--muted)">总图数（13 主图 + 3 A+）</div>
+  </div>
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#2ec4b6;line-height:1;margin-bottom:6px">79</div>
+    <div style="font-size:11px;color:var(--muted)">13 张主图均分（满分 100）</div>
+  </div>
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#2ec4b6;line-height:1;margin-bottom:6px">84</div>
+    <div style="font-size:11px;color:var(--muted)">3 张 A+ 均分（满分 100）</div>
+  </div>
+  <div class="card" style="text-align:center;padding:18px 14px">
+    <div style="font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:#f4a261;line-height:1;margin-bottom:6px">7</div>
+    <div style="font-size:11px;color:var(--muted)">关键问题点（含重复 / 命名 / 合规）</div>
+  </div>
+</div>
+
+<div class="alert alert-blue" style="margin-top:18px">
+  <span style="font-size:18px;flex-shrink:0">🔍</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">一句话总结</strong>
+    Mudi 7 的视觉素材<strong>整体水准已经在同价位 5G 旅行路由器中处于上游</strong>（KV / 触屏交互 / VPN 光速图均达 ✨ Excellent 级），但 <strong>4 个结构性问题需要立刻处理</strong>：① 主图-04 9 宫格与 A+ 2-highlight 内容<strong>近乎完全重复</strong>，等于浪费一个 A+ 模块位；② 主图-07 触屏交互与 A+ 3-wifi7+touchscreen 右半部同样重复；③ 主图-01 与 主图-10 是同款白底 3/4 视图<strong>角度几乎一样</strong>，二选一即可；④ 9 号文件存在两个版本（"主图-09.jpg" Inside the Box 与 "9.-NA%20frequency%20band.jpg" 北美频段图），命名冲突需重命名。此外 A+ 仅做了 <strong>3/10 张</strong>（Excel Listing 草稿中规划了 10 个 A+ 模块），<strong>缺 7 张</strong>，本报告 §10 给出补全设计草案。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 2. 评分方法论                                  -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📐</span>评分方法论</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px">
+  <div class="card">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#c77dff;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px">主图评分 · 6 维度 · 满分 100</div>
+    <table style="font-size:11.5px">
+      <tbody>
+        <tr><td>Amazon 主图政策合规度</td><td style="text-align:right"><strong style="color:#c77dff">25%</strong></td></tr>
+        <tr><td>Rufus 多模态视觉典型性</td><td style="text-align:right"><strong style="color:#c77dff">25%</strong></td></tr>
+        <tr><td>视觉清晰度 &amp; 信息层级</td><td style="text-align:right"><strong style="color:#c77dff">20%</strong></td></tr>
+        <tr><td>差异化卖点呈现</td><td style="text-align:right"><strong style="color:#c77dff">15%</strong></td></tr>
+        <tr><td>场景 / 人群代入感</td><td style="text-align:right"><strong style="color:#c77dff">10%</strong></td></tr>
+        <tr><td style="border-bottom:none">品牌一致性</td><td style="text-align:right;border-bottom:none"><strong style="color:#c77dff">5%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card">
+    <div style="font-family:'DM Mono',monospace;font-size:11px;color:#c77dff;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:10px">A+ 图片评分 · 5 维度 · 满分 100</div>
+    <table style="font-size:11.5px">
+      <tbody>
+        <tr><td>信息层级 &amp; 版式</td><td style="text-align:right"><strong style="color:#c77dff">25%</strong></td></tr>
+        <tr><td>Rufus 抓取友好度（OCR + 视觉）</td><td style="text-align:right"><strong style="color:#c77dff">25%</strong></td></tr>
+        <tr><td>文字密度 &amp; 移动端可读性</td><td style="text-align:right"><strong style="color:#c77dff">20%</strong></td></tr>
+        <tr><td>场景连贯性 &amp; Tagline 一致性</td><td style="text-align:right"><strong style="color:#c77dff">15%</strong></td></tr>
+        <tr><td style="border-bottom:none">品牌一致性 &amp; 设计质感</td><td style="text-align:right;border-bottom:none"><strong style="color:#c77dff">15%</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px">
+  <span class="tag" style="background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)">🔴 0-40 Critical</span>
+  <span class="tag" style="background:rgba(244,162,97,0.15);color:#f4a261;border:1px solid rgba(244,162,97,0.3)">🟡 41-60 Needs Work</span>
+  <span class="tag" style="background:rgba(46,196,182,0.15);color:#2ec4b6;border:1px solid rgba(46,196,182,0.3)">🟢 61-80 Good</span>
+  <span class="tag" style="background:rgba(199,125,255,0.15);color:#c77dff;border:1px solid rgba(199,125,255,0.3)">✨ 81-100 Excellent</span>
+</div>
+
+<!-- ============================================== -->
+<!-- 3. 主图整体诊断                                -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🖼</span>主图整体诊断（13 张）</div>
+
+<div class="alert alert-orange" style="margin-bottom:18px">
+  <span style="font-size:18px;flex-shrink:0">⚠</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">现有主图序列存在 4 个结构性问题</strong>
+    <strong>① 白底主图唯一性问题</strong>：主图-01 与 主图-10 为<strong>同款 3/4 侧视图、角度几乎一样</strong>，二选一即可（建议留 -01，删 -10 或改为产品反面角度）。<br>
+    <strong>② 主图-04 与 A+ 2-highlight 重复</strong>：两者都是 9 宫格特性总览（5G / 13.5h / 触屏 / Wi-Fi 7 / eSIM / 2.5G LAN / VPN / Dual SIM），<strong>等于一张图的成本用了两次</strong>。Amazon 主图位置宝贵，9 张副图位浪费 1 个非常可惜。<br>
+    <strong>③ 主图-07 与 A+ 3-wifi7+touchscreen 右半部重复</strong>：触屏交互演示图在两处出现，相当于 A+ 第 3 个模块只贡献了 "Wi-Fi 7 速率条" 一半的新内容。<br>
+    <strong>④ 9 号文件命名冲突</strong>：目录中同时存在 "主图-09.jpg"（Inside the Box 包装清单）和 "9.-NA%20frequency%20band.jpg"（北美频段表），不清楚卖家想用哪张作为 Amazon 主图 #9。建议把后者重命名为 "辅图-NA频段.jpg"（不参与 Amazon 主图 9 张序列，作为 listing 内嵌图或 backend 资源）。
+  </div>
+</div>
+
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:24px">
+  <table style="font-size:11.5px">
+    <thead><tr>
+      <th>#</th>
+      <th>文件名</th>
+      <th>角色分类</th>
+      <th>Amazon 合规</th>
+      <th>独家差异化点呈现</th>
+      <th style="text-align:center">总分</th>
+    </tr></thead>
+    <tbody>
+      <tr><td>01</td><td class="mono">主图-01.jpg</td><td>白底主图 #1 候选</td><td><span style="color:#2ec4b6">✓ 合规（白底/产品居中）</span></td><td>屏幕显示已暗示触屏</td><td style="text-align:center"><strong style="color:#c77dff">84</strong></td></tr>
+      <tr><td>02</td><td class="mono">主图-02.png</td><td>副图（角度图）</td><td><span style="color:#f4a261">△ 灰底不合规为 #1</span></td><td>同款角度，差异化点少</td><td style="text-align:center"><strong style="color:#f4a261">66</strong></td></tr>
+      <tr><td>03</td><td class="mono">主图-03.jpg</td><td>尺寸 / 接口标注图</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>TS-9 / USB 3.1 / 2.5G LAN 全标注</td><td style="text-align:center"><strong style="color:#c77dff">88</strong></td></tr>
+      <tr><td>04</td><td class="mono">主图-04.jpg</td><td>9 宫格特性总览</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>9 个差异化全包，<strong style="color:#e63946">与 A+ 重复</strong></td><td style="text-align:center"><strong style="color:#2ec4b6">74</strong></td></tr>
+      <tr><td>05</td><td class="mono">主图-05.jpg</td><td>SIM / 连接概念图</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>Dual SIM + eSIM 概念</td><td style="text-align:center"><strong style="color:#2ec4b6">75</strong></td></tr>
+      <tr><td>06</td><td class="mono">主图-06.jpg</td><td>场景图 · 13.5h 电池</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>13.5h 电池续航 + 数字游民场景</td><td style="text-align:center"><strong style="color:#c77dff">82</strong></td></tr>
+      <tr><td>07</td><td class="mono">主图-07.jpg</td><td>触屏交互演示</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>触屏全交互（独家）<strong style="color:#e63946">，与 A+ 3 重复</strong></td><td style="text-align:center"><strong style="color:#2ec4b6">78</strong></td></tr>
+      <tr><td>08</td><td class="mono">主图-08.jpg</td><td>VPN 速度光速图</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>700+/600+ Mbps VPN（独家）</td><td style="text-align:center"><strong style="color:#c77dff">86</strong></td></tr>
+      <tr><td>09</td><td class="mono">主图-09.jpg</td><td>Inside the Box 包装清单</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>10Gbps USB-C cable 卖点暗藏</td><td style="text-align:center"><strong style="color:#c77dff">86</strong></td></tr>
+      <tr><td>9*</td><td class="mono">9.-NA%20frequency%20band.jpg</td><td>NA 频段表（命名冲突）</td><td><span style="color:#f4a261">△ 文字密度太高，移动端难读</span></td><td>专业卖家需要的频段信息</td><td style="text-align:center"><strong style="color:#2ec4b6">76</strong></td></tr>
+      <tr><td>10</td><td class="mono">主图-10.jpg</td><td>白底 3/4 视图（与 01 重复）</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>与主图-01 几乎相同</td><td style="text-align:center"><strong style="color:#2ec4b6">68</strong></td></tr>
+      <tr><td>11</td><td class="mono">主图-11.jpg</td><td>白底产品背面图</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>背面纹理 + GL.iNet logo</td><td style="text-align:center"><strong style="color:#2ec4b6">78</strong></td></tr>
+      <tr><td>12</td><td class="mono">主图-12.jpg</td><td>4 场景图</td><td><span style="color:#2ec4b6">✓ 合规</span></td><td>4 个场景人物代入感强</td><td style="text-align:center"><strong style="color:#c77dff">84</strong></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================== -->
+<!-- 4. 逐张主图打分诊断（核心 13 张）              -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📸</span>逐张主图打分诊断</div>
+
+<!-- ===== 主图 01 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-01.jpg" alt="主图-01"/></div>
+    <div class="img-meta">主图-01.jpg · 74 KB · ~1000×1000</div>
+  </div>
+  <div>
+    <h3>主图-01 · 白底 3/4 侧视图（屏幕开机）</h3>
+    <div class="role">🟢 推荐为 Amazon 主图 #1 · 总分 84 ✨</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="33.17"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">84</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#ffd166">60</strong></div><div class="dim-bar-fill"><div style="width:60%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-box diag-borrow"><strong>🔍 做得好的地方</strong> ① <strong>白底纯净</strong>（RGB 接近 255/255/255），Amazon 主图 #1 强制白底政策完美合规；② <strong>屏幕开机显示 11:40 + 地球壁纸 + 天气 / 数据用量图标</strong>，给静态产品图一个"活的视觉锚点"，瞬间传达"这是一个有 2.8" 触屏的智能设备"（独家差异化点之一）；③ 产品占比约 60%，留白合理，左侧 5G / WiFi 7 / USB 3.1 / 2.5G Ethernet 暗刻字母清晰；④ 阴影柔和，无杂光，专业感强。</div>
+    <div class="diag-diff"><strong>🚀 差异化机会</strong> Amazon 主图 #1 政策禁止文字 logo 道具，所以无法在这张图上加 "Wi-Fi 7 · 5G NR · eSIM" 等卖点角标。但可以在<strong>主图 #2（副图位）</strong>用同样角度但加 "World's First Wi-Fi 7 + 5G + eSIM Travel Router" 文字横幅版（参考 Apple / Sony 副图做法）。</div>
+    <div class="diag-warn"><strong>⚠ 必须检查</strong> ① 实际像素是否 ≥ 1000×1000（Amazon zoom 功能要求），从文件大小 74 KB 推测分辨率可能偏低，建议导出 ≥ 2000×2000 高清版；② 产品占比 60% 还有提升空间，Amazon 政策推荐 <strong>≥ 85%</strong>，可以适当裁剪留白。</div>
+    <div class="diag-fix"><strong>📝 In-place 优化建议</strong> ① 导出 2000×2000 高清版替换；② 微调裁切让产品占比从 60% 提升到 80-85%；③ 屏幕显示内容保留（这是优势）。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 02 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-02.png" alt="主图-02"/></div>
+    <div class="img-meta">主图-02.png · 152 KB</div>
+  </div>
+  <div>
+    <h3>主图-02 · 灰底 3/4 侧视图</h3>
+    <div class="role">🟡 副图位（非 #1） · 总分 66 Needs Work</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="70.48"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">66</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#e63946">50</strong></div><div class="dim-bar-fill"><div style="width:50%;background:#e63946"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">75</strong></div><div class="dim-bar-fill"><div style="width:75%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#ffd166">60</strong></div><div class="dim-bar-fill"><div style="width:60%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> 与主图-01 同款角度但<strong>背景略带氛围（淡灰渐变）</strong>，有产品摄影的"工作室感"，比纯白显得更有质感。Rufus 视觉模型对产品形态的识别在两张图上一致性高。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> 这张图的"灰底氛围"如果不是因为主图 #1 合规要求让它必须改纯白，<strong>可以保留作为副图位（#2-9）</strong>。建议改造为<strong>"角度对比图"</strong>：左侧产品正面 3/4 + 右侧产品背面（融合 主图-11 的背面元素），形成"正反双视图"，比单独一张孤立的角度图信息密度更高。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题</strong> 背景<strong>不是 RGB 255/255/255 纯白</strong>（实际是浅灰渐变），<strong>不符合 Amazon 主图 #1 政策</strong>。如果卖家把这张作为主图 #1 上架，会被 Amazon 自动算法识别并降权 / 拒绝。<strong>主图 #1 必须用主图-01</strong>。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① <strong>不要作为主图 #1</strong>；② 改造为"正反双视图"放副图 #2 位；或者 ③ 直接舍弃（如果 §7 重排建议没有给它留位置）。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 03 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-03.jpg" alt="主图-03"/></div>
+    <div class="img-meta">主图-03.jpg · 172 KB</div>
+  </div>
+  <div>
+    <h3>主图-03 · Product Dimension 尺寸 / 接口标注图</h3>
+    <div class="role">✨ 推荐为副图 #3 · 总分 88 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="24.88"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">88</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>三维尺寸全部标出</strong>（75mm × 22.8mm × 157mm），帮买家立刻判断"能不能塞口袋"；② <strong>所有接口都点名</strong>：Dual External Antenna Ports (TS-9) / USB-C USB 3.1 Port / 2.5G LAN/WAN Port / Power Button / USB-C Power Port / 2.8" Touch Screen — 等于把产品的硬件能力 spec 表用一张图视觉化呈现，<strong>Rufus 多模态模型能 OCR 出每一条文字</strong>，对应 Listing Bullet 3 / Bullet 6 关键词；③ 深蓝渐变背景与品牌色一致，专业感强；④ 产品悬浮 + 正反两个角度同时展示，信息密度高。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> US 8 个直接竞品（NETGEAR M7 系列 / TP-Link M8550 / GlocalMe 等）<strong>很少有人在主图里同时标注全部 6 个接口名 + 三维尺寸</strong> — Mudi 7 的这张图等于一次性把"接口齐全 + 便携尺寸"两个核心买点合二为一，<strong>是 §3 §8 §9 都强调的独家差异化点 "10 Gbps USB-C" / "2.5G Ethernet" / "TS-9 外置天线"的视觉证明</strong>。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 推荐放<strong>副图 #3</strong>位置（主图 #1 白底 → 副图 #2 副角度/正反对比 → 副图 #3 尺寸接口图）；② 可以再加一个角标 "300g · Pocket-sized" 强调便携；③ "USB-C USB 3.1 Port" 标注容易让买家以为只是 USB 3.1（5 Gbps），<strong>建议改为 "USB-C 10 Gbps Port"</strong> 强化独家差异化（与产品 Excel 卖点表 "10Gbps USB-C" 对齐）。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 04 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-04.jpg" alt="主图-04"/></div>
+    <div class="img-meta">主图-04.jpg · 547 KB</div>
+  </div>
+  <div>
+    <h3>主图-04 · 9 宫格特性总览</h3>
+    <div class="role">🟢 强但有重复风险 · 总分 74 Good（因重复扣 10 分）</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="53.9"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">74</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">92</strong></div><div class="dim-bar-fill"><div style="width:92%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">78</strong></div><div class="dim-bar-fill"><div style="width:78%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#c77dff">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景代入感（10%）</span><strong style="color:#e63946">50</strong></div><div class="dim-bar-fill"><div style="width:50%;background:#e63946"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>9 个差异化卖点一图打尽</strong>：5G Connectivity / 13.5hrs Run Time / 2.8" LCD Touchscreen / 2 USB-C Ports / Tri-band Wi-Fi 7（含 5765/2882/688 Mbps 三频数字）/ eSIM / 2.5G LAN/WAN Port / High-speed VPN（OpenVPN-DCO 700+/WireGuard 600+ Mbps）/ Dual SIM Dual Standby — <strong>v1.2 Listing 报告识别的 9 个独家差异化点几乎全部对应</strong>；② Rufus 多模态可以 OCR 出每条文字 + 数字，对应 Listing Title / Bullet 1-7 / Backend 关键词；③ 视觉层级清晰，9 宫格规整。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> 这是<strong>本组主图中差异化呈现最强的一张</strong>（差异化 95 分），US 8 竞品中没有任何一家把这么完整的 9 个独家点放在一张主图里。<strong>但前提是不能与 A+ 2-highlight 重复使用</strong>，否则等于消耗了双倍位置展示同一信息。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题：与 A+ 2-highlight.jpg 内容高度重复</strong> 两张图都是 9 宫格特性总览，<strong>结构、信息、视觉语言都极其相似</strong>（仅排版略不同：主图-04 是 3×3 等分九宫，A+ 2-highlight 是 4×2 行布局）。这导致：<br>• Amazon 主图位置（最多 9 个）浪费 1 个<br>• A+ 模块位置（最多 7 个 brand store + 5 个 standard）浪费 1 个<br>• <strong>买家在 listing 页面会看到两次同样的信息，反而显得"卖点不够支撑这么多模块"</strong>。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong>（推荐方案 A）：<br>• <strong>保留</strong>主图-04 作为副图 #4（Amazon 主图位是高曝光位）<br>• <strong>替换</strong> A+ 2-highlight 为 <em>"vs 竞品对比图"</em>（参考 §10 A+ 补全路线图 Module Comparison Chart）<br>• 这样可以让 9 宫格在主图位发挥"功能性总览"作用，A+ 用对比图发挥"决策推手"作用，<strong>两个位置各司其职</strong>。<br>（备选方案 B）：保留 A+ 2-highlight，把主图-04 改为某个独家差异化的单点放大图（如 "10 Gbps USB-C · 5x faster than competitors" 单图）。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 05 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-05.jpg" alt="主图-05"/></div>
+    <div class="img-meta">主图-05.jpg · 431 KB</div>
+  </div>
+  <div>
+    <h3>主图-05 · Stay Connected Everywhere · SIM / 连接概念图</h3>
+    <div class="role">🟢 中等 · 总分 75 Good</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="51.83"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">75</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">75</strong></div><div class="dim-bar-fill"><div style="width:75%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#ffd166">70</strong></div><div class="dim-bar-fill"><div style="width:70%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#2ec4b6">75</strong></div><div class="dim-bar-fill"><div style="width:75%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景代入感（10%）</span><strong style="color:#ffd166">60</strong></div><div class="dim-bar-fill"><div style="width:60%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① 主标题 "Stay Connected Everywhere" + 副标 "Dual-SIM, eSIM, 5G, and Wi-Fi 7. Deliver reliable speed wherever you are." <strong>一句话传达 4 个核心连接卖点</strong>；② 4 个发光图标（5G / nano-SIM / Wi-Fi 7 / eSIM）围绕产品背面 SIM 槽，<strong>视觉化呈现"三槽待机"这个独家差异化</strong>（v1.2 报告 Bullet 2 的核心点）；③ 产品 SIM 槽特写罕见，给买家"打开包装就能看到这样"的预期管理。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> <strong>4 个图标飘浮位置无对齐感</strong>（上、左、右、下分散），如果按"功能强弱"排列（最大功能 5G 在中、其他三个均分两侧），视觉重心会更明确。另外 <strong>nano-SIM 图标</strong>建议改成"<strong>×2</strong> nano-SIM"明示双卡，否则容易被误以为只一张物理 SIM。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题</strong> ① 产品背面的<strong>设备 ID / FCC ID 字符过曝</strong>（"R…1-1NET / Multi-Wi…Portable Router / Model: GL-E5800EU / Input: 5V/12V → 3A / IP: 192.168.8.1" 等微字），虽然真实但移动端读不清，造成"乱码感"；② "Made in China" 字样隐隐可见，<strong>合规但视觉处理可以更巧妙</strong>（虚化或裁切到主体外）。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 4 个图标按"5G→Wi-Fi 7→eSIM→Dual nano-SIM" 顺时针排列；② 产品标签微字用景深虚化处理（focus 集中在 SIM 槽）；③ 副标题加一句 Tier 1 营销 Tagline（v1.2 报告引用 Excel）："Global Roaming, Zero Hassle"。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 06 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-06.jpg" alt="主图-06"/></div>
+    <div class="img-meta">主图-06.jpg · 546 KB</div>
+  </div>
+  <div>
+    <h3>主图-06 · Long-lasting &amp; Fast-charging Battery · 海景咖啡场景</h3>
+    <div class="role">✨ 强场景图 · 总分 82 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="37.31"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">82</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#ffd166">70</strong></div><div class="dim-bar-fill"><div style="width:70%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景代入感（10%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>极强的场景代入感</strong>（90 分）：海景 + 咖啡 + MacBook + 笔记本 + 路由器开机工作中 — 一秒钟代入"数字游民在地中海海岸边远程办公"的画面，<strong>命中 Excel Tier 1 长期外派 / Tier 1 商务差旅</strong>用户；② "13.5h" 时钟图标设计干净，配合 "All-day Connection" 一句话副标，<strong>13.5h 电池续航这个 spec 数字得到了视觉化具象呈现</strong>（比单纯数字更有说服力）；③ 主图-01 屏幕显示的 11:40 在这里变成 09:40，时间感连贯（让客户感觉是"早上开始工作的同一台设备"）。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> US 8 竞品中 <strong>NETGEAR M7 Pro 的场景图多用工业 / 商务办公室</strong>（缺生活感）；<strong>TP-Link M8550 几乎无场景图</strong>；<strong>GlocalMe 用 backpack 旅行场景</strong>。Mudi 7 的"海景咖啡 + 笔记本"是<strong>同价位段最有调性的场景图之一</strong>，可以延伸做一组（海岛 / 山间小屋 / 高铁车厢）形成 Tier 1 场景叙事。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 副标 "All-day Connection" 可以改为更具体的<strong>"1.3h Fast Recharge + 13.5h Run Time"</strong>（v1.2 Bullet 5 推荐的两个数字组合），直接打出"充得快 + 用得久"双重价值；② 笔记本上的手写笔记可以贴近"work-related"（如 timezone 时差表、客户名 list），强化商务 / 外派暗示。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 07 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-07.jpg" alt="主图-07"/></div>
+    <div class="img-meta">主图-07.jpg · 455 KB</div>
+  </div>
+  <div>
+    <h3>主图-07 · One-tap Network Access · 触屏交互演示</h3>
+    <div class="role">🟢 强但有重复 · 总分 78 Good（因重复扣 8 分）</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="45.61"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">78</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#c77dff">92</strong></div><div class="dim-bar-fill"><div style="width:92%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景代入感（10%）</span><strong style="color:#ffd166">70</strong></div><div class="dim-bar-fill"><div style="width:70%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>把"触屏全交互"这个独家差异化用 4 个 UI 镜像截图 + 1 个手指点击中央演示</strong>，视觉化呈现的难度高 — 大部分竞品(NETGEAR M7 Pro / M6)的触屏只能"显示状态"，<strong>Mudi 7 是唯一可以在触屏上直接操作 SIM 切换 / VPN 开关 / QR 分享 / USB 模式选择的 5G 路由器</strong>（v1.2 报告 Bullet 6 差异化点）；② 4 个 UI 截图分别对应 v1.2 报告的 4 个独家功能：Scan QR / Active SIM Card / VPN-Policy Mode / USB Mode Selection — 完美对齐 Listing 文字描述；③ Rufus 视觉模型能识别手指点击动作，<strong>"One-tap"这个关键词在视觉上是 self-evident 的</strong>。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> 这张图的"独家差异化"分数高达 92，US 8 竞品中没有任何一家把触屏交互画得这么具体（NETGEAR M7 Pro 触屏图仅 1 张静态主屏；TP-Link M8550 触屏图只有侧拍）。<strong>视觉证据 + Bullet 6 文字描述 + A+ 3 右半部</strong>三重背书，构成同价位段独家锚点。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题：与 A+ 3-wifi7+touchscreen.jpg 右半部高度重复</strong> A+ 3 的右半部就是这张图的精简版（同样 4 个 UI + 手指 + 中央触屏，加 "One-tap Network Access · Skip the admin panel and app..." 副文案）。<strong>买家在 listing 页面会看到几乎一样的视觉两次</strong>。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong>（推荐方案）：<br>• <strong>保留</strong>主图-07 作为副图（主图位高曝光）<br>• <strong>修改</strong> A+ 3-wifi7+touchscreen 的右半部为"<em>触屏 vs 手机 App 操作对比</em>"或"<em>触屏在某个具体场景的应用</em>"（如 "在 Pop-up Retail 店员场景里 30 秒切换 SIM 不需要培训"），让 A+ 3 的右半成为"应用场景"而非"功能展示"，与主图-07 形成"功能 → 应用"递进。<br>• 这样 §10 A+ 补全路线图 可以省下 1 个模块位（不用单独再做触屏应用场景模块）。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 08 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-08.jpg" alt="主图-08"/></div>
+    <div class="img-meta">主图-08.jpg · 529 KB</div>
+  </div>
+  <div>
+    <h3>主图-08 · Fast and Secure Web Browsing · VPN 速度光速图</h3>
+    <div class="role">✨ 强差异化锚点 · 总分 86 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="29.02"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">86</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#c77dff">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景代入感（10%）</span><strong style="color:#ffd166">60</strong></div><div class="dim-bar-fill"><div style="width:60%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>"光速"视觉隐喻</strong>（蓝色光道穿过产品）一秒钟传达"快"的核心情绪，配合主标题 "Fast and Secure Web Browsing" 直击 VPN 速度卖点；② <strong>4 个生态 logo 并列</strong>（OpenVPN / WireGuard / Cloudflare / IPv6）— Cloudflare 与 IPv6 是 v1.2 Listing 文字优化版没强调过的<strong>额外信任锚</strong>，借势行业标准（Cloudflare 是 Web 速度认知标杆）；③ <strong>两个速度条</strong>清晰对比 OpenVPN Up to 700+ Mbps (with DCO support) / WireGuard Up to 600+ Mbps — 数字大写醒目，<strong>Rufus OCR 可以提取这两个具体数值匹配 L1 Prompt "Does GL.iNet have a router with 700 Mbps OpenVPN?"</strong>；④ 法律免责小字（Tests conducted on a local network / OpenVPN and WireGuard speeds will be slower when running the device as a server）<strong>专业且合规</strong>，避免 Amazon 因"过度承诺"下架。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> US 8 竞品 VPN 表现：NETGEAR M7/M7 Pro/M6/GlocalMe/RoamWiFi <strong>5 家完全无 VPN</strong>；TP-Link M8550 仅 WireGuard 无速度数字；自家 XE3000 是 150/300 Mbps。<strong>Mudi 7 的 700/600 Mbps 是行业天花板</strong>，这张图的存在意义就是"<strong>谁能争这个王座</strong>" — 没有 VPN 的 5 家拿不出这种图，有 VPN 的 1 家(TP-Link)拿不出速度数字。这是 v1.2 报告 9 个独家差异化点中<strong>视觉化最完整的一张</strong>。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① "Preinstalled with VPN support. Choose from 30+ VPN service providers" 副标可以再具体些：<strong>"NordVPN · ExpressVPN · Mullvad · Surfshark + 30 more"</strong>（v1.2 Bullet 7 推荐做法，点名 4 个最大牌的 used_with 实体）；② Cloudflare logo 旁可加一行小字 "Cloudflare WARP supported" 让信任锚更具象；③ 法律免责字号建议调大 1-2 pt，移动端缩略图下确保可读（避免被 Amazon 判"误导性数字"风险）。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 09 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-09.jpg" alt="主图-09"/></div>
+    <div class="img-meta">主图-09.jpg · 136 KB</div>
+  </div>
+  <div>
+    <h3>主图-09 · Inside the Box · 包装清单</h3>
+    <div class="role">✨ 转化推手图 · 总分 86 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="29.02"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">86</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#2ec4b6">75</strong></div><div class="dim-bar-fill"><div style="width:75%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① "Inside the Box" 是<strong>5G 路由器品类高转化主图模式</strong>（NETGEAR M7 / TP-Link M8550 几乎每款都有这张）— 它直接回答买家心中的"$370 我能得到什么"的预期管理；② 6 件配件全部列出（User Manual / Mudi 7 / Thank you Card / Battery Pack (Pre-installed) / Travel Pouch / 10Gbps USB-C Cable）+ 数量 "1 x"，<strong>没有给买家想象空间</strong>；③ <strong>"Travel Pouch"</strong>是同价位段少见的赠送（NETGEAR M7 不送，TP-Link M8550 不送）— 强化"差旅"定位；④ <strong>"10Gbps USB-C cable"</strong>这个细节是隐藏卖点（v1.2 Bullet 3 提到的 10 Gbps USB-C 端口需要对应规格的线材才能跑满，主图-09 等于"赠送原配线 = 不用另买" 的隐性承诺）。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> ① 同价位段 GlocalMe / RoamWiFi 给 SIM data plan，没有实体附件 — Mudi 7 的<strong>包装清单"完整且不缺线"</strong>是隐性加分项；② <strong>"Battery pack (Pre-installed)"</strong>暗示电池<strong>可拆卸 / 可替换</strong>（NETGEAR M7 Pro 电池不可拆，TP-Link 不明示）— 这是<strong>未被 v1.2 Listing 报告 Bullet 5 抓到的隐藏差异化点</strong>，建议补到 Bullet 5。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 在 "1 x 10Gbps USB-C cable" 下方加一行小字 <strong>"For full 10 Gbps speed compatibility"</strong>，直接打出"原配线匹配规格" 的卖点；② "Battery pack (Pre-installed)" 加一行 <strong>"Hot-swappable for extended trips"</strong>（如果硬件支持热插拔的话），化解 NETGEAR M7 Pro 不可拆电池的痛点；③ 把图右下角添加 "Plus 2-year warranty" 小字（GL.iNet 标准保修，竞品多为 1-2 年）。</div>
+  </div>
+</div>
+
+<!-- ===== 9.-NA frequency band ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/9.-NA%20frequency%20band.jpg" alt="9-NA freq"/></div>
+    <div class="img-meta">9.-NA%20frequency%20band.jpg · 500 KB</div>
+  </div>
+  <div>
+    <h3>9.-NA frequency band · 北美 5G/LTE 频段表</h3>
+    <div class="role">🟢 技术性图 · 总分 76 Good · ⚠ 命名冲突</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="49.75"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">76</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#ffd166">68</strong></div><div class="dim-bar-fill"><div style="width:68%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#2ec4b6">75</strong></div><div class="dim-bar-fill"><div style="width:75%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>透明化 frequency band 信息</strong>，对懂技术的买家（数字游民 / IT 工程师 / Tier 1 高收入专业人士）是<strong>非常强的信任锚</strong>；② 产品爆炸图 + 5G NR 圆圈标注让"5G NR Sub-6 GHz" 这个抽象 spec 可视化（v1.2 Bullet 1 提到的 X72 芯片对应的 3GPP Rel-17 NSA/SA operation）；③ NSA / SA 双模都列出，配合 LTE-FDD / LTE-TDD 全套，<strong>Rufus 可以 OCR 出 "n2 n5 n7 n12..."等具体频段 → 命中 L1 Prompt "Does GL.iNet have a router certified for AT&amp;T, T-Mobile, Verizon?"</strong>。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题</strong><br>① <strong>命名冲突</strong>：与"主图-09.jpg" 都以 "9" 开头，<strong>不清楚卖家想用哪张作为 Amazon 主图 #9</strong>。Amazon Seller Central 一次只能上 9 张主图，主图-09 (Inside the Box) 转化贡献远大于频段表，建议优先用 -09。<br>② <strong>移动端可读性较差</strong>：6 行频段表 + 每行 13-17 个 band 字符（n2/n5/n7...），在移动端缩略图状态下密集到无法阅读；<br>③ 频段表只覆盖 NA 区域，<strong>如果同时在 UK / DE 卖，需要单独制作对应区域的频段图</strong>，不能复用这张。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong>（推荐方案）：<br>• <strong>重命名为</strong> <code>辅图-NA频段表.jpg</code>，<strong>不进入 Amazon 主图 9 张序列</strong>；<br>• 改放在 <strong>Listing 商品详情下方的 "Technical Specifications" 区域</strong> 或 <strong>A+ Brand Story 模块的"全球频段兼容"展示</strong>；<br>• 同时为 UK / DE 各做一份对应版（标题改为 "EU Bands" / "UK Bands"，列出对应频段）；<br>• 主图 #9 位置让给 主图-09 (Inside the Box)，转化贡献更直接。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 10 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-10.jpg" alt="主图-10"/></div>
+    <div class="img-meta">主图-10.jpg · 60 KB</div>
+  </div>
+  <div>
+    <h3>主图-10 · 白底 3/4 视图（与主图-01 高度相似）</h3>
+    <div class="role">🟢 重复 · 总分 68 Good（与 -01 冗余扣 10 分）</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="66.34"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">68</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#e63946">55</strong></div><div class="dim-bar-fill"><div style="width:55%;background:#e63946"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> 与主图-01 同样的产品角度 + 屏幕开机显示 + 白底 — 单独看是张合格的白底产品图（背景偏暗一点点更显质感）。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题：与主图-01 内容近乎完全重复</strong><br>• 产品角度：<strong>同款 3/4 侧视图</strong><br>• 屏幕显示：<strong>同样 11:40 + 地球壁纸 + 天气</strong><br>• 文字标注：<strong>同样左侧 5G / WiFi 7 / USB 3.1 / 2.5G Ethernet 暗刻</strong><br>• <strong>唯一可见的差别</strong>是 -10 的背景略偏暗一点点（疑似 -01 的"导出版本 2"）<br>买家在主图序列中连续看到这两张<strong>会立刻感觉"凑数"</strong>，反而扣品牌专业度。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong>（推荐方案）：<br>• <strong>删除主图-10</strong> 或 <strong>替换为产品的另一个真实角度</strong>（正面平视图 / 侧立面图 / 俯视图）<br>• 把 9 张主图位置中省下的这一张留给 §10 A+ 补全路线图中的<strong>"vs 竞品对比图"</strong>（差异化呈现 95+）<br>• 或者把 主图-11 (产品背面图) 升级到这个位置，正反两张白底主图序列更完整。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 11 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-11.jpg" alt="主图-11"/></div>
+    <div class="img-meta">主图-11.jpg · 80 KB</div>
+  </div>
+  <div>
+    <h3>主图-11 · 白底产品背面图</h3>
+    <div class="role">🟢 角度副图 · 总分 78 Good</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="45.61"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">78</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">78</strong></div><div class="dim-bar-fill"><div style="width:78%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">82</strong></div><div class="dim-bar-fill"><div style="width:82%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#ffd166">60</strong></div><div class="dim-bar-fill"><div style="width:60%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>纯白底产品背面图</strong>，让买家看到产品的另一面（正面是主图 -01 / -10）；② 黑色斜纹纹理 + 椭圆 GL.iNet logo 是<strong>品牌识别度极高的视觉元素</strong>，新品上市可以承担"老 GL.iNet 用户认出品牌"的作用；③ 文件大小 80 KB 推测是高质量压缩图（产品摄影专业级）。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> NETGEAR M7 Pro / TP-Link M8550 都<strong>很少展示产品背面</strong>（多用 3/4 角度遮住背部）。Mudi 7 大方展示背面纹理 + Logo，<strong>暗示"我们的工艺细节经得起细看"</strong>，特别适合做<strong>副图 #2 配合 主图-01 形成"正面 → 背面" 信息闭环</strong>。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 推荐放<strong>副图 #2</strong>位（紧跟主图 #1 之后，正面→背面顺序符合买家"看产品全貌"的本能）；② 可以在背面纹理上叠加一个透明的小角标 "Anti-slip Diagonal Texture"，把"防滑斜纹"这个产品工艺细节也变成卖点；③ GL.iNet logo 旁可以加 "Since 2014 · 10 Years of OpenWrt Routers" 品牌背书小字。</div>
+  </div>
+</div>
+
+<!-- ===== 主图 12 ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="E5800主图/主图-12.jpg" alt="主图-12"/></div>
+    <div class="img-meta">主图-12.jpg · 567 KB</div>
+  </div>
+  <div>
+    <h3>主图-12 · Guard your every connection · 4 场景图</h3>
+    <div class="role">✨ 强场景叙事 · 总分 84 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="33.17"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">84</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>Amazon 合规度（25%）</span><strong style="color:#2ec4b6">95</strong></div><div class="dim-bar-fill"><div style="width:95%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 视觉典型性（25%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>清晰度 &amp; 信息层级（20%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>差异化卖点呈现（15%）</span><strong style="color:#ffd166">65</strong></div><div class="dim-bar-fill"><div style="width:65%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景代入感（10%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性（5%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>4 个场景跨越男女、商务/创作、室内/室外、个人/团队</strong>，覆盖度极广：Travel（男士手机街拍 → Tier 1 商务差旅）/ Live Streaming（女孩自拍 → Tier 2 户外创作者）/ Remote Work（笔记本+香槟杯 → Tier 1 高收入专业人士）/ Production Control（数据中心女工程师 → Tier 3 商业 B2B）；② <strong>人物年龄 / 性别 / 种族多元</strong>，避免单一人群代入感不足；③ 主标题 "Guard your every connection" 配 "No interference. No congestion" 副标 — 把 4 个不同场景的共性（连接稳定）抽象出来。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> NETGEAR M7 Pro 场景图多用<strong>"商务办公 / IT 机房"</strong>单一职业向；TP-Link M8550 几乎无场景图；GlocalMe 用<strong>"背包旅行"</strong>单一场景。Mudi 7 的 4 场景<strong>同时打商务 + 创作 + 远程 + B2B</strong>，<strong>是同价位段场景覆盖最广的一张</strong>。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题</strong> 4 个场景与 Excel sheet 1 的 Tier 1-3 用户表对齐度<strong>仅 ~60%</strong>。缺：<br>• <strong>Tier 1 长期外派 / 数字游民</strong>（"Take Your Home Network Anywhere" 营销 tagline）<br>• <strong>Tier 3 Pop-up Retail / Food Truck</strong>（"Never Lose a Sale" tagline，对应美国零售小老板群体，是高购买意愿群体）<br>• <strong>Tier 3 Trade Show / Exhibition</strong>（"Private Network in a Crowded Hall" tagline）。Production Control 场景虽然炫但对应人群（专业 IT 工程师）<strong>购买决策权弱</strong>，可以替换为 Pop-up Retail 收银场景。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 把 "Production Control"（数据中心场景）替换为 <strong>"Pop-up Retail"</strong>（小店店员用 Mudi 7 触屏切 SIM）— Tier 3 美国零售场景代入感更强；② 或者升级为 <strong>6 场景图（3×2）</strong>，把缺的 Tier 1 数字游民 + Tier 3 Pop-up 都加进去；③ 每个场景下加一行 Tier 营销 tagline 小字（"Global Roaming, Zero Hassle" / "Studio-Grade Speed, Outdoors" 等）。</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 5. A+ 整体诊断                                  -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🖌</span>A+ 整体诊断（3/10 已做）</div>
+
+<div class="alert alert-orange" style="margin-bottom:18px">
+  <span style="font-size:18px;flex-shrink:0">📋</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">Excel Listing 草稿规划了 10 个 A+ 模块，目前仅完成 3 张</strong>
+    卖家在 Excel sheet 3 列出了完整的 A+ 模块计划：KV / Highlight / Wi-Fi 7+Touchscreen / Four Features / Scenario 1 / Scenario 2 / Four Feature Scene / 还有报告 §10 推荐的 Brand Story / What's New vs MUDI 2 / Comparison Chart。<strong>目前 KV / Highlight / Wi-Fi 7+Touchscreen 已做（3 张）；其余 7 张设计草案见 §10 补全路线图。</strong>
+  </div>
+</div>
+
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:24px">
+  <table style="font-size:11.5px">
+    <thead><tr><th>#</th><th>A+ 模块</th><th>状态</th><th>对应 v1.2 报告关键点</th><th style="text-align:center">本报告评分</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><strong>1-KV (Hero)</strong></td><td><span class="tag tag-green">✓ 已做</span></td><td>Hero · "Next-Gen Connectivity Anytime, on the go" + 8 特性</td><td style="text-align:center"><strong style="color:#c77dff">88</strong></td></tr>
+      <tr><td>2</td><td><strong>2-Highlight</strong></td><td><span class="tag tag-green">✓ 已做</span></td><td>9 宫格特性总览（与主图-04 重复）</td><td style="text-align:center"><strong style="color:#2ec4b6">78</strong></td></tr>
+      <tr><td>3</td><td><strong>3-Wi-Fi 7 + Touchscreen</strong></td><td><span class="tag tag-green">✓ 已做</span></td><td>Wi-Fi 7 速率条 + 触屏交互（右半与主图-07 重复）</td><td style="text-align:center"><strong style="color:#c77dff">87</strong></td></tr>
+      <tr><td>4</td><td><strong>Four Features (Excel 已填文案)</strong></td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>Built-in eSIM / Dual USB-C / OpenWrt 22.03 / Dual TS-9 Antenna</td><td style="text-align:center">—</td></tr>
+      <tr><td>5</td><td><strong>Scenario 1 · 户外创作者</strong></td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>Tier 2 · "Studio-Grade Speed, Outdoors" 4K/8K backhaul</td><td style="text-align:center">—</td></tr>
+      <tr><td>6</td><td><strong>Scenario 2 · 商务差旅</strong></td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>Tier 1 · "Global Roaming, Zero Hassle" 落地即连</td><td style="text-align:center">—</td></tr>
+      <tr><td>7</td><td><strong>Four Feature Scene</strong></td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>Co-working / PC VR / USB-C tethering / Antenna boost</td><td style="text-align:center">—</td></tr>
+      <tr><td>8</td><td><strong>VPN Server · Keep Home IP</strong>（建议新增）</td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>US 8 竞品独家空白（v1.2 Bullet 7 锚点）</td><td style="text-align:center">—</td></tr>
+      <tr><td>9</td><td><strong>What's New vs MUDI 2</strong>（建议新增）</td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>化解跨型号风险（v1.2 §6）</td><td style="text-align:center">—</td></tr>
+      <tr><td>10</td><td><strong>Comparison Chart vs 竞品</strong>（建议新增）</td><td><span class="tag tag-l3">⏳ 待制作</span></td><td>vs NETGEAR M7 Pro / TP-Link M8550 / 自家 XE3000</td><td style="text-align:center">—</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================== -->
+<!-- 6. 逐张 A+ 打分诊断                            -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🎨</span>逐张 A+ 打分诊断</div>
+
+<!-- ===== A+ 1 KV ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="B5800A+图片/1-KV.jpg" alt="A+ 1 KV"/></div>
+    <div class="img-meta">1-KV.jpg · 399 KB · A+ Hero</div>
+  </div>
+  <div>
+    <h3>A+ 1 · KV Hero · "Next-Gen Connectivity Anytime, on the go"</h3>
+    <div class="role">✨ 高质量 · 总分 88 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="24.88"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">88</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>信息层级 &amp; 版式（25%）</span><strong style="color:#c77dff">92</strong></div><div class="dim-bar-fill"><div style="width:92%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 抓取友好度（25%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>文字密度 &amp; 移动可读（20%）</span><strong style="color:#2ec4b6">88</strong></div><div class="dim-bar-fill"><div style="width:88%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景 &amp; Tagline 一致性（15%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性 &amp; 设计质感（15%）</span><strong style="color:#c77dff">92</strong></div><div class="dim-bar-fill"><div style="width:92%;background:#c77dff"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>主副标题层级清晰</strong>：大字 "Next-Gen Connectivity Anytime, on the go" + 中字 "The Ultimate 5G NR Tri-band Wi-Fi 7 Travel Router" + 蓝色 chip "Mudi 7 (GL-E5800)" 三级递进；② <strong>8 个特性图标 + 数字</strong>全部在 Hero 第一屏（5G NR Up to 4.67 Gbps / Tri-band Wi-Fi 7 / 2.5Gbps Ethernet / 10 Gbps USB 3.1 / OpenWrt Support / VPN Client/Server / eSIM Support / Fast Charging）— <strong>Rufus 一屏 OCR 完成 8 个差异化点抓取</strong>，进 listing 第 1 秒就建立"全能旗舰"印象；③ <strong>MUSE 2025 Gold Winner</strong> 奖项徽章 + CE/FC 认证 logo 是<strong>极强的信任锚</strong>（同价位竞品几乎没有这种"国际设计奖"背书）；④ 右侧产品 3/4 渲染图 + 蓝色科技光道背景，<strong>品牌质感一致</strong>。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> ① <strong>MUSE Gold Winner</strong> 奖章是同价位段独家信任锚（NETGEAR / TP-Link / GlocalMe 都没有国际设计奖背书） — 这个奖项要利用好，应该在 Listing 文字 Backend 中加 "muse design award" 关键词；② "VPN Client/Server"图标已经体现，但<strong>没有显式打出 "700 Mbps OpenVPN"</strong>这个行业天花板数字，可以加一行小字 "Up to 700 Mbps VPN"；③ <strong>OpenWrt Support</strong> 是 GL.iNet 品牌的核心识别（同价位段独家），但 KV 上仅作为 8 个图标之一稍弱化，建议给 OpenWrt 一个独立小标题区。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 可改进点</strong> ① <strong>缺一行场景 Tagline</strong>（Excel Tier 1 营销 tagline "Global Roaming, Zero Hassle" 没有出现在 KV 上）；② 8 个图标排列偏静态，<strong>可以视觉上分主次</strong>（前 4 个突出，后 4 个稍弱化），避免"信息过载"；③ <strong>CE/FC 认证</strong> 一行可以放大一点点，作为底部信任栏。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 主标题下方加一行 Tagline："<strong>Global Roaming, Zero Hassle · Take Your Home Network Anywhere</strong>"；② 给 8 个图标加视觉权重分级（左 4 个图标稍大，右 4 个稍小）；③ MUSE Gold Winner 徽章保持（这是这张图最大的差异化），可以在徽章下方加一行小字 "2025 Designed in Hong Kong" 强化设计感。</div>
+  </div>
+</div>
+
+<!-- ===== A+ 2 Highlight ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="B5800A+图片/2-highlight.jpg" alt="A+ 2 Highlight"/></div>
+    <div class="img-meta">2-highlight.jpg · 471 KB · A+ Highlight</div>
+  </div>
+  <div>
+    <h3>A+ 2 · Highlight 9 宫格特性（与主图-04 重复）</h3>
+    <div class="role">🟢 内容强但有重复 · 总分 78 Good（重复扣 10 分）</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#2ec4b6" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="45.61"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#2ec4b6">78</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>信息层级 &amp; 版式（25%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 抓取友好度（25%）</span><strong style="color:#2ec4b6">82</strong></div><div class="dim-bar-fill"><div style="width:82%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>文字密度 &amp; 移动可读（20%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景 &amp; Tagline 一致性（15%）</span><strong style="color:#ffd166">60</strong></div><div class="dim-bar-fill"><div style="width:60%;background:#ffd166"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性 &amp; 设计质感（15%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> 9 宫格 4×2 行布局比主图-04 的 3×3 等分九宫<strong>更适合 A+ 横版尺寸（A+ Hero 是 1464×600 横版，4×2 是天然适配）</strong>；每格都有清晰图标 + 卖点 + 数字；中间大宫格 "Tri-band Wi-Fi 7" + 三频速率 (5765/2882/688 Mbps) 视觉中心明确。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题：与主图-04 高度重复</strong><br>• 信息完全一致：9 个差异化点全部 ✓<br>• 视觉语言极相似：同样深蓝光道背景、同样图标+数字组合<br>• 仅排版略不同（3×3 vs 4×2）<br><strong>买家在 listing 页面会先看主图序列，然后下拉看 A+，两次看到几乎一样的 9 宫格 → 感觉"卖点不够支撑这么多模块"</strong>。本报告 §4 主图-04 评分扣 10 分，这张同样扣 10 分。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong>（强烈推荐替换）：<br>• <strong>替换为 "vs 竞品对比图"</strong>（详见 §10 Module 10 设计草案）— 横版 4 列 × 4 行：Mudi 7 / NETGEAR M7 Pro / TP-Link M8550 / 自家 XE3000，每行一个独家维度（Wi-Fi 标准 / SIM 配置 / 触屏交互 / VPN 速度）。这样 9 宫格在主图位发挥"功能性总览"作用，A+ 用对比图发挥"决策推手"作用，两个位置各司其职。<br>• <strong>或者保留 9 宫格但内容差异化</strong>：把 9 个格子改为 <em>9 个使用场景</em>（差旅 / 远程 / 直播 / 露营 / 展会 / 快闪店 / 餐车 / 比赛直播 / 家用），与主图-04 的"功能 9 宫"形成"场景 9 宫"互补。</div>
+  </div>
+</div>
+
+<!-- ===== A+ 3 Wi-Fi 7 + Touchscreen ===== -->
+<div class="image-card">
+  <div>
+    <div class="img-wrap"><img src="B5800A+图片/3-wifi7+touchscreen.jpg" alt="A+ 3 Wi-Fi 7"/></div>
+    <div class="img-meta">3-wifi7+touchscreen.jpg · 434 KB</div>
+  </div>
+  <div>
+    <h3>A+ 3 · Wi-Fi 7 速率 + 触屏交互（双内容并列）</h3>
+    <div class="role">✨ 双独家差异化 · 总分 87 Excellent</div>
+    <div class="score-ring-wrap">
+      <div style="position:relative;width:80px;height:80px;flex-shrink:0"><svg width="80" height="80" viewBox="0 0 80 80" style="transform:rotate(-90deg);flex-shrink:0"><circle cx="40" cy="40" r="33" fill="none" stroke="#181c24" stroke-width="7"/><circle cx="40" cy="40" r="33" fill="none" stroke="#c77dff" stroke-width="7" stroke-linecap="round" stroke-dasharray="207.3" stroke-dashoffset="26.95"/></svg><div style="position:absolute;top:0;left:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#c77dff">87</div></div>
+      <div style="flex:1">
+        <div class="dim-bar"><div class="dim-bar-head"><span>信息层级 &amp; 版式（25%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>Rufus 抓取友好度（25%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>文字密度 &amp; 移动可读（20%）</span><strong style="color:#2ec4b6">85</strong></div><div class="dim-bar-fill"><div style="width:85%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>场景 &amp; Tagline 一致性（15%）</span><strong style="color:#2ec4b6">80</strong></div><div class="dim-bar-fill"><div style="width:80%;background:#2ec4b6"></div></div></div>
+        <div class="dim-bar"><div class="dim-bar-head"><span>品牌一致性 &amp; 设计质感（15%）</span><strong style="color:#c77dff">90</strong></div><div class="dim-bar-fill"><div style="width:90%;background:#c77dff"></div></div></div>
+      </div>
+    </div>
+    <div class="diag-borrow diag-box"><strong>🔍 做得好的地方</strong> ① <strong>左右双内容并列设计</strong>合理利用 A+ 1464×600 横版空间：左半 Wi-Fi 7 三频速率条（6/5/2.4 GHz → 5765/2882/688 Mbps）+ "5G meets tri-band Wi-Fi 7 Secure, stable, and always on · Mudi 7 delivers up to 5.8Gbps peak throughput" 副文案；右半 触屏交互演示 4 个 UI 截图 + "One-tap Network Access · Skip the admin panel and app" 副文案；② <strong>左半的速率条视觉清晰</strong>，6 GHz / 5 GHz / 2.4 GHz 高度对比一目了然，可对应 v1.2 Bullet 1 关键数字；③ 右半 4 个手机 UI 截图（QR / Carrier / VPN-Policy / USB Mode）+ 中间触屏特写 + 手指点击 — <strong>Rufus 多模态可识别"手指 + 触摸"动作</strong>，强化 "One-tap" 关键词。</div>
+    <div class="diag-diff diag-box"><strong>🚀 差异化机会</strong> 把<strong>同价位段独家的两个差异化（Wi-Fi 7 速率 + 触屏全交互）</strong>放在一张图，<strong>信息密度极高</strong>。NETGEAR M7 Pro / TP-Link M8550 在 A+ 中很难同时呈现这两点（前者无 OpenWrt 触屏交互，后者无 Wi-Fi 7）。</div>
+    <div class="diag-warn diag-box"><strong>⚠ 关键问题：右半与主图-07 重复</strong> 右半的触屏交互演示与主图-07（同样 4 UI + 手指 + 触屏 + "One-tap Network Access" 主标题）<strong>近乎一样</strong>。建议见 §4 主图-07 fix 建议：保留主图-07 作为主图位曝光，A+ 3 右半改为"<em>触屏在 Pop-up Retail 场景的应用</em>"（30 秒切 SIM 不需培训），与主图-07 形成"功能 → 应用"递进。</div>
+    <div class="diag-fix diag-box"><strong>📝 In-place 优化建议</strong> ① 左半保留 Wi-Fi 7 速率部分（这部分独立 Excellent）；② 右半改为 <strong>"Touchscreen in Action · 30s carrier swap at your pop-up store"</strong> — 用一张<strong>店员手部+触屏</strong>的场景化图替代 4 UI 镜像，命中 v1.2 Tier 3 营销 tagline "Never Lose a Sale"；③ 中央底部加 Tagline "<strong>Studio-Grade Speed · No-Code Control</strong>"。</div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 7. 主图序列重排建议                            -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🔀</span>主图序列重排建议（13 张取最强 9 张）</div>
+
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">Amazon 主图位最多 9 张，13 张中需要取舍。下表给出推荐序列 + 取舍理由。重排核心逻辑：<strong>白底主图 → 副角度 / 尺寸图 → 9 宫格功能总览 → 独家差异化（VPN / 触屏 / 电池） → 场景图 → Inside the Box</strong>。</p>
+
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:18px">
+  <table style="font-size:11.5px">
+    <thead><tr><th>新位置</th><th>使用的图</th><th>角色</th><th>关键 prompt 命中</th></tr></thead>
+    <tbody>
+      <tr><td><strong style="color:#c77dff">#1</strong></td><td>主图-01.jpg（导出高清版）</td><td>白底 3/4 主图（屏幕开机）</td><td>L3 "5g travel router" 视觉锚 + 触屏暗示</td></tr>
+      <tr><td><strong style="color:#c77dff">#2</strong></td><td>主图-11.jpg（白底背面图）</td><td>正反对应副图（替代主图-10 / 02）</td><td>"全方位展示产品" 信任锚</td></tr>
+      <tr><td><strong style="color:#c77dff">#3</strong></td><td>主图-03.jpg（尺寸 / 接口图）</td><td>技术 spec 视觉化</td><td>L1 #7 #8 #13 "2.5G Ethernet / 10 Gbps USB-C / TS-9 antenna" + "300g pocket-sized"</td></tr>
+      <tr><td><strong style="color:#c77dff">#4</strong></td><td>主图-04.jpg（9 宫格特性）</td><td>功能性总览</td><td>v1.2 全部 9 个独家差异化点一图打尽</td></tr>
+      <tr><td><strong style="color:#c77dff">#5</strong></td><td>主图-08.jpg（VPN 光速图）</td><td>VPN 速度独家锚点</td><td>L1 #5 #11 "700 Mbps OpenVPN" / "pre-installed WireGuard"</td></tr>
+      <tr><td><strong style="color:#c77dff">#6</strong></td><td>主图-07.jpg（触屏交互）</td><td>触屏全交互独家锚点</td><td>L1 #6 "travel router with touchscreen" + "One-tap"</td></tr>
+      <tr><td><strong style="color:#c77dff">#7</strong></td><td>主图-06.jpg（13.5h 海景咖啡）</td><td>电池续航场景图</td><td>L1 #9 #10 "13h battery" + "30W PD" · Tier 1 数字游民</td></tr>
+      <tr><td><strong style="color:#c77dff">#8</strong></td><td>主图-12.jpg（4 场景）</td><td>多场景叙事</td><td>L2 多 audience: 商务 / 创作者 / 远程 / B2B</td></tr>
+      <tr><td><strong style="color:#c77dff">#9</strong></td><td>主图-09.jpg（Inside the Box）</td><td>包装清单 / 心理预期管理</td><td>L3 转化推手 + 隐藏 "10Gbps USB-C cable" 卖点</td></tr>
+      <tr style="border-top:2px solid #252c3a"><td><span class="tag" style="background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)">❌ 删除</span></td><td>主图-10.jpg</td><td>与主图-01 重复</td><td>n/a</td></tr>
+      <tr><td><span class="tag" style="background:rgba(230,57,70,0.15);color:#e63946;border:1px solid rgba(230,57,70,0.3)">❌ 删除</span></td><td>主图-02.png</td><td>灰底不合规 + 角度重复</td><td>n/a</td></tr>
+      <tr><td><span class="tag" style="background:rgba(244,162,97,0.15);color:#f4a261;border:1px solid rgba(244,162,97,0.3)">⤵ 降级</span></td><td>主图-05.jpg（SIM 概念图）</td><td>移到 A+ 模块 5 或 listing 详情下方</td><td>n/a</td></tr>
+      <tr><td><span class="tag" style="background:rgba(244,162,97,0.15);color:#f4a261;border:1px solid rgba(244,162,97,0.3)">⤵ 重命名</span></td><td>9.-NA%20frequency%20band.jpg → 辅图-NA频段表.jpg</td><td>不进主图序列，移到 listing 详情或 A+ Brand Story</td><td>n/a</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="alert alert-green">
+  <span style="font-size:18px;flex-shrink:0">💡</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">重排后效果预估</strong>
+    应用本重排序列后，主图序列<strong>每张图都承担独立的差异化角色</strong>，无重复信息。预估买家从主图 #1 看到 #9 的<strong>认知建立路径</strong>：① 看到产品形态（#1）→ ② 全方位（#2）→ ③ 看到接口和尺寸 → 这是个真正的"硬件齐全的小机器"（#3）→ ④ 全部 9 个差异化点（#4）→ ⑤ 关键差异化 VPN（#5）→ ⑥ 关键差异化触屏（#6）→ ⑦ 电池续航（#7）→ ⑧ 我会在什么场景用它（#8）→ ⑨ 我开箱能拿到什么（#9）→ <strong>看 A+ → 决定下单</strong>。重排后主图均分预估从 79 → <strong>~85</strong>。
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 8. A+ 补全路线图                                -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📝</span>A+ 补全路线图（7 张待制作模块设计草案）</div>
+
+<p style="font-size:13px;color:var(--muted);margin-bottom:18px">基于 Excel sheet 3 已列模块 + v1.2 Listing 报告推荐增项，给出剩余 7 张 A+ 模块的<strong>详细设计草案</strong>（含主标题 / 副文案 / 视觉布局 / 命中的 v1.2 关键差异化点）。</p>
+
+<div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px">
+  <div class="card" style="border-left:3px solid #c77dff">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-purple">Module 4 · Four Features</span><strong style="font-size:13px">建议立刻制作 · 高优先级</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Engineering for Power Users"<br>
+    <strong>副文案</strong>：4 列方格，每列一个核心硬件特性 + 数字（Excel 卖家已填）<br>
+    &nbsp;&nbsp;● <strong>Built-in eSIM</strong> — Onboard chipset · 140+ carriers · One-tap switch<br>
+    &nbsp;&nbsp;● <strong>2 USB-C Ports</strong> — 10 Gbps tethering · OTG · PD charging<br>
+    &nbsp;&nbsp;● <strong>OpenWrt 22.03</strong> — Linux Kernel 5.15 · 5000+ plugins · Full root access<br>
+    &nbsp;&nbsp;● <strong>Dual TS-9 Antenna Ports</strong> — External antenna for weak-signal areas<br>
+    <strong>视觉</strong>：4 张产品接口 / OpenWrt 后台 / TS-9 天线特写的微距图 + 数字 overlay<br>
+    <strong>命中</strong>：L1 #3 #8 #11 #13 + Tier 1 高收入专业人士 / 极客用户
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #c77dff">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-purple">Module 5 · Scenario 1 户外创作者</span><strong style="font-size:13px">立刻制作 · 高优先级</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Studio-Grade Speed, Outdoors"（Excel Tier 2 营销 tagline 直接用）<br>
+    <strong>副文案</strong>：4K/8K livestream backhaul via 2.5G Ethernet to NAS · TS-9 external antenna boost in weak-signal venues · Wi-Fi 7 6 GHz private band for OBS/streaming PCs<br>
+    <strong>视觉</strong>：户外直播现场 — 男主播 / 4K 摄像机 + 灯光 + 笔记本 OBS 软件画面 + Mudi 7 通过 2.5G 网线接 NAS · 背景天空 + 草地（户外感强）<br>
+    <strong>命中</strong>：L2 #5 户外创作者 + L2 #10 used_with NAS + L2 #14 4K/8K livestreaming
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #c77dff">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-purple">Module 6 · Scenario 2 商务差旅</span><strong style="font-size:13px">立刻制作 · 高优先级</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Global Roaming, Zero Hassle"（Excel Tier 1 营销 tagline 直接用）<br>
+    <strong>副文案</strong>：Land in any country, switch carriers with a tap. eSIM + 2 nano-SIM Dual Standby — no SIM hunt, no carrier surcharge.<br>
+    <strong>视觉</strong>：机场航站楼 / 出租车 / 商务酒店 lobby 三联画 · 西装商务客手指点 Mudi 7 触屏切换 SIM · 背景多国国旗或时区时钟<br>
+    <strong>命中</strong>：L2 #1 商务差旅 + L2 #15 international roaming · Tier 1 营销 tagline 闭环
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #c77dff">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-purple">Module 7 · Four Feature Scene</span><strong style="font-size:13px">中优先级</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Built for Every Connection Scenario"<br>
+    <strong>副文案</strong>：4 个微场景方格（沿用 Excel 已填的 4 句话，每个加 1 个具体数字）<br>
+    &nbsp;&nbsp;● <strong>2.5 Gbps Wired</strong> — Stable wired access in co-working spaces<br>
+    &nbsp;&nbsp;● <strong>5.76 Gbps Wi-Fi 7</strong> — High-resolution PC VR wireless streaming<br>
+    &nbsp;&nbsp;● <strong>10 Gbps USB-C</strong> — Instant connectivity via USB-C tethering<br>
+    &nbsp;&nbsp;● <strong>2× TS-9 Antenna</strong> — Signal boosting in challenging coverage areas<br>
+    <strong>视觉</strong>：4 张 1080p 短视频帧拼接（每个场景一帧）<br>
+    <strong>命中</strong>：L1 #7 #1 #8 #13 全覆盖
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #4cc9f0">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-blue">Module 8 · VPN Server + Keep Home IP</span><strong style="font-size:13px">建议新增 · v1.2 报告强烈推荐</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Take Your Home Network Anywhere"（Excel Tier 1 外派营销 tagline）<br>
+    <strong>副文案</strong>：Run Mudi 7 as a VPN Server back home + a Client abroad. Reach your home NAS, smart hub, and even keep your home IP for streaming services.<br>
+    <strong>视觉</strong>：网络拓扑图 — 国外（Mudi 7 Client 模式）→ 加密 VPN tunnel 700 Mbps → 国内家中（Mudi 7 Server 模式）→ NAS / 智能音箱 / 4K TV<br>
+    <strong>命中</strong>：L1 #15 used_to keep home IP（v1.2 报告强调：<strong>US 8 竞品独家空白</strong>，必须做）+ Tier 1 长期外派
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #f4a261">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-orange">Module 9 · What's New vs MUDI 2</span><strong style="font-size:13px">建议新增 · 化解跨型号风险</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Upgrading from MUDI 2 (E750V2)? Here's What Changed."<br>
+    <strong>副文案</strong>：7 项升级对照表<br>
+    &nbsp;&nbsp;● Wi-Fi 5 → <strong>Wi-Fi 7</strong>（速度 8×）<br>
+    &nbsp;&nbsp;● 4G LTE → <strong>5G NR</strong> (Qualcomm X72)<br>
+    &nbsp;&nbsp;● Small OLED → <strong>2.8" Color Touchscreen</strong><br>
+    &nbsp;&nbsp;● OpenVPN 10 Mbps → <strong>700 Mbps (DCO)</strong>（速度 70×）<br>
+    &nbsp;&nbsp;● Gigabit Ethernet → <strong>2.5G + 10 Gbps USB-C</strong><br>
+    &nbsp;&nbsp;● Manual SIM swap → <strong>Onboard eSIM + Dual Standby</strong><br>
+    &nbsp;&nbsp;● OpenWrt customization preserved（保留迁移友好）<br>
+    <strong>视觉</strong>：左 MUDI 2 + 右 Mudi 7 双产品并列 + 7 行箭头对比<br>
+    <strong>命中</strong>：v1.2 §6 跨型号风险化解 — Mudi 老用户清晰升级路径
+    </div>
+  </div>
+
+  <div class="card" style="border-left:3px solid #2ec4b6">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><span class="tag tag-green">Module 10 · Comparison Chart vs 竞品</span><strong style="font-size:13px">建议新增 · 决策推手</strong></div>
+    <div style="font-size:12.5px;color:#c8ccda;line-height:1.85">
+    <strong>主标题</strong>："Why Mudi 7 Stands Out — 4-way Comparison"<br>
+    <strong>副文案</strong>：4 列横版对比表<br>
+    <table style="margin-top:8px;font-size:11px;background:#0a0b0d;border:1px solid var(--border);border-radius:6px">
+      <thead><tr><th style="padding:8px">维度</th><th style="padding:8px">Mudi 7 ($370)</th><th style="padding:8px">NETGEAR M7 Pro ($594)</th><th style="padding:8px">TP-Link M8550 ($594)</th><th style="padding:8px">GL.iNet XE3000 ($410)</th></tr></thead>
+      <tbody style="font-size:11px">
+        <tr><td style="padding:6px">Wi-Fi 标准</td><td style="padding:6px;color:#2ec4b6">Wi-Fi 7 Tri-band</td><td style="padding:6px">Wi-Fi 7</td><td style="padding:6px">Wi-Fi 6E</td><td style="padding:6px">Wi-Fi 6</td></tr>
+        <tr><td style="padding:6px">SIM 模式</td><td style="padding:6px;color:#2ec4b6">eSIM + 2 nano-SIM Dual Standby</td><td style="padding:6px">1 SIM + 8 eSIM (Single)</td><td style="padding:6px">1 Nano SIM</td><td style="padding:6px">2 SIM (Single Standby)</td></tr>
+        <tr><td style="padding:6px">2.8" 触屏交互</td><td style="padding:6px;color:#2ec4b6">✓ Full operation</td><td style="padding:6px">Status display</td><td style="padding:6px">1.44" small</td><td style="padding:6px">LED only</td></tr>
+        <tr><td style="padding:6px">VPN 速度</td><td style="padding:6px;color:#2ec4b6">OpenVPN 700 / WG 600</td><td style="padding:6px">No VPN</td><td style="padding:6px">WG only (no speed)</td><td style="padding:6px">OpenVPN 150 / WG 300</td></tr>
+        <tr><td style="padding:6px">USB-C 速度</td><td style="padding:6px;color:#2ec4b6">10 Gbps native</td><td style="padding:6px">N/A</td><td style="padding:6px">USB 3.0 (5 Gbps)</td><td style="padding:6px">USB 2.0</td></tr>
+      </tbody>
+    </table>
+    <strong>命中</strong>：决策推手 · 直接化解"比价"环节
+    </div>
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 9. 图片 ↔ Listing 一致性矩阵                    -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🔗</span>图片 ↔ Listing 草稿一致性矩阵</div>
+
+<p style="font-size:13px;color:var(--muted);margin-bottom:16px">把 v1.2 报告识别的 <strong>9 个独家差异化点</strong> 与 主图 / Bullet / A+ 的三维度覆盖对照，找出 <strong>"Bullet 说了但图没画"</strong> 或 <strong>"图画了但 Bullet 没强调"</strong> 的 mismatch。</p>
+
+<div style="overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:24px">
+  <table style="font-size:11.5px">
+    <thead><tr><th>独家差异化点</th><th>Bullet 覆盖</th><th>主图覆盖</th><th>A+ 覆盖</th><th>一致性诊断</th></tr></thead>
+    <tbody>
+      <tr><td>Wi-Fi 7 Tri-band 5.76 Gbps</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 1</span></td><td>✓ 04 / 08 (品)</td><td>✓ A+ 1 KV / A+ 3</td><td><span class="cov-yes" style="color:#2ec4b6">✓ 三处一致</span></td></tr>
+      <tr><td>5G X72 4.67 Gbps</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 1</span></td><td>✓ 04 / 9-NA</td><td>✓ A+ 1 KV / A+ 3</td><td><span class="cov-yes" style="color:#2ec4b6">✓ 三处一致</span></td></tr>
+      <tr><td>Built-in eSIM + Dual SIM Dual Standby</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 2</span></td><td>✓ 04 / 05</td><td>✓ A+ 1 KV / A+ 2</td><td><span class="cov-yes" style="color:#2ec4b6">✓ 三处一致</span></td></tr>
+      <tr><td>10 Gbps USB-C</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 3</span></td><td><span style="color:#f4a261">△ 03 标 "USB 3.1"（含糊）</span></td><td>✓ A+ 1 KV</td><td><span style="color:#f4a261">⚠ 主图-03 应改为 "USB-C 10 Gbps"</span></td></tr>
+      <tr><td>2.5G Ethernet</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Title+Bullet 3</span></td><td>✓ 03 / 04</td><td>✓ A+ 1 KV / A+ 2</td><td><span class="cov-yes" style="color:#2ec4b6">✓ 三处一致</span></td></tr>
+      <tr><td>2.8" Color Touchscreen（全交互）</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Title+Bullet 6</span></td><td>✓ 01 / 04 / 07</td><td>✓ A+ 1 / A+ 3（重复）</td><td><span style="color:#f4a261">⚠ 主图-07 与 A+ 3 右半重复</span></td></tr>
+      <tr><td>13.5h Battery + 30W PD</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 5</span></td><td>✓ 04 / 06</td><td>✓ A+ 1 / A+ 2</td><td><span style="color:#f4a261">⚠ 主图-06 没明确写 30W PD</span></td></tr>
+      <tr><td>OpenVPN 700 / WireGuard 600 Mbps</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 7</span></td><td>✓ 04 / 08</td><td>✓ A+ 1 / A+ 2</td><td><span class="cov-yes" style="color:#2ec4b6">✓ 四处一致</span></td></tr>
+      <tr><td>Quad-Path Multi-WAN Failover</td><td><span class="cov-yes" style="color:#2ec4b6">✓ Bullet 4</span></td><td><span class="cov-no" style="color:#e63946">✗ 0 张</span></td><td><span class="cov-no" style="color:#e63946">✗ 0 张</span></td><td><span style="color:#e63946">🔴 Bullet 4 独家但完全没视觉化</span></td></tr>
+      <tr><td>OpenWrt 开源固件（行业独家）</td><td><span style="color:#e63946">✗ 草稿未提</span></td><td><span class="cov-no" style="color:#e63946">✗ 主图缺</span></td><td>✓ A+ 1 KV 图标</td><td><span style="color:#e63946">🔴 草稿 Bullet 缺失（v1.2 报告已指出）</span></td></tr>
+      <tr><td>VPN Server / Keep Home IP</td><td><span style="color:#f4a261">△ Bullet 7 优化版有</span></td><td><span class="cov-no" style="color:#e63946">✗ 0 张</span></td><td><span class="cov-no" style="color:#e63946">✗ 0 张</span></td><td><span style="color:#e63946">🔴 §10 Module 8 必须做</span></td></tr>
+      <tr><td>TS-9 外置天线接口</td><td><span style="color:#f4a261">△ 未在 7 Bullet 强调</span></td><td>✓ 03</td><td>✓ A+ 1 KV 图标</td><td><span style="color:#f4a261">⚠ Bullet 缺 vs 图覆盖</span></td></tr>
+      <tr><td>MUSE Gold Winner 2025 设计奖</td><td><span class="cov-no" style="color:#e63946">✗ 0 提</span></td><td><span class="cov-no" style="color:#e63946">✗ 0 张</span></td><td>✓ A+ 1 KV 徽章</td><td><span style="color:#e63946">🔴 Bullet / Backend 必须加 "muse award" 关键词</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="alert alert-red" style="margin-bottom:24px">
+  <span style="font-size:18px;flex-shrink:0">🔴</span>
+  <div>
+    <strong style="display:block;margin-bottom:4px">必须补 3 个 mismatch（图 ↔ Bullet 不一致）</strong>
+    ① <strong>Quad-Path Failover</strong>（Bullet 4 独家但完全没视觉化）— 建议为 §10 Module 4 Four Features 加一个 sub-card 画 4 路 failover 拓扑图<br>
+    ② <strong>OpenWrt</strong>（Bullet 完全没提但 A+ 1 KV 有图标）— v1.2 报告已指出，建议补到 Bullet 2/3<br>
+    ③ <strong>VPN Server / Keep Home IP</strong>（US 8 竞品独家空白但当前图 0 张）— §10 Module 8 强烈推荐立刻做
+  </div>
+</div>
+
+<!-- ============================================== -->
+<!-- 10. D+30 验证                                   -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">🔁</span>D+30 / D+60 图片有效性验证</div>
+
+<div class="card" style="border-left:3px solid #4cc9f0;padding:24px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#4cc9f0">D+30</div>
+    <div style="font-size:16px;font-weight:700">图片点击热图 + Brand Analytics（约 2026-06-19）</div>
+  </div>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px">卖家拉数据路径</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.9;color:#c8ccda">
+    <li><strong>Amazon Seller Central → Brand Analytics → Search Catalog Performance</strong> · 看 Mudi 7 的 Glance Views, Click Rate, Detail Page Sales</li>
+    <li><strong>Amazon Ads Console → Reports → Sponsored Display</strong> · 看 product/category 主图点击率（CTR）</li>
+    <li><strong>Posts (Amazon Posts) Insights</strong> · 看 13 张主图中哪几张 engagement 最高（如果有用作 Posts）</li>
+    <li><strong>第三方工具</strong>（Helium 10 X-Ray / Jungle Scout）· 看主图 vs 竞品 CTR 横向</li>
+  </ul>
+  <div style="font-family:'DM Mono',monospace;font-size:10px;color:#4cc9f0;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;margin-top:14px">Cosle 在 Validation Report 中验证</div>
+  <ul style="margin-left:20px;font-size:12.5px;line-height:1.9;color:#c8ccda">
+    <li><strong>主图 #1 CTR vs 同价位段平均</strong>（5G hotspot 行业基准约 3-5%）</li>
+    <li><strong>本报告预测的 9 张主图序列实际表现</strong>（重排后 CTR 是否提升）</li>
+    <li><strong>哪张图带动了最多转化</strong>（图片→详情页→加购的漏斗）</li>
+    <li><strong>A+ 3 张 vs 没有 A+ 时的转化对比</strong>（如有 A/B test 历史）</li>
+  </ul>
+</div>
+
+<div class="card" style="border-left:3px solid #f4a261;padding:24px;margin-bottom:14px">
+  <div style="display:flex;align-items:center;gap:14px;margin-bottom:14px">
+    <div style="font-family:'Syne',sans-serif;font-size:24px;font-weight:800;color:#f4a261">D+60</div>
+    <div style="font-size:16px;font-weight:700">A+ 7 张补全后效果验证（约 2026-07-19）</div>
+  </div>
+  <p style="font-size:12.5px;color:#c8ccda;line-height:1.85">假设卖家在 D+30 前完成 §10 推荐的 7 张 A+ 模块，D+60 验证：① A+ 7 个新模块的 engagement（Brand Analytics A+ Content Performance）；② Module 8（VPN Server）和 Module 10（Comparison Chart）这两个独家差异化模块的转化贡献；③ 主图-04 / A+ 2-highlight 重复化解后整体 CTR 变化。</p>
+</div>
+
+<!-- ============================================== -->
+<!-- 11. 报告局限                                    -->
+<!-- ============================================== -->
+<div class="section-title"><span class="icon">📝</span>报告局限与免责</div>
+
+<div class="card" style="padding:24px">
+  <ul style="margin-left:20px;font-size:12.5px;line-height:2;color:#c8ccda">
+    <li><strong>评分为预测值</strong>：本报告基于视觉静态分析 + Amazon 主图政策 + Rufus 多模态视觉理解能力推演，<strong>无 A/B test 实测数据</strong>。真实分数须在 D+30 后通过 Brand Analytics CTR / 点击热图验证。</li>
+    <li><strong>主图分辨率推测</strong>：本报告基于文件大小推测主图分辨率（主图-01 仅 74 KB 可能偏低）。<strong>建议卖家确认每张主图实际像素 ≥ 1000×1000</strong>（Amazon zoom 功能要求），推荐 2000×2000。</li>
+    <li><strong>白底纯度未做精确色值检测</strong>：主图-02 的"灰底"判断是视觉直观估计，未做 RGB 取色。建议卖家用 Photoshop 取色器确认主图 #1 候选的背景是否 ≥ RGB 250/250/250（Amazon 政策容忍范围）。</li>
+    <li><strong>A+ 完成度仅 3/10</strong>：剩余 7 张 A+ 模块（§10）尚未制作，本报告评估的是<strong>当前状态</strong>；待 A+ 全部完成后建议出 v1.1 增量报告评估补全后的整体效果。</li>
+    <li><strong>仅 US 市场视角</strong>：本报告默认 US 主导（与 v1.2 Listing 报告一致），UK/DE 视角的图片合规与场景适配需另行评估（特别是 9.-NA frequency band 需出对应地区版）。</li>
+    <li><strong>视频 / Posts / Brand Story 未在本报告范围</strong>：本报告仅覆盖<strong>主图序列 + A+ Standard 模块</strong>。Mudi 7 的产品视频、Amazon Posts、Brand Store 等高级品牌资产建议在 D+30 验证后单独评估。</li>
+    <li><strong>数据保密</strong>：本报告所有数据仅用于 Mudi 7 上市前内部测试；不留存图片原始数据；可签 NDA。</li>
+  </ul>
+</div>
+
+<!-- ============================================== -->
+<!-- FOOTER                                         -->
+<!-- ============================================== -->
+<div style="text-align:center;padding:40px;color:var(--muted);font-size:11px;border-top:1px solid var(--border);margin-top:60px">
+  <div>由 <strong style="color:#e8eaf0">Cosle</strong>（香港科技大学 AI 创业团队）基于 Cosle Rufus 视觉模型生成</div>
+  <div style="margin-top:6px">输入：13 张主图 + 3 张 A+ 图片（E5800/）&nbsp;·&nbsp;配套 v1.2 Listing 文字优化报告&nbsp;·&nbsp;报告日期 2026-05-15</div>
+  <div style="margin-top:14px">📧 <a href="mailto:zouak@connect.ust.hk">zouak@connect.ust.hk</a> &nbsp;·&nbsp; 📧 <a href="mailto:zyuanay@connect.ust.hk">zyuanay@connect.ust.hk</a></div>
+</div>
+
+</div><!-- /container -->
+
+</body>
+</html>

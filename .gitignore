@@ -1,0 +1,32 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# 编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python（PDF 导出 / 数据处理脚本可能用到）
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+.env
+
+# 临时输出
+/tmp/
+*.tmp
+
+# 卖家私有数据 — 不要 commit 任何含真实 SP Prompts xlsx 数据
+*sp_prompts*.xlsx
+*search_term_report*.xlsx
+*real_data*.xlsx
+
+# PDF 体积较大，默认不入仓（如需保留请显式 git add -f）
+examples/*.pdf
