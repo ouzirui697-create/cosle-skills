@@ -130,7 +130,7 @@ Amazon Rufus 上线后，<strong>"Listing 怎么写"已经从 SEO 关键词游�
 ### 全局安装（推荐 · 所有项目都可用）
 
 ```bash
-git clone https://github.com/<your-org>/cosle-skills.git
+git clone https://github.com/ouzirui697-create/cosle-skills.git
 cd cosle-skills
 
 # 复制到 ~/.claude/skills/
