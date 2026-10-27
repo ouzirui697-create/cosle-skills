@@ -2,6 +2,16 @@
 
 The COSMO report uses a consistent dark-theme design system. This file defines the exact CSS variables, components, and layout patterns to use when generating the HTML report.
 
+## Current content contract
+
+This is a visual component reference, not a source of business rules. Follow
+`ad-decisions.md` and `data-contract.md` for all conclusions and values. Legacy example
+copy below is illustrative: do not reuse claims of guaranteed lift, causality,
+fixed refresh times, or universal title limits. Advertising-only reports omit
+Listing scores, rewrites and marketing CTAs; use `scripts/render_ads.py` for an
+offline evidence report. Show total/promoted/other-SKU attribution separately.
+Unknown values remain unknown; L3 badges do not indicate pause decisions.
+
 ---
 
 ## Core Design Principles
@@ -38,7 +48,8 @@ The COSMO report uses a consistent dark-theme design system. This file defines t
 
 ## Font Loading
 
-Always load these three fonts:
+For custom reports these fonts are optional; include local system fallbacks and
+do not require a network font download for offline reports:
 ```html
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@700;800&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
 ```
@@ -208,7 +219,7 @@ Use this component when the seller has data from a previous reporting period. Pl
   </div>
   <!-- Key mechanism callout -->
   <div style="margin-top:14px; font-size:12.5px; color:#a0c8c8; line-height:1.7; border-left:2px solid #2ec4b6; padding-left:12px;">
-    <strong>典型改善机制：</strong>[Describe the specific COSMO fix that worked, e.g., "U8PRO Bullet 3 新增 capable_of + ADA 17.375" 精确规格 → Rufus 在 14 天内停止推荐竞品 iX7-MT"]
+    <strong>同期变化与解释：</strong>[列出已核验改动、观测变化及其他可能因素；前后对比不直接证明因果]
   </div>
 </div>
 ```

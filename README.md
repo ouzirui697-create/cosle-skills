@@ -56,8 +56,8 @@ Amazon Rufus 上线后，<strong>"Listing 怎么写"已经从 SEO 关键词游�
                │       cosmo-report           │
                │       （真实诊断）             │
                │              ↓                │
-               │  🎯 L1 加码 / L3 关闭清单      │
-               │  📈 Rufus 友好度真实分        │
+               │  🎯 基于证据的广告动作清单      │
+               │  📈 本品 / 其他SKU归因拆分        │
                │  ✏ 字符级 Listing 微调建议     │
                └──────────────────────────────┘
 ```
@@ -108,18 +108,26 @@ Amazon Rufus 上线后，<strong>"Listing 怎么写"已经从 SEO 关键词游�
 
 ### 3. `cosmo-report` · 已上架产品 SP Prompts 诊断
 
-> 拿到 SP Prompts xlsx 数据后的真实诊断。L3 关闭清单 + L1 加码清单 + 字符级 Listing 微调。
+支持**只做广告**：无需Listing，先核对数据、拆分归因，再给有证据的建议。
 
-**输入**：Amazon Ads Console 导出的 SP Prompts xlsx（真实广告数据）
-**输出**：单文件 HTML 报告，含：
-- 🔬 **COSMO 分析** —— 每条 Prompt 按 L1/L2/L3 分级 + 转化贡献 + 跨型号替代检测
-- 💯 **Rufus 友好度真实分** —— 5 维度评分（不再是预测，是真实）
-- 🚫 **L3 关闭清单** —— 实测无转化的低典型性 Prompt + 预估省下的广告费
-- 📈 **L1 加码清单** —— 真实有转化的 Prompt 建议 +20-30% bid
-- ✏ **Listing 字符级微调** —— 基于真实 mismatch 给出精确修改建议
-- 🎯 **Ad Action Plan** —— 优先级排序的下一步动作清单
+- XLSX/CSV/TSV全表读取，主表与回答附表分开，不重复累加。
+- Spend/CPC精确映射，保留来源行号；总/本品/其他SKU订单与销售并列。
+- 模型按原文做L1/L2/L3分类与解释，L3不自动暂停，出单不自动加价。
+- 免费期、未知成本、未成熟归因或样本不足时，只给观察/核查。
+- Listing原文齐全且用户需要时再做文案诊断/改写，不称“真实Rufus分”。
 
-**典型触发词**："帮我分析广告报告"、"做一份 COSMO 报告"、"SP Prompts 分析"、"Rufus 广告优化"
+Python 3.10+；XLSX依赖 `cosmo-report/scripts/requirements.txt`。
+
+```bash
+python3 cosmo-report/scripts/parse_prompts.py /path/report.xlsx --out /path/work/parsed.json
+python3 cosmo-report/scripts/analyze_ads.py /path/work/parsed.json --sheet '主表名称' --out /path/work/analysis.json
+python3 cosmo-report/scripts/render_ads.py /path/work/analysis.json --out /path/work/广告诊断.html
+python3 -m unittest discover -s cosmo-report/tests -v
+```
+
+用户确认免费期时传 `--billing free`。目标ACOS、样本门槛与数据回补截止日只在有依据时填写。
+详见[使用说明](cosmo-report/SKILL.md)与[数据契约](cosmo-report/references/data-contract.md)。
+脚本不代替语义判断；模型分类可用 `--annotations` 加入报告。卖家数据和输出不提交到仓库。
 
 ---
 
@@ -194,7 +202,7 @@ ls ~/.claude/skills/listing-image-audit/
 请帮我做完整的 COSMO 诊断报告。
 ```
 
-→ 输出：<strong>预测命中率（v0 的 46 条预测中实际触发 N 条）</strong>+ 意外 Prompt 全量 + L3 关闭清单（预估省 $X/月） + L1 加码清单（预估提 +N% 转化） + 字符级 Listing 微调建议 + Rufus 友好度真实分（替代预测分）。
+→ 输出：预测与实际问题对照（注明覆盖范围）＋本品/其他SKU归因拆分＋广告动作与观察项。需要文案分析时核验Listing，不承诺转化提升。
 
 ---
 
@@ -214,11 +222,11 @@ ls ~/.claude/skills/listing-image-audit/
 
 ### 🔬 COSMO 15 关系框架
 
-prelaunch-listing 和 cosmo-report 共用 [Yu et al. (2024). COSMO](https://www.amazon.science/publications/cosmo) 论文的 15 关系类型，把 Prompt 按典型性分为三级：
+两个模块参考 [Yu et al. (2024). COSMO](https://www.amazon.science/publications/cosmo) 组织语义；`cosmo-report` 已更新其独立参考文件。L1/L2/L3是工具标签，不是平台转化排名：
 
-- **L1 高典型性**（`capable_of` / `used_for_func` / `used_to` / `xWant`）— 占 75% 真实购买转化
+- **L1 高典型性**（`capable_of` / `used_for_func` / `used_to` / `xWant`）— 功能或能力需求，不预设转化占比
 - **L2 中典型性**（`used_for_aud` / `used_for_eve` / `used_in_loc` / `used_with` / `used_by`）— 场景类
-- **L3 低典型性**（`is_a` / `xInterested_in`）— 品牌泛化，建议 PAUSED
+- **L3 低典型性**（`is_a` / `xInterested_in`）— 品牌/品类浏览，不因标签自动暂停
 
 ### ⚡ 周颗粒度验证（v2.0+）
 
@@ -227,7 +235,7 @@ D+30 / D+60 / D+90 月颗粒度太粗，错过 W+1 / W+2 的"意外 Prompt"早�
 | 时间点 | 类型 | 交付 |
 |--------|------|------|
 | W+1 | Quick Read | 24h 内短报，找完全没预测到的高频 Prompt |
-| W+2 | Trend Check | 短报，识别 L3 候选 PAUSED |
+| W+2 | Trend Check | 短报，结合收费、归因与样本识别核查项 |
 | W+4 | Validation Report v1 | 完整报告，预测命中率 + 意外 Prompt 全量 |
 | W+8 | Optimization Report v1 | 完整诊断 + Listing 字符级微调 |
 | W+12 | Calibration Report | 长期方案 + ROI 测算 |
@@ -258,14 +266,14 @@ cosle-skills/
 │
 ├── cosmo-report/                      # Skill 1 · 真实数据诊断
 │   ├── SKILL.md
-│   └── references/
-│       ├── cosmo_framework.md         # COSMO 15 关系详细定义
-│       └── report_design.md           # 红色诊断主题 HTML 设计系统
+│   ├── scripts/                      # 解析 / 汇总 / 离线HTML
+│   ├── tests/                        # 合成数据回归测试
+│   └── references/                   # 数据、广告规则、语义与可选Listing模块
 │
 ├── prelaunch-listing/                 # Skill 2 · 预测性文字报告
 │   ├── SKILL.md                       # 含 Lessons learned 6 条
 │   └── references/
-│       ├── cosmo_framework.md         # （与 cosmo-report 共用）
+│       ├── cosmo_framework.md         # 新品模块独立参考
 │       └── report_design.md           # 橙色预测主题
 │
 ├── listing-image-audit/               # Skill 3 · 视觉打分诊断
