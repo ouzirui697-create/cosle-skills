@@ -1,349 +1,112 @@
 ---
 name: cosmo-report
 description: >
-  Generate a full Amazon COSMO × Rufus SP Prompts optimization report for a seller's ASIN(s).
-  Use this skill whenever a seller uploads their SP Prompts xlsx data and asks for analysis,
-  a report, COSMO scoring, Rufus optimization, listing improvement suggestions, or ad action plans.
-  Also trigger when the user says things like "帮我分析广告报告", "做一份COSMO报告", "listing优化建议",
-  "Rufus广告优化", "SP Prompts分析", or any request to review Amazon advertising Prompt data.
-  This skill reads the xlsx input, classifies each Prompt by COSMO intent level (L1/L2/L3),
-  scores Rufus-friendliness, detects product mismatches, and outputs a polished HTML report
-  with listing rewrite examples and a prioritized ad action plan — all in plain language.
+  Analyze Amazon SP Prompts XLSX/CSV reports with traceable ad metrics, semantic intent
+  classification, response checks, and evidence-based action plans. Use for SP Prompts
+  分析、COSMO 报告、Rufus 广告诊断或已有广告数据的 Listing 优化。
+  Supports advertising-only analysis without Listing input; use prelaunch-listing for
+  unlaunched products without ad data and listing-image-audit for image-only reviews.
 ---
 
-# COSMO × Rufus SP Prompts Report Skill
+# COSMO × Rufus 广告诊断
 
-## What this skill does
+先回答卖家「保留什么、核查什么、是否已有调整依据」，再提供来源和计算过程。
+脚本负责读取、核算和展示；模型负责语义分类、证据解释与建议。分类不是购买意图真值，
+报告也不是账户操作授权。
 
-Produces a complete, seller-ready COSMO optimization report as a **single HTML file** that can be downloaded and opened in any browser. The report includes:
+## 按请求选范围
 
-1. **Health Score** — Rufus-friendliness score (0–100) per product line
-2. **COSMO Intent Analysis** — classify each Prompt into L1/L2/L3 with full sales data
-3. **Mismatch Detection** — find Prompts where Rufus is recommending a competitor or wrong product
-4. **Listing Optimization** — partial before/after fixes + complete listing reference templates
-5. **Ad Action Plan** — prioritized steps (🔴 urgent / 🟡 high / 🟢 medium) with exact console paths
-6. **Plain-language Seller Guide** — step-by-step instructions for non-technical operators
-7. **V1→V2 Comparison** — (returning sellers) show progress between reporting periods
-8. **Periodic Reports Value** — demonstrate why regular diagnosis matters, invite next submission
+- **只做广告**：分析报表、归因、活动和问题表现；无需索取五点描述，不生成 Listing 分数或改写。
+- **广告 + Listing**：先完成可做的广告分析；需要诊断或改写具体文案时，才按
+  [listing-review.md](references/listing-review.md) 核验 Title/Bullets。
+- 没有明确请求改写时给修改方向；用户需要完整文案时保留原有交付能力，以已核实事实为依据。
 
----
+先读取 [data-contract.md](references/data-contract.md) 和 [ad-decisions.md](references/ad-decisions.md)。
+只确认影响结论的缺口，已知信息不重复询问。目标、利润或收费状态缺失时，先完成事实分析，
+依赖这些信息的建议标为观察/核查，不猜默认值。
 
-## Workflow
+## 1. 读取与核算
 
-> **Order is fixed**: Step 0 (Listing verification) → Step 1 (Read xlsx) → Step 2 (COSMO classification) → ... → Step 4 (HTML generation). See "CRITICAL: Listing Verification Rule" section below for the Step 0 / 0.5 details. Skipping Step 0 = report quality collapses.
-
-### Step 1 — Read Input Data
-
-The user will provide one or more of:
-- SP Prompts xlsx files (exported from Amazon Ads console → Sponsored Products → Prompts)
-- ASIN(s) or product line names for context
-- Brand name
-
-**Read the xlsx** using openpyxl. Look for these columns (order may vary):
-```
-Prompt Detail | Sample Response | Ad Name | ASIN | SKU |
-Impressions | Clicks | CTR | Cost | CPC | Purchases | Sales | ACOS
-```
-
-**openpyxl row iteration** — iterate row by row to avoid MergedCell errors:
-```python
-import openpyxl
-wb = openpyxl.load_workbook(path, data_only=True)
-ws = wb.active
-rows = list(ws.iter_rows(values_only=True))
-# Find header row, then iterate data rows
-```
-
-If columns are missing, infer from context. The `Sample Response` and `ASIN` columns may need to be filled manually by the seller (note this in the report).
-
-**All dates in the report must use Chinese format** (e.g., `2026年3月10日`, `3月10日–4月9日`). Never write English month names (Mar, Apr, etc.) in any visible text.
-
-### Step 2 — COSMO Intent Classification
-
-For each Prompt row, classify its COSMO relation type and intent level. Read `references/cosmo_framework.md` for the full 15-relation taxonomy. Quick reference:
-
-| Level | Relation Types | Prompt Pattern | Conversion |
-|-------|---------------|----------------|------------|
-| **L1 高典型性** | capable_of, used_for_func, used_to, xWant | "Does [brand] have [product] with [specific feature]?" | ★★★★★ |
-| **L2 中典型性** | used_for_eve, used_for_aud, used_on, used_in_loc, used_with, used_by, used_as, xIs_a | "What [brand] product works for [scenario/audience]?" | ★★★☆☆ |
-| **L3 低典型性** | is_a, xInterested_in | "Why choose [brand]?" / "[Brand] [product type]" | ★☆☆☆☆ |
-
-**Mismatch detection**: If the `Sample Response` describes product features that don't match the `Ad Name` / ASIN being advertised → flag as ❌ Product Mismatch.
-
-**Cross-model substitution**: Rufus responding to Product A's prompts using features of Product B in the same brand. Root cause: Product A listing lacks specific specs → COSMO borrows from the richer listing. Fix: add specs to Product A's listing directly.
-
-**L3 rule**: Any Prompt classified as L3 should be flagged for immediate closure once CPC billing begins.
-
-### Step 2.5 — Returning Seller: V1→V2 Comparison
-
-If the seller has provided data from a **previous reporting period** (v1), generate a comparison section:
-
-1. Calculate score change per product (v2 score – v1 score)
-2. Identify the specific listing changes made between periods and which COSMO mechanism explains the improvement
-3. Show a concrete example of the COSMO fix working (e.g., "U8PRO Bullet 3 now uses `capable of meeting ADA Standard 117.1 – 17.375-inch` → iX7-MT displaced from Rufus response within 14 days")
-4. Use a green/teal accent for improvements, red for regressions
-5. Include a "V1→V2 对比" banner card near the top of the report (after stat row, before health scores)
-
-This section demonstrates the value of periodic reporting to the seller.
-
-### Step 3 — Scoring
-
-Compute a **Rufus Friendliness Score (0–100)** per product line:
-
-| Dimension | Weight | How to Score |
-|-----------|--------|--------------|
-| capable_of 功能覆盖度 | 40% | % of L1 Prompts with specific numbers/specs in Sample Response (0–100) |
-| Typicality 质量 | 30% | Average quality of Sample Response descriptions (vague=30, specific=80, with numbers=100) |
-| 前80字符意图密度 | 15% | Do Ad Name titles contain key feature words in first 80 chars? |
-| L2/L3场景覆盖 | 10% | Diversity of scenario/audience Prompts |
-| Semantic Gap Risk | -5% | Deduct for each confirmed mismatch |
-
-**Rating guide**: 0–40 = 🔴 Critical, 41–60 = 🟡 Needs Work, 61–80 = 🟢 Good, 81–100 = ✨ Excellent
-
-### Step 4 — Generate HTML Report
-
-Produce a single self-contained HTML file. Read `references/report_design.md` for the exact visual style, color palette, and component patterns to use (dark theme, DM Mono + Syne + Noto Sans SC fonts, red accent #e63946).
-
-The report must contain these sections in order:
-
-```
-1.  Hero header — brand name, data period (Chinese format), prompt count, report date
-2.  Stat row — 4 key metrics (products analyzed, prompts, L1 count, critical count)
-3.  V1→V2 Comparison Banner — (returning sellers only) progress between periods
-4.  Health Scores — score rings per product line + key alert boxes
-5.  Prior Recommendations Tracking — (v2+) did the v1 fixes get implemented?
-6.  COSMO Intent Analysis Table — 11-column table with real sales data, per product
-7.  Key Insights — explain WHY some prompts convert and others don't
-8.  Listing Optimization — partial before/after fixes + complete listing templates
-9.  Ad Action Plan — numbered action items with 🔴/🟡/🟢 priority badges
-10. Plain-language Seller Guide — step-by-step for non-technical operators
-11. Summary Table — one-page priority checklist
-12. Periodic Reports Value — demonstrate value of regular diagnosis
-13. Next Report CTA — invite seller to submit next data
-14. Partnership CTA — Cosle WeChat invitation (ray0117_)
-15. Footer — attribution, citation, disclaimer
-```
-
-### Step 5 — Listing Optimization: Two-Layer Approach
-
-Generate listing optimization in **two layers** for each product with issues:
-
-**Layer 1 — Partial Fix Cards** (always include)
-Show the 1–2 most impactful before/after rewrites. Focus on the highest-priority COSMO fix:
-- Missing `capable of` format → rewrite to include it
-- Vague adjectives → replace with specific numbers
-- ADA height as fraction → convert to decimal + add "capable of meeting ADA Standard 117.1"
-
-**Layer 2 — Complete Listing Reference Template** (placed after each Layer 1 card)
-Use `<details>/<summary>` collapsible pattern (no JavaScript). Contains:
-
-1. **Title** — complete optimized title, < 200 chars, brand + model + core feature keywords
-2. **Five Bullet Points** — COSMO triple format, one bullet per key `capable_of` relation
-3. **Image Suggestions** — main image (⭐ highlighted) + 4 supporting images
-4. **Q&A Recommendations** — map actual running Rufus Prompts to answer templates
-
-**Listing Rewrite Rules:**
-
-**Golden Rule**: Specific numbers + precise specs = high typicality. Vague adjectives = low typicality.
-
-Apply the COSMO triple format for Bullet Points:
-```
-[FEATURE LABEL]: [product] capable of [specific function] – [exact spec with numbers] for [use case]
-```
-
-**❌ Low typicality (avoid)**:
-- "Powerful flush system"
-- "Comfortable seat height"
-- "Easy to install"
-
-**✅ High typicality (target)**:
-- `ADA COMFORT HEIGHT: capable of meeting ADA Standard 117.1 – 17.375-inch (17-3/8") floor-to-seat height, suitable for senior and mobility-limited users`
-- `1000G MAP CERTIFIED FLUSH: capable of removing 1000 grams of solid waste in a single flush – 1.6 GPF full / 1.1 GPF half, MaP Premium certified`
-- `FOAM SHIELD SPLASHBACK PROTECTION: capable of forming an airtight foam barrier before each flush – blocks bowl splashback, reduces cleaning frequency`
-
-Always include:
-- Specific numbers (dimensions, weights, quantities, GPF, certifications)
-- Comparative specs ("6× thinner", ADA standard numbers)
-- Action verbs + outcome
-
-**Missing specs**: Use `[X]` placeholder and add a ⚠️ warning: "此处需卖家确认实际规格后填写"
-
-**CRITICAL constraint — never fabricate numbers**:
-- Do not invent PSI ratings, temperature ranges, percentages, or dimensions not found in the actual listing
-- If a spec is unknown, use `[X]` — never guess or estimate
-
-### Step 6 — Ad Action Items
-
-Generate action items in priority order. Each item must include:
-- Priority badge: 🔴 Urgent / 🟡 High / 🟢 Medium / ⚪ Low
-- Exact Amazon console navigation path
-- The specific change to make (copy-paste ready)
-- How to verify success (what to check and when)
-- Estimated time to complete
-
-**Universal rules for ad actions**:
-- Any L3 Prompt → recommend PAUSED immediately
-- Any confirmed mismatch → fix Listing first, then verify Sample Response changes within 7–14 days
-- High CTR + 0 conversion L1 Prompts → recommend Listing fix before increasing bid
-- Verified conversion Prompts → recommend +20–30% bid increase
-
----
-
-## CRITICAL: Listing Verification Rule (HARD GATE — non-negotiable)
-
-**No verification = no diagnosis. Zero tolerance for fabricated or guessed Listing content.**
-
-This is the single most important rule in this skill. A single false "Listing 缺少 X" claim destroys the credibility of the entire report — sellers will conclude the AI is hallucinating. The UNICOLY v1 case (2026-05-14) and EPLO v1 case both validated this: when the listing already says X but the report claims X is missing, the seller spots it instantly and loses trust in every other diagnosis.
-
-### Step 0 (before ANY diagnosis) — Establish ground truth on Listing content
-
-Execute this verification ladder **in order**. Stop at the first method that succeeds:
-
-| Method | When to use | Reliability |
-|--------|-------------|-------------|
-| **(A) User provided directly** | User pasted Title + Bullet Points in conversation | ⭐⭐⭐⭐⭐ Highest |
-| **(B) WebFetch** | `https://www.amazon.com/dp/[ASIN]` | ⚠️ Often returns only HTML head/scripts on Amazon — verify content is substantive before trusting |
-| **(C) WebSearch** | `[Brand] [Product] amazon [ASIN]` — extracts snippets and partial bullet text | ⭐⭐⭐ Usually enough for spec keywords |
-| **(D) Ask the user** | All of (B) and (C) failed or returned incomplete data | ⭐⭐⭐⭐⭐ Use this — do not proceed without it |
-
-**Mandatory rule for method (D)**: If WebFetch returns insufficient content AND WebSearch lacks the Bullet Points text, **stop and ask the user to paste the Title + 5 Bullet Points for each ASIN**. Do not infer Listing content from the Ad Name column alone — the Ad Name is the title, not the Bullets, and diagnoses about "Bullet N lacks X" require seeing the actual Bullets.
-
-### Step 0.5 — Mandatory Listing Verification Table
-
-Before writing the HTML report, output to the user a verification table for review:
-
-```
-| ASIN | What the Listing actually contains | What the report will diagnose as missing | Source |
-|------|-----------------------------------|-----------------------------------------|--------|
-| B0XXX | "cold-rolled steel plate (SPCC)", "wall-mounted, prevent tipping", "tempered glass" | 钢板厚度 mm、单层承重 lbs、玻璃厚度 mm | User-provided 2026-05-14 |
-| ... | ... | ... | ... |
-```
-
-The user must be able to scan this table and immediately spot any false-missing claims. Only proceed to HTML generation after this checkpoint.
-
-### Hard prohibitions
-
-- ❌ Never write "Listing 没有提到 X" / "Listing does not mention X" if X actually appears in the Listing text — instead write "Listing 第 N 点已有 X 关键词但缺少具体数字/规格支撑"
-- ❌ Never invent specific numbers (lbs, mm, PSI, hours, percentages, certification names). Unknown → `[X]` + ⚠️ "待卖家确认"
-- ❌ Never fabricate certification standards (ASTM F2057, ANSI Z97.1, etc.) that the Listing doesn't claim — these can create legal exposure for the seller. Format: "建议补充 [认证名] 认证（待卖家确认是否已通过）"
-- ❌ Never assume a Bullet's content from its label alone — read the actual Bullet text
-
-### Cross-model substitution detection
-
-Watch for Rufus responding to one ASIN's prompts by describing a **different product in the same brand's lineup**. This is distinct from cross-brand substitution and requires checking the Sample Response text against the specific ASIN being advertised. Always state which ASIN's content is being borrowed when applicable.
-
----
-
-## Output
-
-Save the report as `[BrandName]_COSMO_Rufus优化报告.html` in the appropriate output directory and share it with the user.
-
-Tell the user: "下载后直接用浏览器（Chrome/Safari/Edge）打开即可查看完整报告。"
-
-### Pre-delivery HTML Sanity Check (mandatory)
-
-Inline-styled HTML with Chinese text is very easy to break — a missing `">` between `style="..."` and the Chinese text content collapses entire sections silently (the browser treats Chinese as part of the unclosed attribute). UNICOLY v1 had this exact bug in the seller-guide step cards: `<div style="font-size:11px;color:#7b8299;预计 5 分钟</div>` instead of `<div style="font-size:11px;color:#7b8299;">预计 5 分钟</div>`.
-
-Before reporting the file as ready, run this grep to detect malformed style attributes:
+Python 3.10+；XLSX读取需要 `scripts/requirements.txt` 中的openpyxl，CSV/TSV不需要。
+从skill目录运行，输出放用户工作目录或临时目录，不写入skill的脚本/参考目录：
 
 ```bash
-grep -nE 'style="[^"]*;[^>]*[一-龥]' [report.html]
-# Empty result = clean. Any matches = unclosed style attribute leaking into Chinese text — fix immediately.
+python3 scripts/parse_prompts.py /path/report.xlsx --out /path/work/parsed.json
+python3 scripts/analyze_ads.py /path/work/parsed.json --sheet '主表名称' --out /path/work/analysis.json
 ```
 
-Also visually verify by opening the file (or having the user open it) and checking that:
-- All 4 sections of the Plain-language Seller Guide step cards render
-- The Summary Checklist table is full-width, not pushed off-screen
-- All `<details>` collapsible blocks open correctly
+- 解析器扫描**全部**工作表。检查 `sheet_inventory`、`issues`、`excluded` 和真实日期，
+  不把文件名当已验证周期，不把备注、缺名汇总行当普通问题。
+- 只有一个纯指标表时可省略 `--sheet`；有多个候选时必须明确选择。附表回答单独保留。
+  多表合并须核实无重叠、同币种/站点/归因窗口，再传多个 `--sheet` 和 `--confirmed-disjoint`。
+- Spend与CPC分别读取；Campaign/Ad Group不是Title；Ad Name也仅是未核实标签。
+- 原始行数、不同问题文本数、广告ASIN数、活动数分别显示。同一问题跨活动不共享调整建议。
+- 总/本品/其他SKU订单和销售额并列；缺失为未知，不补0；拆分不一致时核查。
+  ACOS/CTR/CPC用总和重算，不平均行级百分比；花费为0时ROAS不定义。
+- 重复或字段歧义未处理前，不将总计视为最终可信结果；脚本不擅自删除重复。
 
----
+用户确认免费期后传 `--billing free`；未知保持默认 `unknown`。付费评估可传：
 
-## Brand Profiles
-
-在生成 Listing 优化建议前，**先识别品牌**。若品牌匹配下方档案，在 COSMO 方法论之上叠加品牌特有规范。品牌规范覆盖通用格式建议，但永远不覆盖 COSMO 典型性规则（Typicality）。
-
-### GL.iNet (GL Technologies)
-
-**触发条件**：品牌为 GL.iNet，或产品名含 Mudi / Beryl / Slate / Brume / Opal / Flint / Spitz / Convexa，或型号以 `GL-` 开头，或 Ad Name 中出现 `GL-` 型号格式。
-
----
-
-**品牌写法**：始终写 `GL.iNet` — 不写 `GL`、`GL iNet`、`Glinet`、`glinet`
-
-**产品命名**：`[产品代号] [代际] ([型号])` — 如 `Mudi 7 (GL-E5800)`、`Beryl AX (GL-MT3000)`
-- 代号：自然界英文单词（Mudi, Beryl, Slate, Brume, Opal, Flint, Spitz）
-- 型号格式：`GL-[字母][数字]`
-- Listing Title 中必须同时出现产品代号和型号
-
----
-
-**Title 结构**：
+```bash
+python3 scripts/analyze_ads.py /path/work/parsed.json --sheet '主表名称' \
+  --billing paid --currency USD --target-acos 0.25 --min-clicks 30 \
+  --as-of 2026-04-30 --out /path/work/analysis.json
 ```
-GL.iNet [产品代号] ([型号]) [主品类] with [Feature 1] & [Feature 2], [Spec 1], [Spec 2] — [使用场景 Tagline]
+
+目标和样本是**命令参数示例，不是推荐阈值**，须使用卖家目标与适用样本规则。
+`--as-of` 是原始报表已回补归因至哪天，不填今天来使旧数据「成熟」。窗口优先读表头；
+有证据时才用 `--attribution-days` 补充。币种/站点缺失可用明确来源的 `--currency` / `--country`。
+
+## 2. 语义分类与回答核查
+
+按 [cosmo_framework.md](references/cosmo_framework.md) 阅读原文，输出
+`intent: L1/L2/L3/unknown`、关系、判读依据和歧义；不按有没有数字或问句开头做正则分类。
+同一文字可复用语义标签，但广告动作保留活动、广告组、ASIN/SKU和周期。
+
+`response_records` 是独立证据。区分：缺回答、未明确型号、型号一致、明确提及其他型号、
+与已核实规格冲突。缺回答不填Irrelevant；同品牌其他型号不等于竞品。
+示例回答不证明每次曝光都这样回答，其他SKU订单也不证明回答错误。
+没有购买SKU与会话证据，不把二者连接成因果链。
+
+## 3. 形成广告建议
+
+按 [ad-decisions.md](references/ad-decisions.md) 给出「事实 → 判断 → 动作 → 验证」。
+每项动作保留源表/行号和广告实体，说明适用目标、证据限制和下一步。
+
+- L3不自动暂停；出单不自动加价；免费期0%ACOS不代表付费效率。
+- `observe_or_verify` 表示有缺口；`review_candidate` 仅表示可以进一步评估，
+  仍须核查相关性、利润、预算、当前状态与稳定性，不能直接下发固定百分比。
+- 不把Prompt子集解释为整个活动或账户表现，不据此调整整个活动预算。
+- 小样本洞察注明点击/订单样本量与品类范围；不把单案例变成跨品类常数。
+- 前后期保持站点、窗口、长度与指标口径；列出其他变化因素，不直接宣称因果提升。
+
+## 4. 交付
+
+普通问答先给可执行结论，不强制生成长报告。正式广告报告可用：
+
+```bash
+python3 scripts/render_ads.py /path/work/analysis.json --out /path/work/广告诊断.html
 ```
-- `—` 破折号分隔参数列表与场景 tagline
-- Tagline 简短（< 30 chars）：如 "Mobile Hotspot for Travel, Livestream"
-- Title 中数字紧凑写法：`5.76 Gbps`、`700Mbps`、`13.5h`（`13.5h` 连写，无空格）
 
----
+模型分类可通过 `--annotations /path/work/annotations.json` 输入：
 
-**Bullet Points 格式（Layer 2 完整模板必须遵守）**：
-- 标题用全角方括号 `【Feature Name】`，**不用** 通用 COSMO 格式 `[LABEL]: product capable of...`
-- 右括号后**无冒号**，直接接正文
-- 核心芯片/模组写全称：`Qualcomm Dragonwing MBB Gen 3 (X72)`
-- 速率格式：`688 Mbps (2.4 GHz) + 2882 Mbps (5 GHz) + 5765 Mbps (6 GHz)`
-- 句内用 `—` 破折号过渡（不用逗号分隔功能点）
-- Bullet 末尾列出使用场景：`for lag-free 4K streaming, gaming, and Zoom/Teams meetings`
-- VPN/速率类 Bullet 末尾加免责声明：`*Speeds measured on local network; real-world results vary.*`
+```json
+[{"unit_id":"复制analysis.json中的真实unit_id","intent":"L3","rationale":"品牌选择泛问；标签本身不决定暂停"}]
+```
 
-**Bullet 顺序（GL.iNet 惯例优先级）**：
-1. 主连接速率（5G / Wi-Fi 标准 + 芯片）
-2. SIM 灵活性（eSIM + Dual SIM 细节）
-3. 有线 I/O（Ethernet + USB-C 规格）
-4. 网络可靠性（Multi-WAN Failover）
-5. 电池续航
-6. 屏幕 / 交互（Touchscreen 快捷操作）
-7. VPN（预装服务商 + 速率）
+未分类项显示「未分类」，不要伪装已完成分析。广告报告含：范围/缺口、指标与归因拆分、
+具体活动/问题建议、回答证据、来源与复查条件。人工撰写完整报告也使用同一份analysis.json数值，
+参考 [report_design.md](references/report_design.md) 的样式；广告-only略去评分、文案和营销章节。
 
----
+交付前核对源数据不变、无跨表重复累加、拆分与总计一致、建议可追溯、免费期无付费扩量结论；
+HTML桌面/窄屏/打印无关键信息丢失，原始文本转义。任何自定义评分必须标为启发式，
+不叫「亚马逊官方评分」或「真实Rufus分」。
 
-**Description 格式**：
-- H1 标题：`GL.iNet [产品] ([型号]) — [品类] + [核心卖点]`
-- 开篇句：`built for people whose [work / travel / content] depends on [core value]`
-- KEY FEATURES 区块用 `•` 列点（不用 `-`）
-- 末行固定：`Ideal for: business travellers, digital nomads, ...`（逗号分隔受众）
-- 全文末加 VPN 免责声明
+## 维护与验证
 
----
+```bash
+python3 -m unittest discover -s tests -v
+```
 
-**Keywords 风格**：
-- 全小写，空格分隔，无逗号无分号
-- 必含：产品代号 + 型号（去连字符）— `mudi 7 e5800`
-- 必含：芯片名 — `dragonwing x72`
-- 美国站必含：运营商关键词 — `at&t t-mobile verizon unlocked`
-- 必含：核心使用场景词 — `pop-up retail food truck pos backup digital nomad remote work`
-
----
-
-**语气 / 受众定位**：
-- 技术性强，面向专业用户，不用空洞形容词
-- 具名使用场景：`pop-up retail POS, food trucks, trade-show booths, festival vendors`
-- 受众列举：business travellers, digital nomads, content creators, livestreamers, remote engineers, expats, campervan users
-
----
-
-**GL.iNet 禁止事项**：
-- ❌ Layer 2 完整模板不用通用 COSMO 格式 `[LABEL]: capable of` — GL 用 `【】` 叙述风格
-- ❌ 不写 `GL` 单独出现（必须是 `GL.iNet`）
-- ❌ Title 建议不得省略型号 `(GL-XXXX)`
-- ❌ 不暗示 eSIM + 双 SIM 三槽同时工作（eSIM 启用时占用一个物理 SIM 位）
-- ❌ Layer 1 诊断卡不受此限制 — 仍用 COSMO 诊断语言；仅 Layer 2 完整模板需按 GL 风格输出
-
----
-
-## Reference Files
-
-- `references/cosmo_framework.md` — Full 15-relation COSMO taxonomy with examples and typicality scoring
-- `references/report_design.md` — HTML/CSS design system for the report (dark theme, components, color codes)
-
-Read these when you need detail on classification rules or when writing the HTML output.
+测试使用合成数据，真实卖家文件与报告只留本地工作区，不纳入仓库。
+新规则写明来源、条件与例外，不把个案CPC、ACOS、点击量或品类当作永久阈值。

@@ -1,136 +1,60 @@
-# COSMO Framework Reference
+# COSMO相关语义框架与工具标签
 
-## Source
-Yu et al. (2024). COSMO: A Large-Scale E-commerce Common Sense Knowledge Generation and Serving System at Amazon. SIGMOD-Companion '24.
+参考：Yu et al. (2024), COSMO: A Large-Scale E-commerce Common Sense Knowledge Generation
+and Serving System at Amazon, https://doi.org/10.1145/3626246.3653398 。
+关系词汇用于组织语义；本工具的L1/L2/L3、运营建议与评分不是亚马逊官方规则。
+引用具体论文结论须核验原文，不把案例转化占比、关键词句式或缓存时间说成平台事实。
 
----
+## 先读问题，不看转化给标签
 
-## The 15 COSMO Relation Types
+| 标签 | 原文表达 | 示例 | 边界 |
+|---|---|---|---|
+| L1 功能/能力 | 命名功能、标准、协议、容量等 | dual band、Wi-Fi 6、WireGuard | 不要求数字或Does开头 |
+| L2 场景/人群/泛功能 | 受众、场景或泛问有哪些功能 | suitable for travelers、what features | 场景+功能混合时说明主意图 |
+| L3 品牌/品类浏览 | 泛品牌选择、纯品类发现 | Why choose Brand routers? | 不表示没有购买价值或应停投 |
+| unknown | 缺失、歧义过大 | 无法识别的文字片段 | 不默认L3 |
 
-COSMO organizes e-commerce knowledge into 15 relation types organized as (head_entity, relation, tail_entity) triples. Each relation maps to an intent level and Rufus Prompt pattern.
+「How fast is its VPN throughput?」是具体性能问题，可判L1，不因How fast句式判L3。
+「Wi-Fi 6 for fast gaming」同时含标准与场景，可按主意图判L1或L2，写明理由并保持批次一致。
+「easy setup」为泛化易用性，说明L1/L2边界，不强行等同量化规格。
+「portable router」可能仅是品类，不自动判具体能力。
+成交、是否该投放是独立判断，不改变问题语义标签。
 
-| Relation | English Name | Tail Type | E-commerce Example | Intent Level | Rufus Prompt Form | Conversion |
-|----------|-------------|-----------|-------------------|--------------|-------------------|------------|
-| `capable_of` | Capable of | Function/Usage | "portable router capable of gigabit speeds" | **L1 高典型性** | Does [brand] have a [product] with [feature]? | ★★★★★ |
-| `used_for_func` | Used for Func | Function/Usage | "travel router used for securing hotel WiFi" | **L1 高典型性** | Does [brand] have a [product] for [function]? | ★★★★☆ |
-| `used_to` | Used to | Function/Usage | "router used to create private WiFi hotspot" | **L1 高典型性** | Does [brand] have [product] to [action]? | ★★★★☆ |
-| `xWant` | xWant | Activity | "buyer wants to secure public WiFi connection" | **L1 高典型性** | Does [brand] have [product] that [outcome]? | ★★★★☆ |
-| `used_for_eve` | Used for Event | Event/Activity | "portable router used for RV camping trips" | **L2 中典型性** | What [brand] router works for [event]? | ★★★☆☆ |
-| `used_for_aud` | Used for Aud | Audience | "VPN router for remote workers / travelers" | **L2 中典型性** | What [brand] router is best for [audience]? | ★★★☆☆ |
-| `used_as` | Used as | Concept/Product | "device used as mobile WiFi repeater" | **L2 中典型性** | [Brand] [product] used as [role] | ★★★☆☆ |
-| `used_on` | Used on | Time/Season/Event | "router used on international business trips" | **L2 中典型性** | [Brand] router for [occasion] | ★★★☆☆ |
-| `used_in_loc` | Used in Loc | Location/Facility | "portable router used in hotels/airports" | **L2 中典型性** | Does [brand] router work in [location]? | ★★★☆☆ |
-| `used_with` | Used with | Complementary | "router used with VPN subscription services" | **L2 中典型性** | What [brand] product works with [accessory]? | ★★★☆☆ |
-| `used_by` | Used by | Audience | "router used by digital nomads / IT professionals" | **L2 中典型性** | What [brand] router is used by [user type]? | ★★★☆☆ |
-| `xIs_a` | xIs a | Audience | "buyer is a frequent traveler / remote worker" | **L2 中典型性** | Best [product] for [user persona]? | ★★★☆☆ |
-| `used_in_body` | Used in Body | Body Part | "serum used on face/neck" | **L2 中典型性** | Does [brand] [product] work for [body area]? | ★★☆☆☆ |
-| `is_a` | Is a | Concept/Type | "GL-MT3000 is a portable travel router" | **L3 低典型性** | [Brand] [product type] | ★★☆☆☆ |
-| `xInterested_in` | xInterested in | Interest | "customers interested in network security" | **L3 低典型性** | Why choose [brand] for [interest area]? | ★☆☆☆☆ |
+## 关系词汇
 
----
+| 关系 | 用途 |
+|---|---|
+| capable_of | 具体能力 |
+| used_for_func | 功能用途 |
+| used_to | 完成动作 |
+| xWant | 买家希望的结果 |
+| used_for_eve | 事件/场合 |
+| used_for_aud | 受众 |
+| used_as | 用作某角色 |
+| used_on | 时间/情境 |
+| used_in_loc | 使用地点 |
+| used_with | 兼容/搭配 |
+| used_by | 使用者 |
+| xIs_a | 买家身份 |
+| used_in_body | 身体部位 |
+| is_a | 商品类型 |
+| xInterested_in | 兴趣主题 |
 
-## Intent Level Definitions
+关系与意图不是强制一对一映射，不合适时用unknown；示例不是转化排名。
 
-### L1 — 高典型性 (High Typicality)
-- Buyer has **specific functional requirement**
-- COSMO can match product to query via precise capability triple
-- Listing must contain **exact numbers and specs** to achieve high typicality score
-- **75% of purchases** in test data came from L1 Prompts
-- Action: Keep and boost bids after verifying listing quality
+## 回答与商品匹配
 
-### L2 — 中典型性 (Medium Typicality)
-- Buyer has scenario/audience/occasion context but no specific feature requirement
-- Rufus gives broader answers, lower conversion
-- Listing should include relevant scene/audience keywords
-- Action: Monitor, optimize listing for scene coverage, don't over-invest in bids
+- missing_response：未提供/空白，不当Irrelevant。
+- model_unspecified：只有品牌/品类，无法确认具体ASIN。
+- model_consistent_specs_unverified：型号一致但规格未核实，不代表全面准确。
+- different_model：明确提及其他型号，记录原文、广告型号、回答型号。
+- verified_spec_conflict：与已核实产品事实冲突，必须附事实来源。
 
-### L3 — 低典型性 (Low Typicality)
-- Generic brand questions or pure category browsing
-- Rufus often answers with a different (competitor) product
-- Near-zero conversion, negative ROI once CPC billing starts
-- Action: **Pause immediately** when CPC billing activates
+如需ESCI（Exact/Substitute/Complement/Irrelevant），必须有足够产品与问题证据。
+ESCI相关性与「回答换型号」是不同维度；同品牌其他SKU不等于跨品牌竞品，
+其他SKU归因也不能替代回答证据。
 
----
+## 文案启发
 
-## Typicality Scoring Principles
-
-From §3.3.2 of the COSMO paper — "Typicality annotation":
-
-**High typicality** (score 8–10): 
-- Contains exact numbers: "capable of drilling 20mm concrete in 5 seconds"
-- Comparative specs: "6× thinner than standard wefts"
-- Specific materials + grade: "Grade 12A 100% unprocessed Brazilian virgin human hair"
-- Precise capacity: "handles up to 120 simultaneous device connections"
-
-**Medium typicality** (score 5–7):
-- Functional but vague: "capable of connecting multiple devices"
-- Partial spec: "100% human hair" without grade or origin
-- Scene without detail: "suitable for travel"
-
-**Low typicality** (score 1–4):
-- Pure adjectives: "high quality", "comfortable", "natural-looking"
-- Generic brand statement: "trusted by millions"
-- No functional information
-
-**The Apple Watch anti-example**: A listing that says "for fitness tracking" is low typicality. "Capable of measuring blood oxygen with ±2% accuracy" is high typicality. The distinction is always: can COSMO extract a specific capability triple from your description?
-
----
-
-## ESCI Match Classification
-
-From §4.1 of the paper — when COSMO evaluates relevance between a Prompt and a product:
-
-| ESCI Type | Meaning | Typical Situation | Action |
-|-----------|---------|-------------------|--------|
-| **Exact** | Product perfectly answers the Prompt | L1 Prompt, listing describes the feature | Boost bid |
-| **Substitute** | Similar product, but not ideal match | Feature exists but described vaguely | Fix listing, then re-evaluate |
-| **Complement** | Related product, not a direct match | Correct category, wrong intent | Monitor or pause |
-| **Irrelevant** | Product doesn't match the Prompt at all | Wrong ASIN shown, or L3 mismatch | Pause immediately |
-
----
-
-## Category-Specific Examples
-
-### Hair & Beauty
-- **capable_of** high typicality: "capable of being dyed up to 3 shades lighter without damage" / "holds style for 72+ hours in humidity"
-- **capable_of** low typicality: "made of real human hair" / "natural look"
-- **used_for_aud** example: "designed for women with fine hair seeking volume"
-- **used_for_eve** example: "perfect for wedding day, graduation, special occasions"
-
-### Electronics/Routers
-- **capable_of** high typicality: "capable of 1800Mbps dual-band throughput with 120 simultaneous devices"
-- **capable_of** low typicality: "fast WiFi" / "supports multiple devices"
-
-### Apparel
-- **capable_of** high typicality: "capable of wicking 150ml/hour moisture; UPF 50+ UV protection"
-- **used_for_eve** example: "designed for marathon training on asphalt"
-- **used_in_body** example: "targets core temperature regulation via mesh underarm panels"
-
-### Home & Kitchen
-- **capable_of** high typicality: "capable of maintaining 165°F for 6 hours; 6-quart capacity feeds 8 adults"
-- **used_with** example: "compatible with all standard induction cooktops (1800W–3500W)"
-
----
-
-## Semantic Gap Bridging (§4.1)
-
-COSMO bridges the "semantic gap" between buyer queries and product listings using the knowledge graph. The cross-encoder uses:
-
-```
-Relevance(Q, P) = f(Q, P, COSMO_knowledge(Q, P))
-```
-
-Where `COSMO_knowledge` adds commonsense triples like:
-- "winter clothes" → [capable_of keeping warm] → matches "insulated jacket"
-- "pre-installed VPN" → [capable_of connecting VPN instantly] → matches listing with explicit "pre-installed"
-
-**Implication**: Your listing text feeds directly into COSMO's knowledge extraction. If your listing says "supports VPN", COSMO generates a weaker triple than if you say "pre-installed OpenVPN and WireGuard — connect to 30+ providers in seconds without setup".
-
----
-
-## Multi-Turn Navigation (§4.3)
-
-COSMO builds a hierarchy from coarse to fine:
-- camping → winter camping → winter camping sleeping bag → insulated sleeping bag for -20°C
-
-For sellers: having BOTH broad L2 terms (camping) AND specific L1 specs (-20°C rated) in your listing helps you appear at multiple levels of buyer navigation.
+具体事实、可理解功能与买家场景可帮助表达；更多数字不自动更好，capable of不是必需关键词。
+不能为分数编造性能、认证或倍数。文案模块见[listing-review.md](listing-review.md)，广告-only不加载。
